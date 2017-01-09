@@ -1,92 +1,77 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*   ft_strsplit2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mtassett <mtassett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/27 18:13:20 by mdamesto          #+#    #+#             */
-/*   Updated: 2015/11/28 15:22:03 by mdamesto         ###   ########.fr       */
+/*   Created: 2016/07/17 00:12:34 by mtassett          #+#    #+#             */
+/*   Updated: 2016/11/20 16:21:26 by mtassett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-static size_t	ft_chrcnt(char const *s, char c)
+static size_t	get_sub_siz(const char *str, char c)
 {
-	size_t i;
+	const char	*tmp;
 
-	if (!s || !c)
-		return (0);
-	i = 0;
+	tmp = str;
+	while (*tmp != c && *tmp)
+		tmp++;
+	return (tmp - str);
+}
+
+static size_t	get_tab_row(const char *s, char c)
+{
+	size_t	n_sep;
+	int		word_before;
+
+	word_before = 0;
+	n_sep = 0;
 	while (*s)
 	{
 		if (*s == c)
 		{
-			i++;
-			while (*s++ == c)
-				;
+			while (*s == c)
+				s++;
+			if (word_before && *s)
+				n_sep++;
+			word_before = 0;
 		}
+		else
+		{
+			word_before = 1;
+			s++;
+		}
+	}
+	return (n_sep + 1);
+}
+
+
+char	**ft_strsplit(const char *s, char c)
+{
+	char	**out;
+	size_t	n;
+	size_t	row;
+	size_t	siz;
+
+	if (!s)
+		return (NULL);
+	row = get_tab_row(s, c);
+	if (!(out = malloc(sizeof(char *) * (row + 1))))
+		return (NULL);
+	n = 0;
+	while (*s == c)
 		s++;
-	}
-	return (i);
-}
-
-static char		*ft_strdup_mod(const char *s, size_t start, size_t end)
-{
-	char	*new;
-	size_t	size;
-	size_t	i;
-
-	i = 0;
-	size = end - start;
-	if (!(new = ft_strnew(size)))
-		return (NULL);
-	while (i < size)
+	while (n < row)
 	{
-		new[i] = s[start + i];
-		i++;
+		siz = get_sub_siz(s, c);
+		out[n++] = siz ? ft_strsub(s, 0, siz) : NULL;
+		s += siz;
+		while(*s == c)
+			s++;
 	}
-	return (new);
-}
-
-static char		*create_str(const char *s, size_t *last, size_t *cur)
-{
-	char	*tmp;
-
-	if (*last == *cur)
-		return (NULL);
-	tmp = ft_strdup_mod(s, *last, *cur);
-	*last = *cur;
-	return (tmp);
-}
-
-char			**ft_strsplit(char const *s, char c)
-{
-	char	**tab;
-	size_t	cur;
-	size_t	last;
-	size_t	i;
-	size_t	len;
-
-	len = ft_chrcnt(s, c);
-	if (!(tab = (char**)malloc(sizeof(char *) * (len + 1))) || !s || !c)
-		return (NULL);
-	last = 0;
-	i = 0;
-	while (s[last] == c)
-		last++;
-	while (i < len)
-	{
-		cur = last;
-		while (s[cur] != c && s[cur])
-			cur++;
-		tab[i++] = create_str(s, &last, &cur);
-		while (s[last] == c)
-			last++;
-	}
-	if (len == 0 && *s)
-		tab[0] = ft_strdup(s);
-	return (tab);
+	out[n] = NULL;
+	return (out);
 }

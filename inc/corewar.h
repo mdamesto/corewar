@@ -24,22 +24,37 @@
 # define ENONAME		6
 # define ENOCOM			7
 # define EPARSING		8
+# define EBDINST		9
+# define EINSTARG		10
+# define EBDREG			11
 
 /*# define EMALLOC_TXT "Error: Malloc Failed"
 write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/
 
 
+typedef struct		s_label
+{
+	char			*name;
+	int 			adress;
+	struct s_label 	*next;
+}					t_label;
+
 typedef struct	s_env
 {
 	header_t 	*header;
+	t_label 	*labels;
 	char		*filename;
 	int 		fd;
-	int 		lc; 		//line counter 
+	int 		line_nb; 		//line counter
+	int 		c_adress; 
 	char		*line;		//line value
-	char		**instr;		//parsed data
+	int 		inst_nb
+	char		**inst;		//parsed data
 }				t_env;
 
 void	ft_error(int code);
+
+//gnl.c
 int gnl(void);
 
 //parsing.c
@@ -49,6 +64,16 @@ char	*parsing_champion(t_env *env);
 void	init_env(char *filename);
 t_env	*get_env(t_env *env);
 void	free_env(void);
+
+//name_comment.c
+void	get_name(t_env *env);
+void	get_comment(t_env *env);
+
+//label.c
+void	print_labels(t_env *env);
+void	add_label(t_env *env, char *label);
+
+
 
 #endif
 	

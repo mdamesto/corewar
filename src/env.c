@@ -8,14 +8,22 @@ void	init_env(char *filename)
 	if (!(new = malloc(sizeof(t_env))))
 		ft_error(EMALLOC);
 	ft_bzero(new, sizeof(t_env));
+	
 	if (!(new->header = malloc(sizeof(header_t))))
 		ft_error(EMALLOC);
 	ft_bzero(new->header, sizeof(header_t));
 	new->header->prog_size = 0;
+	
 	new->filename = filename;
 	if ((new->fd = open(new->filename, O_RDONLY)) < 0) 
 		ft_error(EOPEN);
-	new->lc = 0;
+	
+	new->line_nb = 0;
+	new->c_adress = 0;
+	
+	new->instr_nb = 1;
+	new->instr = malloc(sizeof(char *) * 100)
+
 	get_env(new);
 } 
 

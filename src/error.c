@@ -27,7 +27,28 @@ void	ft_error(int code) {
 	else if (code == 7)
 		ft_putstr_fd("Champion must have a comment\n", 2);
 	else if (code == 8) {
-		ft_putstr_fd("Synthax error on ligne ", 2);
+		ft_putstr_fd("Synthax error on line ", 2);
+		ft_putstr_fd(ft_itoa(env->lc), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(env->line, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	else if (code == 9) {
+		ft_putstr_fd("Invalid instruction on line", 2);
+		ft_putstr_fd(ft_itoa(env->lc), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(env->line, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	else if (code == 10) {
+		ft_putstr_fd("Wrong number of args for instruction on line", 2);
+		ft_putstr_fd(ft_itoa(env->lc), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(env->line, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	else if (code == 11) {
+		ft_putstr_fd("Unknow registre on line", 2);
 		ft_putstr_fd(ft_itoa(env->lc), 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(env->line, 2);

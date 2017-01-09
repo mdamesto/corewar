@@ -1,96 +1,105 @@
 #include "corewar.h"
 
-char	*get_content(char *line) 
+void	live(char **data, int i)
 {
-	int i;
 	int j;
-	int k;
-	char *ret;
+	int reg_nb;
+	char tmp[2];
+	t_env *env;
 
-	i = 0;
-	k = 0;
+	env = get_env(NULL);
+	if (!data[i] || data[i + 1])
+		ft_error(EINSTARG);
 	
-	while(line[i] && line[i] != '\"')
-		i++;
-	j = i + 1;
-	while((line[j] && line[j] != '\"') || (line[j] && line[j - 1] == '\\'))
-		j++;
-	if (line[i] != '\"' || line[j] != '\"' || i == j)
-		ft_error(EPARSING);
-
-
-	ret = malloc(sizeof(char *) * (j - i));
-	while (++i < j)
-		ret[k++] = line[i];
-	ret[k] = '\0';
-
-	while (line[++i])
-		if(line[i] != ' ' && line[i] != '	')
-			ft_error(EPARSING);
-
-	return (ret);
-
-}
-
-void	get_name(t_env *env)
-{
-	int ret;
-	char *content;
-
-	ret = gnl();
-	if (ret == 0)
-		ft_error(EEMPTYFILE);
-	if (ft_strncmp(env->line, ".name \"", 7) != 0)
-		ft_error(ENONAME);
-	
-	content = get_content(env->line);
-	if (ft_strlen(content) <= PROG_NAME_LENGTH + 1)
-		ft_strcpy(env->header->prog_name, content);
-	free(content);
-
-	ft_putstr("champion's name: ");
-	ft_putstr(env->header->prog_name);
-	write (1, "\n", 1);
-}
-
-void	get_comment(t_env *env)
-{
-	char *content;
-
-	gnl();
-	if (ft_strncmp(env->line, ".comment \"", 10) != 0)
-		ft_error(ENOCOM);
-
-	content = get_content(env->line);
-	if (ft_strlen(content) <= COMMENT_LENGTH + 1)
-		ft_strcpy(env->header->comment, content);
-	free(content);
-
-	ft_putstr("champion's comment: ");
-	ft_putstr(env->header->comment);
-	write (1, "\n", 1);
-
-}
-
-int 	check_empty_line(char *line){
-	int i;
-
-	i = 0;
-	while (line[i]) 
+	if (data[i][j] == 'r')
 	{
-		if (line[i] != ' ' && line[i] != '	')
-			return (0);
-		i++;
+		ft_bzero(tmp, 3);
+		j = 1;
+		while (data[i][j]) {
+			if (!ft_isdigit(data[i][j++]) || j > 2)
+				ft_error(EBDREG);
+			tmp[j - 1] = data[i][j];
+		}
+		reg_nb = ft_atoi(tmp);
+		if (reg_nb < 1 || reg_nb > 16)
+			ft_error(EBDREG);
+		env->inst[env->inst_nb] = ""
+		// int to binary + create fulll string... ---------------------------------------------- TODO
 	}
-	return (1);
+}
+
+
+static void norme1(char **data, int i)
+{
+	/*else if(data[i] == "zjmp")
+		zjmp(data, i);
+	else if(data[i] == "ldi")
+		ldi(data, i);
+	else if(data[i] == "sti")
+		sti(data, i);
+	else if(data[i] == "fork")
+		fork(data, i);
+	else if(data[i] == "lld")
+		lld(data, i);
+	else if(data[i] == "lldi")
+		lldi(data, i);
+	else if(data[i] == "lfork")
+		lfork(data, i);
+	else if(data[i] == "aff")
+		aff(data, i);*/
+	else
+		ft_error(EBDINST);
+}
+void	op_switch(char **data, int i)
+{
+	if(data[i] == "live")
+		live(data, i + 1);
+	/*else if(data[i] == "ld")
+		ld(data, i);
+	else if(data[i] == "st")
+		st(data, i);
+	else if(data[i] == "add")
+		add(data, i);
+	else if(data[i] == "sub")
+		sub(data, i);
+	else if(data[i] == "and")
+		and(data, i);
+	else if(data[i] == "or")
+		or(data, i);
+	else if(data[i] == "xor")
+		xor(data, i);*/
+	else
+		norme1(data, i);
 }
 
 void	get_instructions(t_env *env)
 {
-	gnl();
-	while (check_empty_line(env->line) == 1)
-		gnl();
-	ft_putstr(env->line);
+	char **data;
+	int i;
+
+	i = 0;
+	data = ft_strsplit_space(env->line);
+	if (data[0][ft_strlen(data[0]) - 1] == ':' && ft_strlen(data[0]) > 1) 
+	{
+		add_label(env, data[0]);
+		if (!data[1]) {
+			gnl();
+			ft_tab_free(data);
+			data = ft_strsplit_space(env->line);
+		}
+		else
+			i++;
+	}
+	op_switch(data, i);
+
+	ft_putstr("// INSTRUCTION \n");
+	while (data[i]) 
+	{
+		ft_putstr(data[i]);
+		write (1, "\n", 1);
+		i++;
+	}
+	ft_tab_free(data);
 }
 
 
@@ -102,8 +111,10 @@ char	*parsing_champion(t_env *env)
 
 	get_name(env);
 	get_comment(env);
-	get_instructions(env);
-	
+	while(gnl() != 0) {
+		get_instructions(env);
+	}
+	print_labels(env);
 	ft_putstr("*** parsing done! \n");
 	return ("temporary return");
 }

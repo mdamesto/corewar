@@ -12,7 +12,7 @@
 
 NAME = asm
 
-SRC_NAME = main.c error.c parsing.c env.c
+SRC_NAME = main.c error.c parsing.c env.c gnl.c label.c name_comment.c
 SRC_PATH = ./src/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
