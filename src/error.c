@@ -10,7 +10,7 @@ void	ft_error(int code) {
 	}
 	
 	env = get_env(NULL);
-	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd("\nError: ", 2);
 	ft_putstr_fd(env->filename, 2);
 	ft_putstr_fd(": ", 2);
 
@@ -28,28 +28,49 @@ void	ft_error(int code) {
 		ft_putstr_fd("Champion must have a comment\n", 2);
 	else if (code == 8) {
 		ft_putstr_fd("Synthax error on line ", 2);
-		ft_putstr_fd(ft_itoa(env->lc), 2);
+		ft_putstr_fd(ft_itoa(env->line_nb), 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(env->line, 2);
 		ft_putstr_fd("\n", 2);
 	}
 	else if (code == 9) {
-		ft_putstr_fd("Invalid instruction on line", 2);
-		ft_putstr_fd(ft_itoa(env->lc), 2);
+		ft_putstr_fd("Invalid instruction on line ", 2);
+		ft_putstr_fd(ft_itoa(env->line_nb), 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(env->line, 2);
 		ft_putstr_fd("\n", 2);
 	}
 	else if (code == 10) {
-		ft_putstr_fd("Wrong number of args for instruction on line", 2);
-		ft_putstr_fd(ft_itoa(env->lc), 2);
+		ft_putstr_fd("Wrong number of args for instruction on line ", 2);
+		ft_putstr_fd(ft_itoa(env->line_nb), 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(env->line, 2);
 		ft_putstr_fd("\n", 2);
 	}
 	else if (code == 11) {
-		ft_putstr_fd("Unknow registre on line", 2);
-		ft_putstr_fd(ft_itoa(env->lc), 2);
+		ft_putstr_fd("Unknow registre on line ", 2);
+		ft_putstr_fd(ft_itoa(env->line_nb), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(env->line, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	else if (code == 12) {
+		ft_putstr_fd("Wrong arg on line ", 2);
+		ft_putstr_fd(ft_itoa(env->line_nb), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(env->line, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	else if (code == 13) {
+		ft_putstr_fd("Wrong Direct value on line ", 2);
+		ft_putstr_fd(ft_itoa(env->line_nb), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(env->line, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	else if (code == 14) {
+		ft_putstr_fd("Wrong Indirect value on line ", 2);
+		ft_putstr_fd(ft_itoa(env->line_nb), 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(env->line, 2);
 		ft_putstr_fd("\n", 2);

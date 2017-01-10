@@ -1,39 +1,16 @@
 #include "corewar.h"
 
-void	live(char **data, int i)
-{
-	int j;
-	int reg_nb;
-	char tmp[2];
-	t_env *env;
-
-	env = get_env(NULL);
-	if (!data[i] || data[i + 1])
-		ft_error(EINSTARG);
-	
-	if (data[i][j] == 'r')
-	{
-		ft_bzero(tmp, 3);
-		j = 1;
-		while (data[i][j]) {
-			if (!ft_isdigit(data[i][j++]) || j > 2)
-				ft_error(EBDREG);
-			tmp[j - 1] = data[i][j];
-		}
-		reg_nb = ft_atoi(tmp);
-		if (reg_nb < 1 || reg_nb > 16)
-			ft_error(EBDREG);
-		env->inst[env->inst_nb] = ""
-		// int to binary + create fulll string... ---------------------------------------------- TODO
-	}
-}
-
-
 static void norme1(char **data, int i)
 {
-	/*else if(data[i] == "zjmp")
-		zjmp(data, i);
-	else if(data[i] == "ldi")
+	if(!(ft_strncmp(data[i], "st", 2)))
+		st(data, i + 1);
+	else if(!(ft_strncmp(data[i], "ld", 2)))
+		ld_lld(data, i);
+	else if(!(ft_strncmp(data[i], "lld", 3)))
+		ld_lld(data, i);
+	else if(!(ft_strncmp(data[i], "aff", 3)))
+		aff(data, i + 1);
+	/*else if(data[i] == "ldi")
 		ldi(data, i);
 	else if(data[i] == "sti")
 		sti(data, i);
@@ -50,56 +27,63 @@ static void norme1(char **data, int i)
 	else
 		ft_error(EBDINST);
 }
-void	op_switch(char **data, int i)
+void	inst_switch(char **data, int i)
 {
-	if(data[i] == "live")
-		live(data, i + 1);
-	/*else if(data[i] == "ld")
-		ld(data, i);
-	else if(data[i] == "st")
-		st(data, i);
-	else if(data[i] == "add")
-		add(data, i);
-	else if(data[i] == "sub")
-		sub(data, i);
-	else if(data[i] == "and")
-		and(data, i);
-	else if(data[i] == "or")
-		or(data, i);
-	else if(data[i] == "xor")
-		xor(data, i);*/
+	if(!(ft_strncmp(data[i], "live", 4)))
+		live_zjump_fork_lfork(data, i);
+	else if(!(ft_strncmp(data[i], "zjump", 4)))
+		live_zjump_fork_lfork(data, i);
+	else if(!(ft_strncmp(data[i], "fork", 4)))
+		live_zjump_fork_lfork(data, i);
+	else if(!(ft_strncmp(data[i], "lfork", 5)))
+		live_zjump_fork_lfork(data, i);
+	else if(!(ft_strncmp(data[i], "add", 3)))
+		add_sub_and_or_xor(data, i);
+	else if(!(ft_strncmp(data[i], "sub", 3)))
+		add_sub_and_or_xor(data, i);
+	else if(!(ft_strncmp(data[i], "and", 3)))
+		add_sub_and_or_xor(data, i);
+	else if(!(ft_strncmp(data[i], "or", 2)))
+		add_sub_and_or_xor(data, i);
+	else if(!(ft_strncmp(data[i], "xor", 3)))
+		add_sub_and_or_xor(data, i);
+	//LDI // STI------------------> TODO
 	else
 		norme1(data, i);
 }
 
 void	get_instructions(t_env *env)
 {
-	char **data;
 	int i;
+	int j;
 
 	i = 0;
-	data = ft_strsplit_space(env->line);
-	if (data[0][ft_strlen(data[0]) - 1] == ':' && ft_strlen(data[0]) > 1) 
+	env->data = ft_strsplit_space(env->line);
+
+	if (env->data[0][ft_strlen(env->data[0]) - 1] == ':' && ft_strlen(env->data[0]) > 1) 
 	{
-		add_label(env, data[0]);
-		if (!data[1]) {
+		add_label(env, env->data[0]);
+		if (!env->data[1]) {
 			gnl();
-			ft_tab_free(data);
-			data = ft_strsplit_space(env->line);
+			ft_tab_free(env->data);
+			env->data = ft_strsplit_space(env->line);
 		}
 		else
 			i++;
 	}
-	op_switch(data, i);
 
-	ft_putstr("// INSTRUCTION \n");
-	while (data[i]) 
+	j = i;
+	ft_putstr("\ndata: ");
+	while (env->data[j]) 
 	{
-		ft_putstr(data[i]);
-		write (1, "\n", 1);
-		i++;
+		ft_putstr(env->data[j]);
+		write (1, " ", 1);
+		j++;
 	}
-	ft_tab_free(data);
+
+
+	inst_switch(env->data, i);
+	ft_tab_free(env->data);
 }
 
 

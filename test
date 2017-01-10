@@ -1,11 +1,18 @@
 #coment#.name "test_#comment#name" #TROLOLOLOL#
 .comment "test comment"
-	       
-    
-
 
 labeltest:
-	ligne 2
-	ligne 3
-yo: ligne 4
-ligne 5
+	live %:label 
+	live %1234567
+	ld 123 r10
+	ldd 123 r10
+	st r10 123
+	add r1 r2 r3
+	sub r1 r2 r3
+	and r1 r2 r3
+	or r1 r2 r3
+	zjump %123
+	fork %:label
+	lfork %123
+	aff r12 
+yo: live %:label

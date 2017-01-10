@@ -25,8 +25,11 @@
 # define ENOCOM			7
 # define EPARSING		8
 # define EBDINST		9
-# define EINSTARG		10
-# define EBDREG			11
+# define E_ARG_NB		10
+# define E_BD_REG		11
+# define E_BD_ARG		12
+# define E_BD_DIR		13
+# define E_BD_IND		14
 
 /*# define EMALLOC_TXT "Error: Malloc Failed"
 write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/
@@ -48,7 +51,8 @@ typedef struct	s_env
 	int 		line_nb; 		//line counter
 	int 		c_adress; 
 	char		*line;		//line value
-	int 		inst_nb
+	int 		inst_nb;
+	char 		**data; 		//tmp splitted line
 	char		**inst;		//parsed data
 }				t_env;
 
@@ -72,6 +76,25 @@ void	get_comment(t_env *env);
 //label.c
 void	print_labels(t_env *env);
 void	add_label(t_env *env, char *label);
+
+//check_arg.c
+
+int		check_arg(char *arg);
+char	*get_dir(char *arg, int size);
+char 	*get_reg(char *arg);
+char 	*get_ind(char *arg); 
+
+//inst.c
+void	add_inst(char *inst, char *args_code, char **args);
+char	*ret_to_oct(char *tmp, int oct_nb);
+char	**init_args(void);
+
+void	live_zjump_fork_lfork(char **data, int i);
+void	add_sub_and_or_xor(char **data, int i);
+void	ld_lld(char **data, int i); 
+void	st(char **data, int i);
+void	aff(char **data, int i);
+
 
 
 

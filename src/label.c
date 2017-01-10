@@ -4,7 +4,7 @@ void	print_labels(t_env *env)
 {
 	t_label *tmp;
 
-	ft_putstr("LABEL_LST: ");
+	ft_putstr("\nLABEL_LST: ");
 	if (!env->labels)
 		return ; 
 	tmp = env->labels;

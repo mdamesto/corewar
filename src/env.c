@@ -20,9 +20,8 @@ void	init_env(char *filename)
 	
 	new->line_nb = 0;
 	new->c_adress = 0;
-	
-	new->instr_nb = 1;
-	new->instr = malloc(sizeof(char *) * 100)
+	new->inst_nb = 1;
+	new->inst = malloc(sizeof(char *) * 100);
 
 	get_env(new);
 } 
@@ -47,8 +46,8 @@ void	free_env(void) {
 	env = get_env(NULL);
 	if (env)
 	{
-		/*if (env->elem)
-			free(elem);*/
+		if (env->data)
+			ft_tab_free(env->data);
 		free(env);
 	}
 }
