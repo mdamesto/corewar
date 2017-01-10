@@ -9,6 +9,7 @@ void	ld_lld(char **data, int i)
 	inst = "000000010";
 	if (ft_strlen(data[i]) == 3)
 		inst = "00001101";
+	i++;
 
 	args_code = "01010000";;
 	args = init_args();
@@ -61,3 +62,6 @@ void	st(char **data, int i)
 
 	add_inst("00000011", args_code, args);
 }
+
+
+
