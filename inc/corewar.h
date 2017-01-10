@@ -76,6 +76,7 @@ void	get_comment(t_env *env);
 //label.c
 void	print_labels(t_env *env);
 void	add_label(t_env *env, char *label);
+void	replace_labels(t_env *env);
 
 //check_arg.c
 
@@ -88,6 +89,7 @@ char 	*get_ind(char *arg);
 void	add_inst(char *inst, char *args_code, char **args);
 char	*ret_to_oct(char *tmp, int oct_nb);
 char	**init_args(void);
+void	print_inst(t_env *env);
 
 void	live_zjump_fork_lfork(char **data, int i);
 void	add_sub_and_or_xor(char **data, int i);

@@ -4,7 +4,7 @@
 labeltest:
 	live %:label 
 	live %1234567
-	ld 123 r10
+	ld :label r10
 	ldd 123 r10
 	st r10 123
 	add r1 r2 r3

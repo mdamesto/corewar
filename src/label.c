@@ -49,3 +49,30 @@ void	add_label(t_env *env, char *label)
 		tmp->next = new_label;
 	}
 }
+
+
+
+void	replace_labels(t_env *env)
+{
+	/* TODO
+	 label can start '%'' or ':' depend if dir or ind
+	 */
+	int i;
+	int j;
+	char **tab;
+
+	ft_putstr("\n HERE: ");
+	i = 1;
+	while (i < 2)
+	{
+		ft_putstr("loop: \n");
+		j = 0;
+		tab = ft_strsplit(env->inst[i], ':');
+		while (tab[j]){
+			ft_putstr("\nloop: ");
+			ft_putstr(tab[j++]);
+		}
+		i++;
+		//if (tab[j][ft_strlen(tab[j] - 1)] == '$')
+	}
+}

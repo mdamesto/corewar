@@ -4,6 +4,7 @@ void	add_inst(char *inst, char *args_code, char **args)
 {
 	int i;
 	t_env *env;
+	char *full_inst;
 
 	i = 0;
 	env = get_env(NULL);
@@ -11,6 +12,22 @@ void	add_inst(char *inst, char *args_code, char **args)
 		env->c_adress += 2;
 	else
 		env->c_adress++;
+	
+	full_inst = args[i];
+	while (args[i + 1]) 
+	{
+		full_inst = ft_strjoin(full_inst, args[i + 1]);
+		i++;
+	}
+	if(args_code)
+		full_inst = ft_strjoin(ft_strjoin(inst, args_code), full_inst);
+	else
+		full_inst = ft_strjoin(inst, full_inst);
+	env->inst[env->inst_nb] = full_inst;
+	env->inst_nb++;
+
+	// ------- PRINT INST+ARGS ------ //
+	/*i = 0;
 	ft_putstr("\ninst: ");
 	ft_putstr(inst);
 	if(args_code)
@@ -26,8 +43,8 @@ void	add_inst(char *inst, char *args_code, char **args)
 		ft_putstr(args[i++]);
 		ft_putstr("  ");
 	}
-
-	write(1, "\n", 1);
+	write(1, "\n", 1);*/
+	// ------------------------------- // 
 }
 
 char	*ret_to_oct(char *tmp, int oct_nb) 
@@ -63,4 +80,17 @@ char	**init_args(void)
 	while (i < 4)
 		args[i++] = NULL;
 	return (args);
+}
+
+void	print_inst(t_env *env)
+{
+	int i;
+
+	i = 1;
+	while (i < env->inst_nb)
+	{
+		ft_putstr(env->inst[i]);
+		ft_putstr("\n");
+		i++;
+	}
 }

@@ -48,9 +48,10 @@ void	get_name(t_env *env)
 		ft_strcpy(env->header->prog_name, content);
 	free(content);
 
-	ft_putstr("champion's name: ");
+	// ------- DEBUG: NAME -------
+	/*ft_putstr("champion's name: ");
 	ft_putstr(env->header->prog_name);
-	write (1, "\n", 1);
+	write (1, "\n", 1);*/
 }
 
 void	get_comment(t_env *env)
@@ -66,8 +67,9 @@ void	get_comment(t_env *env)
 		ft_strcpy(env->header->comment, content);
 	free(content);
 
-	ft_putstr("champion's comment: ");
+	// ------- DEBUG: COMMENT -------
+	/*ft_putstr("champion's comment: ");
 	ft_putstr(env->header->comment);
-	write (1, "\n", 1);
+	write (1, "\n", 1);*/
 
 }

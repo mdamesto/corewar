@@ -10,20 +10,7 @@ static void norme1(char **data, int i)
 		ld_lld(data, i);
 	else if(!(ft_strncmp(data[i], "aff", 3)))
 		aff(data, i + 1);
-	/*else if(data[i] == "ldi")
-		ldi(data, i);
-	else if(data[i] == "sti")
-		sti(data, i);
-	else if(data[i] == "fork")
-		fork(data, i);
-	else if(data[i] == "lld")
-		lld(data, i);
-	else if(data[i] == "lldi")
-		lldi(data, i);
-	else if(data[i] == "lfork")
-		lfork(data, i);
-	else if(data[i] == "aff")
-		aff(data, i);*/
+	//LDI // STI------------------> TODO
 	else
 		ft_error(EBDINST);
 }
@@ -47,7 +34,6 @@ void	inst_switch(char **data, int i)
 		add_sub_and_or_xor(data, i);
 	else if(!(ft_strncmp(data[i], "xor", 3)))
 		add_sub_and_or_xor(data, i);
-	//LDI // STI------------------> TODO
 	else
 		norme1(data, i);
 }
@@ -71,21 +57,21 @@ void	get_instructions(t_env *env)
 		else
 			i++;
 	}
-
+	
 	j = i;
-	ft_putstr("\ndata: ");
+	// ------- DEBUG: DATA ------ //
+	/* ft_putstr("\ndata: ");
 	while (env->data[j]) 
 	{
 		ft_putstr(env->data[j]);
 		write (1, " ", 1);
 		j++;
-	}
-
-
+	}*/
+	// --------------------------- // 
+	
 	inst_switch(env->data, i);
 	ft_tab_free(env->data);
 }
-
 
 char	*parsing_champion(t_env *env) 
 {
@@ -98,7 +84,11 @@ char	*parsing_champion(t_env *env)
 	while(gnl() != 0) {
 		get_instructions(env);
 	}
-	print_labels(env);
-	ft_putstr("*** parsing done! \n");
+	
+	print_labels(env); 	// ------- PRINT LABELS ------ // 
+	print_inst(env);		// ------ PRINT ALL INST ----- //
+	
+	/* TODO */ replace_labels(env); 
+	ft_putstr("\n*** parsing done! \n");
 	return ("temporary return");
 }
