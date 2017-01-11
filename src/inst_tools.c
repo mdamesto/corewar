@@ -1,18 +1,11 @@
 #include "corewar.h"
 
-void	add_inst(char *inst, char *args_code, char **args)
+char 	*get_full_inst(char *inst, char *args_code, char **args)
 {
 	int i;
-	t_env *env;
 	char *full_inst;
-
-	i = 0;
-	env = get_env(NULL);
-	if (args_code)
-		env->c_adress += 2;
-	else
-		env->c_adress++;
 	
+	i = 0;
 	full_inst = args[i];
 	while (args[i + 1]) 
 	{
@@ -23,8 +16,56 @@ void	add_inst(char *inst, char *args_code, char **args)
 		full_inst = ft_strjoin(ft_strjoin(inst, args_code), full_inst);
 	else
 		full_inst = ft_strjoin(inst, full_inst);
-	env->inst[env->inst_nb] = full_inst;
-	env->inst_nb++;
+
+	return(full_inst);
+}
+
+t_inst	*new_inst(t_env *env, char *inst)
+{
+	t_inst *new;
+
+	new = malloc(sizeof(t_inst));
+	new->content = inst;
+	new->adress = env->c_adress;
+	new->line = env->line_nb;
+
+	return (new);
+}
+
+void	inst_to_env(t_env *env, char *inst)
+{
+	t_inst *new;
+	t_inst *tmp;
+
+	new = new_inst(env, inst);
+	if (!env->inst)
+		env->inst = new;
+	else
+	{
+		tmp = env->inst;
+		while(tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+}
+
+void	add_inst(char *inst, char *args_code, char **args)
+{
+	t_env *env;
+	char *full_inst;
+
+	env = get_env(NULL);
+	if (args_code)
+		env->add_to_adress += 2;
+	else
+		env->add_to_adress++;
+	
+	full_inst = get_full_inst(inst, args_code, args);
+	
+	inst_to_env(env, full_inst);
+
+	env->c_adress += env->add_to_adress;
+	env->add_to_adress = 0;
 
 	// ------- PRINT INST+ARGS ------ //
 	/*i = 0;
@@ -54,7 +95,7 @@ char	*ret_to_oct(char *tmp, int oct_nb)
 	int ret_len;
 	int tmp_len;
 
-	ret_len = (oct_nb * 8);
+	ret_len = (oct_nb * 2);
 	ret = ft_strnew(ret_len);
 	i = 0;
 	while (i < ret_len)
@@ -84,13 +125,15 @@ char	**init_args(void)
 
 void	print_inst(t_env *env)
 {
-	int i;
+	t_inst *tmp;
 
-	i = 1;
-	while (i < env->inst_nb)
+	tmp = env->inst;
+	while (tmp->next)
 	{
-		ft_putstr(env->inst[i]);
+		ft_putstr(tmp->content);
 		ft_putstr("\n");
-		i++;
+		tmp = tmp->next;
 	}
+	//ft_putstr(tmp->content);
+	//ft_putstr("\n");
 }

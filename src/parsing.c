@@ -67,7 +67,7 @@ void	get_instructions(t_env *env)
 		write (1, " ", 1);
 		j++;
 	}*/
-	// --------------------------- // 
+	// --------------------------- //
 	
 	inst_switch(env->data, i);
 	ft_tab_free(env->data);

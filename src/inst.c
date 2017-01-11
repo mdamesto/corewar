@@ -5,13 +5,13 @@ void	live_zjump_fork_lfork(char **data, int i)
 	char 	*inst;
 	char	**args;
 
-	inst = "00000001"; // live
+	inst = "01"; // live
 	if (data[i][1] == 'j') // zjump
-		inst = "00001001";
+		inst = "09";
 	else if (data[i][1] == 'o') // fork
-		inst = "00001100";
+		inst = "0c";
 	else if (data[i][1] == 'f') // lfork
-		inst = "00001111";
+		inst = "0f";
 	i++;
 
 	args = init_args();
@@ -33,18 +33,18 @@ void	add_sub_and_or_xor(char **data, int i)
 	char	**args;
 	char 	*args_code;
 
-	inst = "00000100"; // add
+	inst = "04"; // add
 	if (data[i][1] == 'u') // sub
-		inst = "00000101";
+		inst = "05";
 	else if (data[i][1] == 'n') // and
-		inst = "00000110";
+		inst = "06";
 	else if (data[i][1] == 'r') // or
-		inst = "00000111";
+		inst = "07";
 	else if (data[i][1] == 'o') // xor
-		inst = "00001000";
+		inst = "08";
 	i++;
 
-	args_code = "01010100";
+	args_code = "54";
 	args = init_args();
 	
 	if (!data[i] || !data[i + 1] || !data[i + 2] || data[i + 3])
@@ -76,5 +76,5 @@ void	aff(char **data, int i)
 	else
 		ft_error(E_BD_ARG);
 
-	add_inst("00010000", NULL, args);
+	add_inst("10", NULL, args);
 }

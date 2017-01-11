@@ -50,29 +50,56 @@ void	add_label(t_env *env, char *label)
 	}
 }
 
-
-
-void	replace_labels(t_env *env)
+/*void	replace_label(char **tab)
 {
-	/* TODO
-	 label can start '%'' or ':' depend if dir or ind
-	 */
-	int i;
-	int j;
-	char **tab;
+	char	*label;
+	int 	dir;
+	t_label	*tmp; 
 
-	ft_putstr("\n HERE: ");
-	i = 1;
-	while (i < 2)
+	label = tab[1];
+	dir = 0;
+	
+	if (label[0] == '%')
 	{
-		ft_putstr("loop: \n");
-		j = 0;
+		label = ft_strcut_beg(label, 1);
+		dir = ft_atoi(label[ft_strlen(label - 1)]);
+		label = ft_strncpy(labl, label, ft_strlen(label - 1));
+	}
+
+	tmp = env->labels;
+	while (ft_strcmp(tmp->name, label))
+	{
+		if (tmp->next = NULL)
+			ft_error(E_UK_LBL);
+		tmp = tmp->next;
+	}
+
+	if (dir > 0)
+		label = ret_to_oct(ft_itoa_base(ft_atoi(tmp->adress), 2), dir);
+	else
+	{
+
+	}
+}*/
+
+void 	replace_labels(t_env *env) {
+	t_env *tmp;
+	tmp = env;
+	/*char **tab;
+	int i;
+
+	i = 1;
+	while (env->inst[i])
+	{
 		tab = ft_strsplit(env->inst[i], ':');
-		while (tab[j]){
-			ft_putstr("\nloop: ");
-			ft_putstr(tab[j++]);
+		if (tab[1])
+		{
+			ft_putstr("\nLABEL line: ");
+			ft_putstr(ft_itoa(i));
+			ft_putstr(" -- ");
+			ft_putstr(tab[1]);
 		}
 		i++;
-		//if (tab[j][ft_strlen(tab[j] - 1)] == '$')
-	}
+		ft_tab_free(tab);
+	}*/
 }

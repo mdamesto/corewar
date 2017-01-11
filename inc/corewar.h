@@ -30,6 +30,7 @@
 # define E_BD_ARG		12
 # define E_BD_DIR		13
 # define E_BD_IND		14
+# define E_UK_LBL		15
 
 /*# define EMALLOC_TXT "Error: Malloc Failed"
 write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/
@@ -42,18 +43,26 @@ typedef struct		s_label
 	struct s_label 	*next;
 }					t_label;
 
+typedef struct		s_instr
+{
+	char			*content;
+	int 			adress;
+	int 			line;
+	struct s_instr 	*next;
+}					t_inst;
+
 typedef struct	s_env
 {
 	header_t 	*header;
 	t_label 	*labels;
+	t_inst		*inst;
 	char		*filename;
 	int 		fd;
-	int 		line_nb; 		//line counter
-	int 		c_adress; 
+	int 		line_nb;
+	int 		c_adress;
+	int 		add_to_adress;
 	char		*line;		//line value
-	int 		inst_nb;
 	char 		**data; 		//tmp splitted line
-	char		**inst;		//parsed data
 }				t_env;
 
 void	ft_error(int code);

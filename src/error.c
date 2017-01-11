@@ -75,6 +75,10 @@ void	ft_error(int code) {
 		ft_putstr_fd(env->line, 2);
 		ft_putstr_fd("\n", 2);
 	}
+	else if (code == 15) {
+		ft_putstr_fd("Unknow label\n", 2);
+		//maybe add param to ft_error for 2nd parsing errors txt
+	}
 	free_env();
 	exit(code);
 }
