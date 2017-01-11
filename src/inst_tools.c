@@ -38,8 +38,9 @@ void	inst_to_env(t_env *env, char *inst)
 	t_inst *tmp;
 
 	new = new_inst(env, inst);
-	if (!env->inst)
+	if (!(env->inst)) {
 		env->inst = new;
+	}
 	else
 	{
 		tmp = env->inst;
@@ -127,6 +128,7 @@ void	print_inst(t_env *env)
 {
 	t_inst *tmp;
 
+	ft_putstr("\nINSTRUCTIONS:\n");
 	tmp = env->inst;
 	while (tmp->next)
 	{
@@ -134,6 +136,6 @@ void	print_inst(t_env *env)
 		ft_putstr("\n");
 		tmp = tmp->next;
 	}
-	//ft_putstr(tmp->content);
-	//ft_putstr("\n");
+	ft_putstr(tmp->content);
+	ft_putstr("\n");
 }

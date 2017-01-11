@@ -19,6 +19,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <stdint.h>
 
 # define BUFF_SIZE 16
 
@@ -115,5 +116,7 @@ char				*ft_strcut_beg(char *str, int n);
 char 				*ft_rmv_space(char *str);
 int					ft_isspace(char c);
 char 				**ft_strsplit_space(char *s);
+char				*ft_strcut_end(char *str, int n);
+char				*ft_utoh(uint64_t n);
 
 #endif

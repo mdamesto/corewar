@@ -76,7 +76,7 @@ char 	*get_reg(char *arg)
 		tmp[i - 1] = arg[i];
 		i++;
 	}
-	return (ret_to_oct(ft_itoa_base(ft_atoi(tmp), 2), 1));
+	return (ret_to_oct(ft_itoa_base(ft_atoi(tmp), 16), 1));
 }
 
  char	*get_dir(char *arg, int size)
@@ -102,7 +102,7 @@ char 	*get_reg(char *arg)
 			tmp[i - 1] = arg[i];
 			i++;
 		}
-		return (ret_to_oct(ft_itoa_base(ft_atoi(tmp), 2), size));
+		return (ret_to_oct(ft_itoa_base(ft_atoi(tmp), 16), size));
 	}
 }
 
@@ -125,6 +125,6 @@ char	*get_ind(char *arg)
 			tmp[i - 1] = arg[i];
 			i++;
 		}
-		return (ret_to_oct(ft_itoa_base(ft_atoi(tmp), 2), 2));
+		return (ret_to_oct(ft_itoa_base(ft_atoi(tmp), 16), 2));
 	}
 }

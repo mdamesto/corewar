@@ -50,56 +50,67 @@ void	add_label(t_env *env, char *label)
 	}
 }
 
-/*void	replace_label(char **tab)
+char	*replace_label(char **split, int adress, t_env *env)
 {
-	char	*label;
-	int 	dir;
-	t_label	*tmp; 
+	char *label_name;
+	int dir;
+	t_label *tmp;
+	int i;
 
-	label = tab[1];
+	label_name = split[1];
 	dir = 0;
-	
-	if (label[0] == '%')
+	if (label_name[0] == DIRECT_CHAR)
 	{
-		label = ft_strcut_beg(label, 1);
-		dir = ft_atoi(label[ft_strlen(label - 1)]);
-		label = ft_strncpy(labl, label, ft_strlen(label - 1));
+		dir = ft_atoi(&(label_name[ft_strlen(label_name) - 1]));
+		label_name = ft_strcut_beg(ft_strcut_end(label_name, 1), 1);
 	}
 
 	tmp = env->labels;
-	while (ft_strcmp(tmp->name, label))
+	while(ft_strcmp(tmp->name, label_name) != 0)
 	{
-		if (tmp->next = NULL)
+		if (!tmp->next)
 			ft_error(E_UK_LBL);
 		tmp = tmp->next;
 	}
 
-	if (dir > 0)
-		label = ret_to_oct(ft_itoa_base(ft_atoi(tmp->adress), 2), dir);
-	else
-	{
+	if (dir) {
+		ft_putstr("\n SPLIT[1]:");
+		ft_putstr("\ntmp->adress - adress: ");
+		ft_putstr(ft_itoa(tmp->adress - adress));
+		ft_putstr("\nreturn from itoa base: ");
+		ft_putstr(ft_itoa_base(tmp->adress - adress, 2));
 
+		split[1] = ret_to_oct(ft_itoa_base((tmp->adress - adress), 2), dir);
+		ft_putstr("\nsplit[1]: ");
+		ft_putstr(split[1]);
+
+
+		//CONVERT TO 11111111 for -1
 	}
-}*/
+	
+	i = 1;
+	while(split[i])
+		split[0] = ft_strjoin(split[0], split[i++]);
+
+	return (split[0]);
+}
 
 void 	replace_labels(t_env *env) {
-	t_env *tmp;
-	tmp = env;
-	/*char **tab;
-	int i;
+	t_inst *tmp;
+	char **split;
 
-	i = 1;
-	while (env->inst[i])
+	tmp = env->inst;
+	while (tmp) 
 	{
-		tab = ft_strsplit(env->inst[i], ':');
-		if (tab[1])
+		split = ft_strsplit(tmp->content, LABEL_CHAR);
+		if (split[1])
 		{
-			ft_putstr("\nLABEL line: ");
-			ft_putstr(ft_itoa(i));
-			ft_putstr(" -- ");
-			ft_putstr(tab[1]);
+			tmp->content = replace_label(split, tmp->adress, env);
+
 		}
-		i++;
-		ft_tab_free(tab);
-	}*/
+		else
+			tmp = tmp->next;
+		ft_tab_free(split);
+	}
 }
+

@@ -88,7 +88,10 @@ char	*parsing_champion(t_env *env)
 	print_labels(env); 	// ------- PRINT LABELS ------ // 
 	print_inst(env);		// ------ PRINT ALL INST ----- //
 	
-	/* TODO */ replace_labels(env); 
+	replace_labels(env); 
+
+	print_inst(env);		// ------ PRINT ALL INST ----- //
+	
 	ft_putstr("\n*** parsing done! \n");
 	return ("temporary return");
 }

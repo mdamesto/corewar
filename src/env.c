@@ -21,7 +21,6 @@ void	init_env(char *filename)
 	new->line_nb = 0;
 	new->c_adress = 0;
 	new->add_to_adress = 0;
-	new->inst = malloc(sizeof(char *) * 100);
 
 	get_env(new);
 } 

@@ -76,5 +76,6 @@ void	aff(char **data, int i)
 	else
 		ft_error(E_BD_ARG);
 
+	ft_putstr(args[0]);
 	add_inst("10", NULL, args);
 }
