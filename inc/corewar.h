@@ -71,7 +71,7 @@ void	ft_error(int code);
 int gnl(void);
 
 //parsing.c
-char	*parsing_champion(t_env *env);
+void	parsing_champion(t_env *env);
 
 //env.c
 void	init_env(char *filename);

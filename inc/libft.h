@@ -118,5 +118,7 @@ char 				**ft_strsplit_space(char *s);
 char				*ft_strcut_end(char *str, int n);
 char				*ft_tab_join(char **tab);
 char				*convert_hex_octnb(int nb, size_t oct_nb);
+char				*fill_hex(char *tmp, size_t oct_nb);
+char				*fill_hex_be(char *str, size_t oct_nb);
 
 #endif

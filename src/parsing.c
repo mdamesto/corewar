@@ -2,37 +2,37 @@
 
 static void norme1(char **data, int i)
 {
-	if(!(ft_strncmp(data[i], "st", 2)))
+	if(!(ft_strcmp(data[i], "st")))
 		st(data, i + 1);
-	else if(!(ft_strncmp(data[i], "ld", 2)))
+	else if(!(ft_strcmp(data[i], "ld")))
 		ld_lld(data, i);
-	else if(!(ft_strncmp(data[i], "lld", 3)))
+	else if(!(ft_strcmp(data[i], "ldd")))
 		ld_lld(data, i);
-	else if(!(ft_strncmp(data[i], "aff", 3)))
+	else if(!(ft_strcmp(data[i], "aff")))
 		aff(data, i + 1);
 	//LDI // STI------------------> TODO
 	else
-	ft_error(EBDINST);
+		ft_error(EBDINST);
 }
 void	inst_switch(char **data, int i)
 {
-	if(!(ft_strncmp(data[i], "live", 4)))
+	if(!(ft_strcmp(data[i], "live")))
 		live_zjump_fork_lfork(data, i);
-	else if(!(ft_strncmp(data[i], "zjump", 4)))
+	else if(!(ft_strcmp(data[i], "zjump")))
 		live_zjump_fork_lfork(data, i);
-	else if(!(ft_strncmp(data[i], "fork", 4)))
+	else if(!(ft_strcmp(data[i], "fork")))
 		live_zjump_fork_lfork(data, i);
-	else if(!(ft_strncmp(data[i], "lfork", 5)))
+	else if(!(ft_strcmp(data[i], "lfork")))
 		live_zjump_fork_lfork(data, i);
-	else if(!(ft_strncmp(data[i], "add", 3)))
+	else if(!(ft_strcmp(data[i], "add")))
 		add_sub_and_or_xor(data, i);
-	else if(!(ft_strncmp(data[i], "sub", 3)))
+	else if(!(ft_strcmp(data[i], "sub")))
 		add_sub_and_or_xor(data, i);
-	else if(!(ft_strncmp(data[i], "and", 3)))
+	else if(!(ft_strcmp(data[i], "and")))
 		add_sub_and_or_xor(data, i);
-	else if(!(ft_strncmp(data[i], "or", 2)))
+	else if(!(ft_strcmp(data[i], "or")))
 		add_sub_and_or_xor(data, i);
-	else if(!(ft_strncmp(data[i], "xor", 3)))
+	else if(!(ft_strcmp(data[i], "xor")))
 		add_sub_and_or_xor(data, i);
 	else
 		norme1(data, i);
@@ -73,7 +73,7 @@ void	get_instructions(t_env *env)
 	ft_tab_free(env->data);
 }
 
-char	*parsing_champion(t_env *env) 
+void	parsing_champion(t_env *env) 
 {
 	ft_putstr("*** starting parsing: ");
 	ft_putstr(env->filename);
@@ -93,5 +93,4 @@ char	*parsing_champion(t_env *env)
 	print_inst(env);		// ------ PRINT ALL INST ----- //
 	
 	ft_putstr("\n*** parsing done! \n");
-	return ("temporary return");
 }

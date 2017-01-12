@@ -4,6 +4,7 @@ void	live_zjump_fork_lfork(char **data, int i)
 {
 	char 	*inst;
 	char	**args;
+	char 	**split;
 
 	inst = "01"; // live
 	if (data[i][1] == 'j') // zjump
@@ -15,15 +16,18 @@ void	live_zjump_fork_lfork(char **data, int i)
 	i++;
 
 	args = init_args();
+	split = ft_strsplit(data[i], ',');
 
-	if (!data[i] || data[i + 1])
+	if (!split[0] || split[1] || data[i + 1])
 		ft_error(E_ARG_NB);
 
-	if (check_arg(data[i]) == 2)
-		args[0] = get_dir(data[i], 4);
+	if (check_arg(split[0]) == 2)
+		args[0] = get_dir(split[0], 4);
 	else
 		ft_error(E_BD_ARG);
 
+	if (split)
+		free(split);
 	add_inst(inst, NULL, args);
 }
 
@@ -32,6 +36,7 @@ void	add_sub_and_or_xor(char **data, int i)
 	char 	*inst;
 	char	**args;
 	char 	*args_code;
+	char 	**split;
 
 	inst = "04"; // add
 	if (data[i][1] == 'u') // sub
@@ -46,36 +51,45 @@ void	add_sub_and_or_xor(char **data, int i)
 
 	args_code = "54";
 	args = init_args();
+	split = ft_strsplit(data[i], ',');
 	
-	if (!data[i] || !data[i + 1] || !data[i + 2] || data[i + 3])
+	if (!split[0] || !split[1] || !split[2] || split[3] || data[i + 1])
 		ft_error(E_ARG_NB);
+
 	
-	if (check_arg(data[i]) == 1 && check_arg(data[i]) == 1 && check_arg(data[i]) == 1) 
+	if (check_arg(split[0]) == 1 && check_arg(split[1]) == 1 && check_arg(split[2]) == 1) 
 	{
-		args[0] = get_reg(data[i]);
-		args[1] = get_reg(data[i + 1]);
-		args[2] = get_reg(data[i + 2]);
+		args[0] = get_reg(split[0]);
+		args[1] = get_reg(split[0]);
+		args[2] = get_reg(split[0]);
 	}
 	else 
 		ft_error(E_BD_ARG);
 
+	if (split)
+		free(split);
 	add_inst(inst, args_code, args);
 }
 
 void	aff(char **data, int i)
 {
 	char	**args;
+	char 	**split;
 
 	args = init_args();
+	split = ft_strsplit(data[i], ',');
 
-	if (!data[i] || data[i + 1])
+	if (!split[0] || split[1] || data[i + 1])
 		ft_error(E_ARG_NB);
 	
-	if (check_arg(data[i]) == 1)
-		args[0] = get_reg(data[i]);
+	write(1, "HERE", 4);
+	if (check_arg(split[0]) == 1)
+		args[0] = get_reg(split[0]);
 	else
 		ft_error(E_BD_ARG);
 
-	ft_putstr(args[0]);
+
+	if (split)
+		free(split);
 	add_inst("10", NULL, args);
 }

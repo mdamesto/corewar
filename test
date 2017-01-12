@@ -1,18 +1,20 @@
-#coment#.name "test_#comment#name" #TROLOLOLOL#
+.name "test_name"
 .comment "test comment"
 
-labeltest:
+entry:
 	live %:yo 
 	live %1234567
-	ld :yo r10
-	ldd 123 r10
-	st r10 123
-	add r1 r2 r3
-	sub r1 r2 r3
-	and r1 r2 r3
-	or r1 r2 r3
+	ld :yo,r10
+	ldd 123,r10
+	st r10,123
+	st r10,123
+	add r1,r2,r3
+	st r10,123
+	sub r1,r2,r3
+	and r1,r2,r3
+	or r1,r2,r3
 	zjump %123
 	fork %:yo
 	lfork %123
 	aff r14 
-yo: live %:labeltest
+yo: live %:entry

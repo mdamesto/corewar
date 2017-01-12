@@ -1,6 +1,19 @@
-#include "corewar.h"
+#include "libft.h"
 
-static char	*fill_hex(char *tmp, size_t oct_nb) 
+char	*fill_hex_be(char *str, size_t oct_nb) 
+{
+	char *ret;
+	size_t i;
+
+	ret = ft_strnew(oct_nb * 2);
+	i = 0;
+	while(i < (oct_nb * 2))
+		ret[i++] = '0';
+	ft_strncpy(ret, str, ft_strlen(str));
+	return (ret);
+}
+
+char	*fill_hex(char *tmp, size_t oct_nb) 
 {
 	int i;
 	char *ret;

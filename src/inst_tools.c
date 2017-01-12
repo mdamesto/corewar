@@ -28,6 +28,7 @@ t_inst	*new_inst(t_env *env, char *inst)
 	new->content = inst;
 	new->adress = env->c_adress;
 	new->line = env->line_nb;
+	new->next = NULL;
 
 	return (new);
 }
@@ -38,6 +39,7 @@ void	inst_to_env(t_env *env, char *inst)
 	t_inst *tmp;
 
 	new = new_inst(env, inst);
+
 	if (!(env->inst)) {
 		env->inst = new;
 	}
@@ -60,7 +62,7 @@ void	add_inst(char *inst, char *args_code, char **args)
 		env->add_to_adress += 2;
 	else
 		env->add_to_adress++;
-	
+
 	full_inst = get_full_inst(inst, args_code, args);
 	
 	inst_to_env(env, full_inst);
@@ -69,7 +71,8 @@ void	add_inst(char *inst, char *args_code, char **args)
 	env->add_to_adress = 0;
 
 	// ------- PRINT INST+ARGS ------ //
-	/*i = 0;
+	/*int i;
+	i = 0;
 	ft_putstr("\ninst: ");
 	ft_putstr(inst);
 	if(args_code)
