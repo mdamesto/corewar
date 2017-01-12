@@ -12,7 +12,7 @@ static void norme1(char **data, int i)
 		aff(data, i + 1);
 	//LDI // STI------------------> TODO
 	else
-		ft_error(EBDINST);
+	ft_error(EBDINST);
 }
 void	inst_switch(char **data, int i)
 {
@@ -85,8 +85,8 @@ char	*parsing_champion(t_env *env)
 		get_instructions(env);
 	}
 	
-	print_labels(env); 	// ------- PRINT LABELS ------ // 
-	print_inst(env);		// ------ PRINT ALL INST ----- //
+	//print_labels(env); 	// ------- PRINT LABELS ------ // 
+	//print_inst(env);		// ------ PRINT ALL INST ----- //
 	
 	replace_labels(env); 
 

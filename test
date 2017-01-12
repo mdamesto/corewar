@@ -2,9 +2,9 @@
 .comment "test comment"
 
 labeltest:
-	live %:labeltest 
+	live %:yo 
 	live %1234567
-	ld %:labeltest r10
+	ld :yo r10
 	ldd 123 r10
 	st r10 123
 	add r1 r2 r3
@@ -15,4 +15,4 @@ labeltest:
 	fork %:yo
 	lfork %123
 	aff r14 
-yo: live %:yo
+yo: live %:labeltest

@@ -32,7 +32,7 @@ SRC_NAME =	ft_isascii.c ft_memcmp.c ft_strcmp.c ft_strncmp.c ft_toupper.c\
 			get_next_line.c ft_str_isdigit.c ft_tab_realloc.c ft_tab_len.c ft_tab_free.c\
 			ft_realloc.c ft_tab_print.c ft_tab_set.c ft_istr_set.c ft_itab_set.c\
 			ft_itab_len.c ft_istrlen.c ft_strcut_beg.c ft_rmv_space.c ft_isspace.c ft_strsplit_space.c\
-			ft_strcut_end.c ft_utoh.c
+			ft_strcut_end.c ft_tab_join.c convert_hex_octnb.c
 
 OBJ_PATH = ./obj/
 OBJ_NAME = $(SRC_NAME:.c=.o)

@@ -37,7 +37,6 @@ void	add_label(t_env *env, char *label)
 		i++;
 	}
 	new_label->adress = env->c_adress;
-	env->c_adress++;
 	if (!env->labels)
 		env->labels = new_label;
 	else
@@ -50,14 +49,24 @@ void	add_label(t_env *env, char *label)
 	}
 }
 
-char	*replace_label(char **split, int adress, t_env *env)
+char 	*get_label_inst(t_label *label,  t_env *env)
 {
-	char *label_name;
+	t_inst *inst;
+	char *content;
+
+	inst = env->inst;
+	while (inst->adress != label->adress)
+		inst = inst->next;
+	content = ft_strnew(4);
+	ft_strncpy(content, inst->content, 4);
+	return (content);
+}
+
+char	*replace_label(char *label_name, int adress, t_env *env)
+{
 	int dir;
 	t_label *tmp;
-	int i;
 
-	label_name = split[1];
 	dir = 0;
 	if (label_name[0] == DIRECT_CHAR)
 	{
@@ -72,45 +81,47 @@ char	*replace_label(char **split, int adress, t_env *env)
 			ft_error(E_UK_LBL);
 		tmp = tmp->next;
 	}
-
-	if (dir) {
-		ft_putstr("\n SPLIT[1]:");
-		ft_putstr("\ntmp->adress - adress: ");
-		ft_putstr(ft_itoa(tmp->adress - adress));
-		ft_putstr("\nreturn from itoa base: ");
-		ft_putstr(ft_itoa_base(tmp->adress - adress, 2));
-
-		split[1] = ret_to_oct(ft_itoa_base((tmp->adress - adress), 2), dir);
-		ft_putstr("\nsplit[1]: ");
-		ft_putstr(split[1]);
-
-
-		//CONVERT TO 11111111 for -1
+	free(label_name);
+	if (dir) 
+		return (convert_hex_octnb(tmp->adress - adress, dir));
+	else
+	{
+		return (get_label_inst(tmp, env));
 	}
-	
-	i = 1;
-	while(split[i])
-		split[0] = ft_strjoin(split[0], split[i++]);
-
-	return (split[0]);
 }
 
 void 	replace_labels(t_env *env) {
 	t_inst *tmp;
 	char **split;
 
+	// first handle dir labels
+	tmp = env->inst;
+	while (tmp) 
+	{
+		split = ft_strsplit(tmp->content, LABEL_CHAR);
+		if (split[1] && split[1][0] == DIRECT_CHAR)
+		{
+			split[1] = replace_label(split[1], tmp->adress, env);
+			tmp->content = ft_tab_join(split);
+		}
+		else
+			tmp = tmp->next;
+		ft_tab_free(split);
+	}
+	// 2nd time to handle ind label
 	tmp = env->inst;
 	while (tmp) 
 	{
 		split = ft_strsplit(tmp->content, LABEL_CHAR);
 		if (split[1])
 		{
-			tmp->content = replace_label(split, tmp->adress, env);
-
+			split[1] = replace_label(split[1], tmp->adress, env);
+			tmp->content = ft_tab_join(split);
 		}
 		else
 			tmp = tmp->next;
 		ft_tab_free(split);
 	}
+
 }
 

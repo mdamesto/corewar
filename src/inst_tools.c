@@ -128,7 +128,7 @@ void	print_inst(t_env *env)
 {
 	t_inst *tmp;
 
-	ft_putstr("\nINSTRUCTIONS:\n");
+	ft_putstr("\n\nINSTRUCTIONS:\n");
 	tmp = env->inst;
 	while (tmp->next)
 	{

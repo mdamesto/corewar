@@ -13,6 +13,7 @@ void	init_env(char *filename)
 		ft_error(EMALLOC);
 	ft_bzero(new->header, sizeof(header_t));
 	new->header->prog_size = 0;
+	new->header->magic = COREWAR_EXEC_MAGIC;
 	
 	new->filename = filename;
 	if ((new->fd = open(new->filename, O_RDONLY)) < 0) 

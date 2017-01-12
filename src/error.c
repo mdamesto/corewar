@@ -4,8 +4,14 @@ void	ft_error(int code) {
 	
 	t_env *env;
 
-	if (code == 1) {
-		ft_putstr_fd("Invalid number of arguments\n", 2);
+	if (code == 1 || code == 2 || code == 3)
+	{
+		if (code == 1) 
+			ft_putstr_fd("Invalid number of arguments\n", 2);
+		else if (code == 2)
+			ft_putstr_fd("Could not open the file\n", 2);
+		else if (code == 3)
+			ft_putstr_fd("Malloc failed\n", 2);
 		exit(code);
 	}
 	
@@ -14,11 +20,7 @@ void	ft_error(int code) {
 	ft_putstr_fd(env->filename, 2);
 	ft_putstr_fd(": ", 2);
 
-	if (code == 2)
-		ft_putstr_fd("Could not open the file\n", 2);
-	else if (code == 3)
-		ft_putstr_fd("Malloc failed\n", 2);
-	else if (code == 4)
+	if (code == 4)
 		ft_putstr_fd("gnl: read error\n", 2);
 	else if (code == 5)
 		ft_putstr_fd("Empty file\n", 2);

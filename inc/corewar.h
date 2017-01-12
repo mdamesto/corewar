@@ -106,8 +106,5 @@ void	ld_lld(char **data, int i);
 void	st(char **data, int i);
 void	aff(char **data, int i);
 
-
-
-
 #endif
 	
