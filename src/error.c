@@ -4,7 +4,7 @@ void	ft_error(int code) {
 	
 	t_env *env;
 
-	if (code == 1 || code == 2 || code == 3)
+	if (code == 1 || code == 2 || code == 3 || code == 17)
 	{
 		if (code == 1) 
 			ft_putstr_fd("Invalid number of arguments\n", 2);
@@ -12,6 +12,8 @@ void	ft_error(int code) {
 			ft_putstr_fd("Could not open the file\n", 2);
 		else if (code == 3)
 			ft_putstr_fd("Malloc failed\n", 2);
+		else if (code == 17)
+			ft_putstr_fd("Invalid file (must be \".s\")\n", 2);
 		exit(code);
 	}
 	
@@ -80,6 +82,13 @@ void	ft_error(int code) {
 	else if (code == 15) {
 		ft_putstr_fd("Unknow label\n", 2);
 		//maybe add param to ft_error for 2nd parsing errors txt
+	}
+	else if (code == 16) {
+		ft_putstr_fd("Bad label character on line ", 2);
+		ft_putstr_fd(ft_itoa(env->line_nb), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(env->line, 2);
+		ft_putstr_fd("\n", 2);
 	}
 	free_env();
 	exit(code);

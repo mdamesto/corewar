@@ -31,6 +31,8 @@
 # define E_BD_DIR		13
 # define E_BD_IND		14
 # define E_UK_LBL		15
+# define E_BD_LBL		16
+# define E_BD_CHP		17
 
 /*# define EMALLOC_TXT "Error: Malloc Failed"
 write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/
@@ -57,6 +59,7 @@ typedef struct	s_env
 	t_label 	*labels;
 	t_inst		*inst;
 	char		*filename;
+	char 		*path;
 	int 		fd;
 	int 		line_nb;
 	int 		c_adress;
@@ -100,11 +103,15 @@ char	*ret_to_oct(char *tmp, int oct_nb);
 char	**init_args(void);
 void	print_inst(t_env *env);
 
-void	live_zjump_fork_lfork(char **data, int i);
-void	add_sub_and_or_xor(char **data, int i);
-void	ld_lld(char **data, int i); 
-void	st(char **data, int i);
-void	aff(char **data, int i);
+void	live_zjump_fork_lfork(char *data, char *inst);
+void	add_sub(char *data, char *inst);
+void	ld_lld_and(char *data, char *inst);
+void	or_xor(char *data, char *inst);
+void	ldi_lldi(char *data, char *inst);
+void	sti(char *data, char *inst);
+
+void	st(char *data, char *inst);
+void	aff(char *data, char *inst);
 
 #endif
 	

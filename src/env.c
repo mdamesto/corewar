@@ -1,5 +1,40 @@
 #include "corewar.h"
 
+char *get_path(char *str)
+{
+	char *ret;
+	int i;
+
+	ret = NULL;
+	i = ft_strlen(str);
+	while(str[--i])
+	{
+		if (str[i] == '/')
+		{
+			ret = ft_strnew(i + 1);
+			ft_strncpy(ret, str, i + 1);
+		}
+	}
+	return(ret);
+}
+
+char 	*check_filename(char *filename)
+{
+	int len;
+	char *ret;
+
+	len = ft_strlen(filename) - 1;
+
+	if (filename[len] == 's' && filename[len - 1] == '.') 
+	{
+		ret = ft_strnew(len - 1);
+		ft_strncpy(ret, filename, len - 1);
+		return (ret);
+	}
+	else
+		return (NULL);
+}
+
 void	init_env(char *filename)
 {
 	t_env *new;
@@ -14,9 +49,11 @@ void	init_env(char *filename)
 	ft_bzero(new->header, sizeof(header_t));
 	new->header->prog_size = 0;
 	new->header->magic = COREWAR_EXEC_MAGIC;
-	
-	new->filename = filename;
-	if ((new->fd = open(new->filename, O_RDONLY)) < 0) 
+
+	if (!(new->filename = check_filename(filename)))
+		ft_error(E_BD_CHP);
+	new->path = get_path(filename);
+	if ((new->fd = open(filename, O_RDONLY)) < 0) 
 		ft_error(EOPEN);
 	
 	new->line_nb = 0;

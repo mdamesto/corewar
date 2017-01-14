@@ -24,7 +24,9 @@ char	**ft_tab_set(int y, int x)
 		while (++i < y)
 			ret[i] = ft_strnew(x);
 	else
+	{
 		while (++i < y)
 			ret[i] = NULL;
+	}
 	return (ret);
 }

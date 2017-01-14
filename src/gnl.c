@@ -43,17 +43,22 @@ int gnl(void)
 {
 	int ret;
 	int loop;
+	char *tmp;
 	t_env *env;
 
 	loop = 1;
 	ret = 1;
 	env = get_env(NULL);
-	while (loop == 1 && ret > 0) {
+	while (loop == 1 && ret > 0)
+	 {
 		env->line_nb++;
 		if ((ret = get_next_line(env->fd, &(env->line))) < 0)
 			ft_error(EGNL);
 		remove_comment(env);
 		loop = check_empty_line(env->line);
 	}
+	tmp = env->line;
+	env->line = ft_strtrim(env->line);
+	free(tmp);
 	return (ret);
 }

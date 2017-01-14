@@ -5,6 +5,21 @@ char 	*get_full_inst(char *inst, char *args_code, char **args)
 	int i;
 	char *full_inst;
 	
+	/*i = 0;
+	ft_putstr("\nIn get full inst---------------");
+	ft_putstr("\ninst: ");
+	ft_putstr(inst);
+	if (args_code) {
+		ft_putstr("\nargs_code: ");
+		ft_putstr(args_code);
+	}
+	ft_putstr("\nargs:");
+	while(args[i]){
+		ft_putstr(" ");
+		ft_putstr(args[i]);
+		i++;
+	}*/
+	
 	i = 0;
 	full_inst = args[i];
 	while (args[i + 1]) 

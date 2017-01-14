@@ -32,10 +32,7 @@ void	add_label(t_env *env, char *label)
 	new_label = malloc(sizeof(t_label));
 	new_label->next = NULL;
 	new_label->name = ft_strnew(ft_strlen(label));
-	while (label[i] != ':') {
-		new_label->name[i] = label[i];
-		i++;
-	}
+	ft_strcpy(new_label->name, label);
 	new_label->adress = env->c_adress;
 	if (!env->labels)
 		env->labels = new_label;

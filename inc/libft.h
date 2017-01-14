@@ -120,5 +120,7 @@ char				*ft_tab_join(char **tab);
 char				*convert_hex_octnb(int nb, size_t oct_nb);
 char				*fill_hex(char *tmp, size_t oct_nb);
 char				*fill_hex_be(char *str, size_t oct_nb);
+void				ft_tab_trim(char **tab);
+int 				ft_bin_to_int(char *str);
 
 #endif

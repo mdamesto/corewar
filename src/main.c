@@ -63,7 +63,7 @@ void	create_champion(t_env *env)
 	char 	**tab;
 	char 	*final;
 
-	tab = ft_tab_set(4, 0);
+	tab = ft_tab_set(5, 0);
 	tab[0] = convert_hex_octnb(env->header->magic, 4); 		// 	magic
 	tab[1] = str_to_hex(env->header->prog_name); 			//	name
 	tab[1] = fill_hex_be(tab[1], 128);						//	name
@@ -74,6 +74,7 @@ void	create_champion(t_env *env)
 
 	final = ft_tab_join(tab);
 	final = format_final(final);
+
 	 //--------------- DEBUG TAB -------------
 	/*ft_putstr("\nMAGIC:");
 	ft_putstr(tab[0]);
@@ -89,13 +90,12 @@ void	create_champion(t_env *env)
 	ft_putstr(ft_itoa(ft_strlen(tab[3]) / 2));
 	ft_putstr("\nINSTS:");
 	ft_putstr(tab[4]);*/
+	//ft_putstr("\nFINAL:\n");
+	//ft_putstr(final);
 	//-----------------------------------------
-	
-	ft_putstr("\nFINAL:\n");
-	ft_putstr(final);
 	free(tab);
 
-	fd_cor = open ("champion.cor", O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH);
+	fd_cor = open (ft_strjoin(env->filename, ".cor"), O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH);
 	write(fd_cor, final, ft_strlen(final));
 }
 
