@@ -10,30 +10,49 @@
 #                                                                              #
 #******************************************************************************#
 
-ASM	=	./asm/
-COREWAR	=	./corewar/
-LIB	=	./libft/
+NAME = asm
 
-MAKE	=	make -C
+SRC_NAME = main.c error.c parsing.c env.c gnl.c label.c name_comment.c arg_check.c\
+		inst_to_env.c inst_1.c inst_2.c create_champ.c convert.c print.c inst_switch.c\
+		arg_get.c
+SRC_PATH = ./src/
 
-all:
-		$(MAKE)	$(LIB)
-		$(MAKE) $(ASM)
-		$(MAKE) $(COREWAR)
+OBJ_NAME = $(SRC_NAME:.c=.o)
+OBJ_PATH = ./obj/
+
+LIB_PATH = ../lib/
+LIB_NAMES = -lft
+INC_PATH = ../inc/
+
+SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
+OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
+INC = $(addprefix -I,$(INC_PATH))
+LIB = $(addprefix -L,$(LIB_PATH))
+
+CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = $(LIB) $(LIB_NAMES)
+CC = gcc
+
+
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(CC) $(LIB) $(INC) $^ -o $@ $(LIB_NAMES)
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
 clean:
-		$(MAKE)	$(LIB) clean
-		$(MAKE) $(ASM) clean
-		$(MAKE) $(COREWAR) clean
-fclean:
-		$(MAKE)	$(LIB) fclean
-		$(MAKE) $(ASM) fclean
-		$(MAKE) $(COREWAR) fclean
-re:		fclean all
+	rm -f $(OBJ)
+	rmdir $(OBJ_PATH) 2>/dev/null || true
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
 
 norme:
-	$(MAKE)	$(LIB) norme
-	$(MAKE) $(ASM) norme
-	$(MAKE) $(COREWAR) norme
-	
-
-.PHONY:		re all fclean clean norme
+	norminette $(SRC)
+	norminette ../inc/asm.h
