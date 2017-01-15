@@ -123,5 +123,11 @@ char				*fill_hex_be(char *str, size_t oct_nb);
 void				ft_tab_trim(char **tab);
 int 				ft_bin_to_int(char *str);
 int 				ft_is_label_char(char c);
+char				*ft_strjoin_f(char *s1, char *s2, int code);
+char				*ft_strget(char *str, int s, int e);
+char				*ft_strget_f(char *str, int s, int e);
+char				*ft_strcut(char *str, int s, int e);
+char				*ft_strcut_f(char *str, int s, int e);
+char 				*ft_rmv_space_f(char *str);
 
 #endif

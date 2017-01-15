@@ -16,35 +16,52 @@ char 	*ft_rmv_space(char *str)
 {
 	int i;
 	int len;
-	char *tmp;
+	char *ret;
 
-	i = 0;
-	len = 0;
 	if (!str)
 		return (NULL);
-	while (str[i])
-	{
-		while (str[i] && (str[i] == ' ' || str[i] == '	'))
-			i++;
-		while (str[i] && str[i] != ' ' && str[i] != '	')
-		{
-			i++;
-			len++;
-		}
-		len++;
-	}
-	tmp = ft_strnew(len);
-	i = 0;
+	i = -1;
 	len = 0;
-	while (str[i])
+	while (str[++i])
 	{
-		while (str[i] && (str[i] == ' ' || str[i] == '	'))
-			i++;
-		while (str[i] && str[i] != ' ' && str[i] != '	')
-			tmp[len++] = str[i++];
-		tmp[len++] = ' ';
+		if (str[i] != ' ' && str[i] != '	' && str[i] != '\n')
+			len++;
 	}
-	tmp[len] = '\0';
+	ret = ft_strnew(len);
+	len = 0;
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] != ' ' && str[i] != '	' && str[i] != '\n')
+			ret[len++] = str[i];
+	}
+	ft_putstr(ret);
+	return (ret);
+}
+
+char 	*ft_rmv_space_f(char *str)
+{
+	int i;
+	int len;
+	char *ret;
+
+	if (!str)
+		return (NULL);
+	i = -1;
+	len = 0;
+	while (str[++i])
+	{
+		if (str[i] != ' ' && str[i] != '	' && str[i] != '\n')
+			len++;
+	}
+	ret = ft_strnew(len);
+	len = 0;
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] != ' ' && str[i] != '	' && str[i] != '\n')
+			ret[len++] = str[i];
+	}
 	free(str);
-	return (tmp);
+	return (ret);
 }
