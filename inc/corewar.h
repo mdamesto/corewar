@@ -33,6 +33,8 @@
 # define E_UK_LBL		15
 # define E_BD_LBL		16
 # define E_BD_CHP		17
+# define E_NM_LEN		18
+# define E_CM_LEN		19	
 
 /*# define EMALLOC_TXT "Error: Malloc Failed"
 write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/
@@ -59,7 +61,6 @@ typedef struct	s_env
 	t_label 	*labels;
 	t_inst		*inst;
 	char		*filename;
-	char 		*path;
 	int 		fd;
 	int 		line_nb;
 	int 		c_adress;
@@ -67,6 +68,21 @@ typedef struct	s_env
 	char		*line;		//line value
 	char 		**data; 		//tmp splitted line
 }				t_env;
+
+//inst.c
+void	inst_to_env(char *inst, char *args_code, char **args);
+void	inst_switch(char **data);
+char	**init_args(void);
+
+void	live_zjump_fork_lfork(char *data, char *inst, size_t siz);
+void	add_sub(char *data, char *inst);
+void	ld_lld_and(char *data, char *inst);
+void	or_xor(char *data, char *inst);
+void	ldi_lldi(char *data, char *inst);
+void	sti(char *data, char *inst);
+void	st(char *data, char *inst);
+void	aff(char *data, char *inst);
+
 
 void	ft_error(int code);
 
@@ -91,27 +107,28 @@ void	add_label(t_env *env, char *label);
 void	replace_labels(t_env *env);
 
 //check_arg.c
-
 int		check_arg(char *arg);
+
+//get_arg.c
 char	*get_dir(char *arg, int size);
 char 	*get_reg(char *arg);
 char 	*get_ind(char *arg); 
 
-//inst.c
-void	add_inst(char *inst, char *args_code, char **args);
-char	*ret_to_oct(char *tmp, int oct_nb);
-char	**init_args(void);
+//print
+void	print_name_comment(t_env *env);
+void	print_add_inst(char *inst, char *args_code, char **args);
+void	print_labels(t_env *env);
 void	print_inst(t_env *env);
+void	print_champ(char **tab, char *final);
 
-void	live_zjump_fork_lfork(char *data, char *inst);
-void	add_sub(char *data, char *inst);
-void	ld_lld_and(char *data, char *inst);
-void	or_xor(char *data, char *inst);
-void	ldi_lldi(char *data, char *inst);
-void	sti(char *data, char *inst);
+//create champ
+void			create_champion(t_env *env);
 
-void	st(char *data, char *inst);
-void	aff(char *data, char *inst);
+//convert
+char	*str_to_hex(char *str);
+char	*ret_to_oct(char *tmp, int oct_nb);
 
+//inst_switch
+void	inst_switch(char **data);
 #endif
 	

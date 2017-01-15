@@ -28,8 +28,20 @@ void	ft_error(int code) {
 		ft_putstr_fd("Empty file\n", 2);
 	else if (code == 6)
 		ft_putstr_fd("Champion must have a name\n", 2);
+	else if (code == 18)
+	{
+		ft_putstr_fd("Champion's name too long (max ", 2);
+		ft_putstr_fd(ft_itoa(PROG_NAME_LENGTH), 2);
+		ft_putstr_fd(":)\n", 2);
+	}
 	else if (code == 7)
 		ft_putstr_fd("Champion must have a comment\n", 2);
+	else if (code == 19)
+	{
+		ft_putstr_fd("Champion's comment too long (max ", 2);
+		ft_putstr_fd(ft_itoa(COMMENT_LENGTH), 2);
+		ft_putstr_fd(":)\n", 2);
+	}
 	else if (code == 8) {
 		ft_putstr_fd("Synthax error on line ", 2);
 		ft_putstr_fd(ft_itoa(env->line_nb), 2);

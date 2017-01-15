@@ -155,7 +155,10 @@ void	sti(char *data, char *inst)
 
 	
 	if (check_arg(split[0]) == 1) 
+	{
+		args[0] = get_reg(split[0]);
 		ft_strcpy(tab_args_code[0], "01");
+	}
 	else
 		ft_error(E_BD_ARG);
 

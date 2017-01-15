@@ -1,6 +1,6 @@
 #include "corewar.h"
 
-void	live_zjump_fork_lfork(char *data, char *inst)
+void	live_zjump_fork_lfork(char *data, char *inst, size_t siz)
 {
 	char	**args;
 	char 	**split;
@@ -14,7 +14,7 @@ void	live_zjump_fork_lfork(char *data, char *inst)
 		ft_error(E_ARG_NB);
 
 	if (check_arg(split[0]) == 2)
-		args[0] = get_dir(split[0], 4);
+		args[0] = get_dir(split[0], siz);
 	else
 		ft_error(E_BD_ARG);
 
@@ -42,8 +42,8 @@ void	add_sub(char *data, char *inst)
 	if (check_arg(split[0]) == 1 && check_arg(split[1]) == 1 && check_arg(split[2]) == 1) 
 	{
 		args[0] = get_reg(split[0]);
-		args[1] = get_reg(split[0]);
-		args[2] = get_reg(split[0]);
+		args[1] = get_reg(split[1]);
+		args[2] = get_reg(split[2]);
 	}
 	else 
 		ft_error(E_BD_ARG);

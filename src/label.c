@@ -1,27 +1,5 @@
 #include "corewar.h"
 
-void	print_labels(t_env *env)
-{
-	t_label *tmp;
-
-	ft_putstr("\nLABEL_LST: ");
-	if (!env->labels)
-		return ; 
-	tmp = env->labels;
- 	while (tmp->next)
- 	{
- 		ft_putstr(tmp->name);
- 		ft_putstr("(");
- 		ft_putstr(ft_itoa(tmp->adress));
- 		ft_putstr(")/");
- 		tmp = tmp->next;
- 	}
- 	ft_putstr(tmp->name);
- 	ft_putstr("(");
- 	ft_putstr(ft_itoa(tmp->adress));
- 	ft_putstr(")\n");
-}
-
 void	add_label(t_env *env, char *label)
 { 
 	t_label *new_label;
@@ -59,8 +37,9 @@ char 	*get_label_inst(t_label *label,  t_env *env)
 	return (content);
 }
 
-char	*replace_label(char *label_name, int adress, t_env *env)
+static	char	*replace_label(char *label_name, int adress, t_env *env)
 {
+	/* if dir > 0 handle DIR of size dir else handle IND */
 	int dir;
 	t_label *tmp;
 
@@ -70,7 +49,6 @@ char	*replace_label(char *label_name, int adress, t_env *env)
 		dir = ft_atoi(&(label_name[ft_strlen(label_name) - 1]));
 		label_name = ft_strcut_beg(ft_strcut_end(label_name, 1), 1);
 	}
-
 	tmp = env->labels;
 	while(ft_strcmp(tmp->name, label_name) != 0)
 	{
@@ -82,43 +60,33 @@ char	*replace_label(char *label_name, int adress, t_env *env)
 	if (dir) 
 		return (convert_hex_octnb(tmp->adress - adress, dir));
 	else
-	{
 		return (get_label_inst(tmp, env));
-	}
 }
 
-void 	replace_labels(t_env *env) {
+void 			replace_labels(t_env *env)
+{
+	/* if loop == 0 handle DIR else handle IND */
 	t_inst *tmp;
 	char **split;
+	int loop = 0;
 
-	// first handle dir labels
 	tmp = env->inst;
-	while (tmp) 
+	while (tmp)
 	{
 		split = ft_strsplit(tmp->content, LABEL_CHAR);
-		if (split[1] && split[1][0] == DIRECT_CHAR)
+		if (split[1] && (split[1][0] == DIRECT_CHAR || loop))
 		{
 			split[1] = replace_label(split[1], tmp->adress, env);
 			tmp->content = ft_tab_join(split);
 		}
 		else
 			tmp = tmp->next;
-		ft_tab_free(split);
-	}
-	// 2nd time to handle ind label
-	tmp = env->inst;
-	while (tmp) 
-	{
-		split = ft_strsplit(tmp->content, LABEL_CHAR);
-		if (split[1])
+		if (!tmp && loop == 0) 
 		{
-			split[1] = replace_label(split[1], tmp->adress, env);
-			tmp->content = ft_tab_join(split);
+			tmp = env->inst;
+			loop++;
 		}
-		else
-			tmp = tmp->next;
 		ft_tab_free(split);
 	}
-
 }
 

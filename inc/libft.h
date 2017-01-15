@@ -122,5 +122,6 @@ char				*fill_hex(char *tmp, size_t oct_nb);
 char				*fill_hex_be(char *str, size_t oct_nb);
 void				ft_tab_trim(char **tab);
 int 				ft_bin_to_int(char *str);
+int 				ft_is_label_char(char c);
 
 #endif
