@@ -49,7 +49,7 @@ static size_t	get_tab_row(const char *s)
 }
 
 
-char	**ft_strsplit_space(const char *s)
+char	**ft_strsplit_space(char *s)
 {
 	char	**out;
 	size_t	n;

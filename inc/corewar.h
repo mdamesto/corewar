@@ -30,7 +30,7 @@ typedef struct	s_champ
 	char	*name;
 	char	*size;
 	char 	*comment;
-	char 	*insts;
+	char 	**inst;
 }				t_champ;
 
 typedef struct	s_env
@@ -51,6 +51,10 @@ void	ft_error(int code, char *str);
 void				init_env(void);
 t_env				*get_env(t_env *env);
 void				free_env(void);
+
+//convert.c
+char *hex_to_str(char *hex);
+char *hex_to_prog_size(char *hex);
 
 #endif
 	

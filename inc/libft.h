@@ -36,6 +36,7 @@ typedef struct		s_struct
 	char			*tmpbuf;
 }					t_struct;
 
+
 int					ft_istrlen(int *istr);
 int					ft_itab_len(int **tab);
 int					**ft_itab_set(int size);

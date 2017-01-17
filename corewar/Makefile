@@ -12,7 +12,7 @@
 
 NAME = corewar
 
-SRC_NAME = main.c env.c error.c
+SRC_NAME = main.c env.c error.c convert.c
 SRC_PATH = ./src/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
