@@ -10,8 +10,7 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = corewar
-NAME_PATH = ../
+NAME = ../corewar
 
 SRC_NAME = main.c env.c error.c convert.c inst_tools.c get_champ.c parse_args.c
 SRC_PATH = ./src/
@@ -37,8 +36,7 @@ CC = gcc
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@mkdir -p $(NAME_PATH)
-	$(CC) $(INC) $^ -o $(NAME_PATH)$@ $(LDFLAGS)
+	$(CC) $(INC) $^ -o $@ $(LDFLAGS)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
@@ -56,3 +54,6 @@ re: fclean all
 norme:
 	norminette $(SRC)
 	norminette ../inc/corewar.h
+
+.PHONY: all clean fclean re norme
+.NOTPARALLEL: re

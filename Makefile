@@ -10,29 +10,33 @@
 #                                                                              #
 #******************************************************************************#
 
-ASM	=	./asm_src/
+ASM	=		./asm_src/
 COREWAR	=	./corewar_src/
-LIB	=	./libft/
+LIB	=		./libft/
 
 #MAKE	=	make -C
 
 all:
-		$(MAKE)	-C $(LIB)
-		$(MAKE) -C $(ASM)
-		$(MAKE) -C $(COREWAR)
+	$(MAKE)	-C $(LIB)
+	$(MAKE) -C $(ASM)
+	$(MAKE) -C $(COREWAR)
+
 clean:
-		$(MAKE)	$(LIB) clean
-		$(MAKE) $(ASM) clean
-		$(MAKE) $(COREWAR) clean
+	$(MAKE)	-C $(LIB) clean
+	$(MAKE) -C $(ASM) clean
+	$(MAKE) -C $(COREWAR) clean
+
 fclean:
-		$(MAKE)	$(LIB) fclean
-		$(MAKE) $(ASM) fclean
-		$(MAKE) $(COREWAR) fclean
+	$(MAKE)	-C $(LIB) fclean
+	$(MAKE) -C $(ASM) fclean
+	$(MAKE) -C $(COREWAR) fclean
+
 re:		fclean all
 
 norme:
-	$(MAKE)	$(LIB) norme
-	$(MAKE) $(ASM) norme
-	$(MAKE) $(COREWAR) norme
+	$(MAKE)	-C $(LIB) norme
+	$(MAKE) -C $(ASM) norme
+	$(MAKE) -C $(COREWAR) norme
 	
 .PHONY:		re all fclean clean norme
+.NOTPARALLEL:	re

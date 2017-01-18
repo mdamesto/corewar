@@ -6,11 +6,11 @@
 #    By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 19:20:50 by mdamesto          #+#    #+#              #
-#    Updated: 2016/01/20 16:25:36 by mdamesto         ###   ########.fr        #
+#    Updated: 2017/01/18 19:48:52 by mdamesto         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-NAME = asm
+NAME = ../asm
 
 SRC_NAME = main.c error.c parsing.c env.c gnl.c label.c name_comment.c arg_check.c\
 		inst_to_env.c inst_1.c inst_2.c create_champ.c convert.c print.c inst_switch.c\
@@ -20,7 +20,7 @@ SRC_PATH = ./src/
 OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ_PATH = ./obj/
 
-LIB_PATH = ../lib/
+LIB_PATH = ../libft/
 LIB_NAMES = -lft
 INC_PATH = ../inc/
 
@@ -29,7 +29,7 @@ OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 INC = $(addprefix -I,$(INC_PATH))
 LIB = $(addprefix -L,$(LIB_PATH))
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = $(LIB) $(LIB_NAMES)
 CC = gcc
 

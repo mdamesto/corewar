@@ -6,7 +6,7 @@
 #    By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 19:20:50 by mdamesto          #+#    #+#              #
-#    Updated: 2017/01/18 17:54:47 by mdamesto         ###   ########.fr        #
+#    Updated: 2017/01/18 19:44:55 by mdamesto         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -48,7 +48,7 @@ INC = $(addprefix -I,$(INC_PATH))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcvsu $(NAME) $(OBJ)
+	@ar rcvsu $(NAME) $(OBJ)
 
 $(OBJ_PATH)%.o:	$(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)

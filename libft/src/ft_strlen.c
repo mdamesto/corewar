@@ -6,7 +6,7 @@
 /*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 16:39:06 by mdamesto          #+#    #+#             */
-/*   Updated: 2015/11/30 18:33:54 by mdamesto         ###   ########.fr       */
+/*   Updated: 2017/01/18 19:46:28 by mdamesto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 size_t	ft_strlen(const char *s)
 {
-	size_t len;
+	const char	*tmp;
 
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
+	tmp = s;
+	while (*tmp)
+		tmp++;
+	return (tmp - s);
 }

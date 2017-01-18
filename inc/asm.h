@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "op.h"
+# include <stdint.h>
 
 # define EBDARG			1
 # define EOPEN			2
@@ -63,7 +64,7 @@ typedef struct	s_env
 	char		*filename;
 	int 		fd;
 	int 		line_nb;
-	int 		c_adress;
+	uint32_t	c_adress;
 	int 		add_to_adress;
 	char		*line;		//line value
 	char 		**data; 		//tmp splitted line
