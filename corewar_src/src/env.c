@@ -3,15 +3,20 @@
 void				init_env(void)
 {
 	t_env *new;
-	if (!(new = ft_memalloc(sizeof(t_env*))))
+
+	if (!(new = ft_memalloc(sizeof(t_env))))
 		ft_error(E_MALLOC, NULL);
-	if (!(new->mem = ft_memalloc(sizeof(void *) * MEM_SIZE)))
+	
+	if (!(new->champs = (t_champ**)ft_memalloc(sizeof(t_champ*) * (MAX_PLAYERS + 1))))
 		ft_error(E_MALLOC, NULL);
-	if (!(new->champs = ft_memalloc(sizeof(t_champ*) * MAX_PLAYERS)))
-		ft_error(E_MALLOC, NULL);
+
 	new->current_ctd = CYCLE_TO_DIE;
 	new->dump = -1;
 	new->next_champ_nb = -1;
+
+	if (!(new->mem = ft_memalloc(sizeof(char) * ((MEM_SIZE * 8) + 1))))
+		ft_error(E_MALLOC, NULL);
+
 	get_env(new);
 } 
 

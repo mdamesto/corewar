@@ -130,5 +130,6 @@ char				*ft_strget_f(char *str, int s, int e);
 char				*ft_strcut(char *str, int s, int e);
 char				*ft_strcut_f(char *str, int s, int e);
 char 				*ft_rmv_space_f(char *str);
+void				*ft_print_memory(void *addr, size_t size);
 
 #endif

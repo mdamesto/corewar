@@ -10,6 +10,7 @@ char	*ft_strget(char *str, int s, int e)
 		return (NULL);
 	while(s < e)
 		ret[i++] = str[s++];
+	//ret[i] = '\0';
 	return (ret);
 }
 

@@ -6,20 +6,20 @@
 #    By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 19:20:50 by mdamesto          #+#    #+#              #
-#    Updated: 2016/01/20 16:25:36 by mdamesto         ###   ########.fr        #
+#    Updated: 2017/01/18 18:00:41 by mdamesto         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-ASM	=	./asm/
-COREWAR	=	./corewar/
+ASM	=	./asm_src/
+COREWAR	=	./corewar_src/
 LIB	=	./libft/
 
-MAKE	=	make -C
+#MAKE	=	make -C
 
 all:
-		$(MAKE)	$(LIB)
-		$(MAKE) $(ASM)
-		$(MAKE) $(COREWAR)
+		$(MAKE)	-C $(LIB)
+		$(MAKE) -C $(ASM)
+		$(MAKE) -C $(COREWAR)
 clean:
 		$(MAKE)	$(LIB) clean
 		$(MAKE) $(ASM) clean
@@ -35,5 +35,4 @@ norme:
 	$(MAKE) $(ASM) norme
 	$(MAKE) $(COREWAR) norme
 	
-
 .PHONY:		re all fclean clean norme

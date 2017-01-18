@@ -21,7 +21,8 @@
 # define E_BD_OPT		3
 # define E_CHP_NB		4
 # define E_BD_EXT		5
-# define E_OPEN			6	
+# define E_OPEN			6
+# define E_BD_OP		7
 
 
 typedef struct	s_champ
@@ -31,16 +32,16 @@ typedef struct	s_champ
 	char	*size;
 	char 	*comment;
 	char 	**inst;
+	int 	nb;
 }				t_champ;
 
 typedef struct	s_env
 {
-	void 	**mem;
-	void 	**champs;
+	char 	*mem;
+	t_champ **champs;
 	int		current_ctd;
 	int		*lives;	
 	int		dump;
-
 	int		next_champ_nb;
 }				t_env;
 
@@ -55,6 +56,15 @@ void				free_env(void);
 //convert.c
 char *hex_to_str(char *hex);
 char *hex_to_prog_size(char *hex);
+
+//inst_tools
+int 	get_inst_len(char *str);
+
+//get_champ.c
+void	get_champ(char *str, t_env *env);
+
+//parse_args.c
+void	parse_args(int argc, char **argv);
 
 #endif
 	

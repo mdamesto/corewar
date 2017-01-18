@@ -22,6 +22,8 @@ void	ft_error(int code, char *str) {
 		ft_putstr_fd("Champion muts be .cor files", 2);
 	else if (code == 6)
 		ft_putstr_fd("Could not open the file", 2);
+	else if (code == 6)
+		ft_putstr_fd("Invalid champion's op code", 2);
 	if (str)
 	{
 		ft_putstr_fd(": ", 2);

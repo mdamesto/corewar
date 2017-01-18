@@ -6,16 +6,16 @@
 #    By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 19:20:50 by mdamesto          #+#    #+#              #
-#    Updated: 2016/02/14 16:35:29 by mdamesto         ###   ########.fr        #
+#    Updated: 2017/01/18 17:54:47 by mdamesto         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-NAME = ../lib/libft.a
+NAME = libft.a
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
-SRC_PATH = ./
+SRC_PATH = ./src/
 SRC_NAME =	ft_isascii.c ft_memcmp.c ft_strcmp.c ft_strncmp.c ft_toupper.c\
 			ft_isdigit.c ft_memcpy.c ft_strcpy.c ft_strncpy.c ft_atoi.c\
 			ft_isprint.c ft_memmove.c ft_strdup.c ft_strnstr.c ft_bzero.c\
@@ -33,7 +33,7 @@ SRC_NAME =	ft_isascii.c ft_memcmp.c ft_strcmp.c ft_strncmp.c ft_toupper.c\
 			ft_realloc.c ft_tab_print.c ft_tab_set.c ft_istr_set.c ft_itab_set.c\
 			ft_itab_len.c ft_istrlen.c ft_strcut_beg.c ft_rmv_space.c ft_isspace.c ft_strsplit_space.c\
 			ft_strcut_end.c ft_tab_join.c convert_hex_octnb.c fill_hex.c ft_tab_trim.c\
-			ft_bin_to_int.c ft_is_label_char.c ft_strget.c ft_strcut.c
+			ft_bin_to_int.c ft_is_label_char.c ft_strget.c ft_strcut.c ft_print_memory.c
 
 OBJ_PATH = ./obj/
 OBJ_NAME = $(SRC_NAME:.c=.o)
@@ -48,9 +48,7 @@ INC = $(addprefix -I,$(INC_PATH))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		mkdir -p ../lib
-		ar rc $(NAME) $(OBJ)
-		ranlib $(NAME)
+	ar rcvsu $(NAME) $(OBJ)
 
 $(OBJ_PATH)%.o:	$(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
@@ -67,4 +65,4 @@ re: fclean all
 
 norme:
 	norminette $(SRC)
-	norminette $(INC_PATH)*.h
+	norminette $(INC_PATH)
