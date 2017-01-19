@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 static	char	**split_label(char *str) {
 	char **ret;

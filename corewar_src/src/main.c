@@ -1,20 +1,16 @@
 #include "corewar.h"
 
-/*void	place_champs()
-{
-	t_env *env;
-
-	env = get_env(NULL);
-
-}*/
-
 int main(int argc, char **argv)
 {
 	t_env *env;
 
-	env = get_env(NULL);
 	init_env();
-	parse_args(argc, argv);
-	//place_champ();
+	env = get_env(NULL);
+	parse_args(argc, argv, env);
+	init_champs(env);
+	play_game(env);
+
 	return 0;
 }
+
+//ASM ABORT AT THE END

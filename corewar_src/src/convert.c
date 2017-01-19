@@ -1,6 +1,14 @@
 #include "corewar.h"
 
-char *hex_to_str(char *hex)
+uint32_t convert_big_endian(char *str)
+{
+	uint32_t n;
+
+	n = (str[3] << 24) | (str[2] << 16) | (str[1] << 8) | str[0];
+	return(n);
+}
+
+/*char *hex_to_str(char *hex)
 {
 	char tmp[2048];
 	int i;
@@ -49,4 +57,4 @@ char *hex_to_prog_size(char *hex)
 		mult *= 16;
 	}
 	return (ft_itoa(size));
-}
+}*/

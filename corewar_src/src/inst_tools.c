@@ -1,6 +1,6 @@
 #include "corewar.h"
 
-static int		get_n(char a, char b, int size)
+/*static int		get_n(char a, char b, int size)
 {
 	int n;
 
@@ -50,4 +50,4 @@ int 			get_inst_len(char *str)
 		ft_error(E_BD_OP, NULL);
 	return (n);
 
-}
+}*/

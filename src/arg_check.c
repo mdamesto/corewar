@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 static	int		check_reg(char *arg)
 {

@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 char	*str_to_hex(char *str)
 {

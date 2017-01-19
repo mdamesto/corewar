@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 void	add_label(t_env *env, char *label)
 { 

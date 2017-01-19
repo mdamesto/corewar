@@ -39,12 +39,10 @@ void	get_opt(char *opt, char *value, t_env *env)
 		ft_error(E_BD_OPT, opt);
 }
 
-void	parse_args(int argc, char **argv)
+void	parse_args(int argc, char **argv, t_env *env)
 {
-	t_env *env;
 	int i;
 
-	env = get_env(NULL);
 	i = 0;
 	while (++i < argc)
 	{
@@ -58,4 +56,5 @@ void	parse_args(int argc, char **argv)
 	}
 	if (!env->champs[1])
 		ft_error(E_CHP_NB, NULL);
+	//sort_by_champ_nb(env); ----------------- TODO
 }

@@ -23,26 +23,55 @@
 # define E_BD_EXT		5
 # define E_OPEN			6
 # define E_BD_OP		7
+# define E_BD_CHP_SIZ	8
 
+
+typedef struct	s_process
+{
+	int 	pc;
+	char 	r1[REG_SIZE];
+	char 	r2[REG_SIZE];
+	char 	r3[REG_SIZE];
+	char 	r4[REG_SIZE];
+	char 	r5[REG_SIZE];
+	char 	r6[REG_SIZE];
+	char 	r7[REG_SIZE];
+	char 	r8[REG_SIZE];
+	char 	r9[REG_SIZE];
+	char 	r10[REG_SIZE];
+	char 	r11[REG_SIZE];
+	char 	r12[REG_SIZE];
+	char 	r13[REG_SIZE];
+	char 	r14[REG_SIZE];
+	char 	r15[REG_SIZE];
+	char 	r16[REG_SIZE];
+	short	carry;
+	int 	wait_cycle;
+
+}				t_process;
 
 typedef struct	s_champ
 {
-	char 	*filename;
-	char	*name;
-	char	*size;
-	char 	*comment;
-	char 	**inst;
+	char	name[PROG_NAME_LENGTH + 1];
+	int		size;
+	char 	comment[COMMENT_LENGTH + 1];
+	char 	inst[CHAMP_MAX_SIZE + 1];
 	int 	nb;
+	t_process **process;
+	bool	alive;
 }				t_champ;
 
 typedef struct	s_env
 {
-	char 	*mem;
-	t_champ **champs;
-	int		current_ctd;
-	int		*lives;	
-	int		dump;
-	int		next_champ_nb;
+	char 		mem[MEM_SIZE];
+	t_champ 	**champs;
+	int			cycle_to_die;
+	int 		current_cycle;
+	int			*lives;
+	int 		lives_nb;
+	int			dump;
+	int			next_champ_nb;
+	bool		end;
 }				t_env;
 
 //error.c
@@ -54,17 +83,24 @@ t_env				*get_env(t_env *env);
 void				free_env(void);
 
 //convert.c
-char *hex_to_str(char *hex);
-char *hex_to_prog_size(char *hex);
+//char *hex_to_str(char *hex);
+//char *hex_to_prog_size(char *hex);
+uint32_t convert_big_endian(char *str);
 
 //inst_tools
-int 	get_inst_len(char *str);
+//int 	get_inst_len(char *str);
 
 //get_champ.c
 void	get_champ(char *str, t_env *env);
 
 //parse_args.c
-void	parse_args(int argc, char **argv);
+void	parse_args(int argc, char **argv, t_env *env);
+
+//init_champs.c
+void	init_champs(t_env *env);
+
+//play_game.c
+void	play_game(t_env *env);
 
 #endif
 	

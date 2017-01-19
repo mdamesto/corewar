@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 void	remove_comment(t_env *env) 
 {

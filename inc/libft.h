@@ -19,6 +19,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <stdbool.h>
+# include <stdint.h>
 
 # define BUFF_SIZE 16
 
@@ -131,5 +133,6 @@ char				*ft_strcut(char *str, int s, int e);
 char				*ft_strcut_f(char *str, int s, int e);
 char 				*ft_rmv_space_f(char *str);
 void				*ft_print_memory(void *addr, size_t size);
+int					ft_atoi_hex(const char *str);
 
 #endif

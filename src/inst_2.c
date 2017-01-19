@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 void	ld_lld_and(char *data, char *inst)
 {

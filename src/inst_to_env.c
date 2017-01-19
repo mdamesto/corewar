@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 static	char	*get_full_inst(char *inst, char *args_code, char **args)
 {

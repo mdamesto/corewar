@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 void	live_zjump_fork_lfork(char *data, char *inst, size_t siz)
 {

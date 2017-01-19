@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 void	ft_error(int code) {
 	

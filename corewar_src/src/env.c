@@ -10,15 +10,17 @@ void				init_env(void)
 	if (!(new->champs = (t_champ**)ft_memalloc(sizeof(t_champ*) * (MAX_PLAYERS + 1))))
 		ft_error(E_MALLOC, NULL);
 
-	new->current_ctd = CYCLE_TO_DIE;
+	ft_memset(new->mem, '\0', MEM_SIZE);
+	
+	new->cycle_to_die = CYCLE_TO_DIE;
+	new->current_cycle = 0;
+	new->lives_nb = 0;
 	new->dump = -1;
 	new->next_champ_nb = -1;
-
-	if (!(new->mem = ft_memalloc(sizeof(char) * ((MEM_SIZE * 8) + 1))))
-		ft_error(E_MALLOC, NULL);
-
+	new->end = false;
+	
 	get_env(new);
-} 
+}
 
 t_env				*get_env(t_env *env)
 {

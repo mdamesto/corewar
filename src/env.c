@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 static char 		*check_filename(char *filename)
 {

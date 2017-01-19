@@ -1,4 +1,5 @@
 #include "corewar.h"
+#include <stdio.h>
 
 int		ft_check_ext(char *file, char *ext, size_t siz)
 {
@@ -11,72 +12,6 @@ int		ft_check_ext(char *file, char *ext, size_t siz)
 			return (1);
 	}
 	return (0);
-}
-
-char	**split_cor(int fd)
-{
-	char *data;
-	char *tmp;
-	char **ret;
-	int size;
-
-	data = ft_strnew(1);
-	//ret = ft_tab_set(4, 0);
-	ret = malloc(sizeof(char*) * 5);
-	ret[4] = NULL;
-
-	while (get_next_line(fd, &tmp))
-		data = ft_strjoin_f(data, tmp, 1);
-	
-	data = ft_rmv_space_f(data);
-	data = ft_strcut_f(data, 0, 8);
-
-	ret[0] = hex_to_str(ft_strget(data, 0, 256));
-	ret[1] = hex_to_prog_size(ft_strget(data, 256, 272));
-	ret[2] = hex_to_str(ft_strget(data, 272, 4376));
-	size = ft_atoi(ret[1]);
-	ret[3] = ft_strget(data, 4376, 4376 + (2 * size));
-
-	/* -------  CHAMP -------- */
-	ft_putstr("IN SPLIT COR ------ \n");
-	ft_putstr("Champ name: ");
-	ft_putstr(ret[0]);
-	ft_putstr("\n");
-	ft_putstr("Champ size: ");
-	ft_putstr(ret[1]);
-	ft_putstr("\n");
-	ft_putstr("Champ inst: ");
-	ft_putstr(ret[3]);
-	ft_putstr("\n");
-	
-	return (ret);
-}
-
-char	**cut_insts(char *insts)
-{
-	int n;
-	int i;
-	char **ret;
-
-	i = 0;
-	ret = ft_tab_set(100, 0);
-	while (*insts) {
-		n = get_inst_len(insts);
-		ret[i++] = ft_strget(insts ,0, n);
-		insts = ft_strcut(insts, 0, n);
-		
-		/* -------- inst cut --------*/
-		/*ft_putstr("n: ");
-		ft_putnbr(n);
-		ft_putstr("   ");
-		ft_putstr("ret[");
-		ft_putnbr(i - 1);
-		ft_putstr("]: ");*/
-		//ft_putstr(ret[i - 1]);
-		//ft_putstr("\n");
-		/* -------------------------- */
-	}
-	return (ret);
 }
 
 int 	get_champ_nb(t_env *env, int i)
@@ -104,12 +39,44 @@ int 	get_champ_nb(t_env *env, int i)
 	return n;
 }
 
+int get_size(char *data)
+{
+	int ret;
+
+	if (data[0] || data[1])
+		ft_error(E_BD_CHP_SIZ, NULL);
+	ret = 0;
+	ret = data[3] + data[2] * 16;
+	return (ret);
+}
+
+
+void	split_header_prog(int fd, t_champ *champ)
+{
+	char data[sizeof(header_t) + CHAMP_MAX_SIZE + 9];
+	int n;
+	char tmp[4];
+
+	n = read(fd, data, (sizeof(header_t) + CHAMP_MAX_SIZE + 9));
+	
+	ft_memcpy(champ->name, &data[4], PROG_NAME_LENGTH);
+	ft_memcpy(tmp, &data[4 + PROG_NAME_LENGTH + 4], 4);
+	champ->size = get_size(tmp);
+	ft_memcpy(champ->comment, &data[4 + PROG_NAME_LENGTH + 8], COMMENT_LENGTH);
+	ft_memcpy(champ->inst, &data[4 + PROG_NAME_LENGTH + 8 + COMMENT_LENGTH + 4], champ->size);
+	if (!(champ->process = ft_memalloc(sizeof(t_process*) * 100))) //imp a good method to realloc it ---- TODO
+		ft_error(E_MALLOC, NULL);
+	champ->alive = true;
+
+	if (n != (4 + PROG_NAME_LENGTH + 8 + COMMENT_LENGTH + 4 + champ->size))
+		ft_error(E_BD_CHP_SIZ, NULL);
+}
+
 void	get_champ(char *str, t_env *env)
 {
-	int i = 0;
+	static int i = 0;
 	int fd; 
 	t_champ *new;
-	char **data;
 	
 	if (ft_check_ext(str, ".cor", 4))
 		ft_error(E_BD_EXT, str);
@@ -117,13 +84,7 @@ void	get_champ(char *str, t_env *env)
 		ft_error(E_OPEN, str);
 	if (!(new = ft_memalloc(sizeof(t_champ))))
 		ft_error(E_MALLOC, NULL);
-	data = split_cor(fd);
-	
-	new->name = data[0];
-	new->size = data[1];
-	new->comment = data[2];
-	new->inst = cut_insts(data[3]);
-	
+	split_header_prog(fd, new);
 	if (env->next_champ_nb > 0)
 	{
 		new->nb = env->next_champ_nb;
@@ -131,41 +92,26 @@ void	get_champ(char *str, t_env *env)
 	}
 	else
 		new->nb = get_champ_nb(env, i);
+	env->champs[i++] = new;
 	
-	i = 0;
-	while (env->champs[i])
-	{
-		ft_putstr("HERE\n");
-		i++;
-	}
-	env->champs[i] = new;
-
-	//env->champs[i++] = new;
-	
-	/* -------- CHAMP --------*/
+	/* ------- NEW CHAMP -----------*/
+	ft_putstr("\n---- In get_champ() (get_champs.c) ----\n");
+	ft_putstr("\ni: ");
+	ft_putnbr(i - 1);
+	ft_putstr("\n");
 	ft_putstr("\nChamp number: ");
 	ft_putnbr(new->nb);
 	ft_putstr("\n");
-	ft_putstr("data[0]: ");
-	ft_putstr(data[0]);
-	ft_putstr("\n");
-	ft_putstr("Champ name: ");
+	ft_putstr("champ name: ");
 	ft_putstr(new->name);
 	ft_putstr("\n");
-	ft_putstr("Champ size: ");
-	ft_putstr(new->size);
+	ft_putstr("champ size: ");
+	ft_putnbr(new->size);
 	ft_putstr("\n");
-	ft_putstr("Champ comment: ");
+	ft_putstr("champ comment: ");
 	ft_putstr(new->comment);
 	ft_putstr("\n");
-	int j = 0;
-	while (new->inst[j]) 
-	{
-		ft_putstr("inst[");
-		ft_putnbr(j);
-		ft_putstr("]: ");
-		ft_putstr(new->inst[j++]);
-		ft_putstr("\n");
-	}
-	/* ----------------------- */
+	ft_putstr("champ inst: \n");
+	ft_print_memory(new->inst, new->size);
+	ft_putstr("\n");
 }

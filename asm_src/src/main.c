@@ -10,6 +10,7 @@ int		main(int argc, char **argv)
 		env = get_env(NULL);
 		parsing_champion(env);
 		create_champion(env);
+		ft_putstr("\nHERE------------\n");
 	}
 	else
 		ft_error(EBDARG);

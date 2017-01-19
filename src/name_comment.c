@@ -1,4 +1,4 @@
-#include "corewar.h"
+#include "asm.h"
 
 char	*get_content(char *line) 
 {
