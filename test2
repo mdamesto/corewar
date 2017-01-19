@@ -1,5 +1,0 @@
-.name "test2"
-.comment "comment test 2"
-
-label1: live :label2
-label2: live :label1
