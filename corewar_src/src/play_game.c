@@ -69,9 +69,11 @@ void	play_game(t_env *env)
 			j = -1;
 			while (champs[i]->process[++j])
 			{
-				if (!champs[i]->process[j]->wait_cycle)
-					//exec_inst(champs[i]->process[j], env);
-					ft_putstr("");
+				if (!champs[i]->process[j]->wait_cycle) 
+				{
+					//ft_putstr("\nexec instr: ");
+					exec_inst(champs[i]->process[j], env);
+				}
 				else
 					champs[i]->process[j]->wait_cycle--;
 			}

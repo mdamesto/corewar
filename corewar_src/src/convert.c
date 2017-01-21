@@ -1,11 +1,42 @@
 #include "corewar.h"
 
-uint32_t convert_big_endian(char *str)
+int atole(char *str)
 {
-	uint32_t n;
+	int n;
 
 	n = (str[3] << 24) | (str[2] << 16) | (str[1] << 8) | str[0];
 	return(n);
+}
+
+int hatole(char *str, int siz)
+{
+	int n;
+
+	n = 0;
+	if (siz == 1)
+		n = str[0];
+	else if(siz == 2)
+		n = (str[1]) | str[0] << 8;
+	else if(siz == 4)
+		n = (str[3] << 24) | (str[2] << 16) | (str[1] << 8) | str[0];
+	return(n);
+}
+
+int revert_endian(int nb)
+{
+	char str[4];
+	char tmp2;
+	char tmp3;
+
+	ft_memcpy(str, &nb, 4);
+	tmp3 = str[0];
+	tmp2 = str[1];
+	str[0] = str[3];
+	str[1] = str[2];
+	str[2] = tmp2;
+	str[3] = tmp3;
+	ft_memcpy(&nb, str, 4);
+	return (nb);
 }
 
 /*char *hex_to_str(char *hex)

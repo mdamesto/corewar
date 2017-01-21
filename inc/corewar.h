@@ -29,22 +29,7 @@
 typedef struct	s_process
 {
 	int 	pc;
-	char 	r1[REG_SIZE];
-	char 	r2[REG_SIZE];
-	char 	r3[REG_SIZE];
-	char 	r4[REG_SIZE];
-	char 	r5[REG_SIZE];
-	char 	r6[REG_SIZE];
-	char 	r7[REG_SIZE];
-	char 	r8[REG_SIZE];
-	char 	r9[REG_SIZE];
-	char 	r10[REG_SIZE];
-	char 	r11[REG_SIZE];
-	char 	r12[REG_SIZE];
-	char 	r13[REG_SIZE];
-	char 	r14[REG_SIZE];
-	char 	r15[REG_SIZE];
-	char 	r16[REG_SIZE];
+	char 	**reg;
 	short	carry;
 	int 	wait_cycle;
 
@@ -63,7 +48,7 @@ typedef struct	s_champ
 
 typedef struct	s_env
 {
-	char 		mem[MEM_SIZE];
+	unsigned char 		mem[MEM_SIZE];
 	t_champ 	**champs;
 	int			cycle_to_die;
 	int 		current_cycle;
@@ -85,7 +70,9 @@ void				free_env(void);
 //convert.c
 //char *hex_to_str(char *hex);
 //char *hex_to_prog_size(char *hex);
-uint32_t convert_big_endian(char *str);
+int atole(char *str);
+int hatole(char *str, int size);
+int revert_endian(int nb);
 
 //inst_tools
 //int 	get_inst_len(char *str);
@@ -101,6 +88,9 @@ void	init_champs(t_env *env);
 
 //play_game.c
 void	play_game(t_env *env);
+
+//exec_inst
+void	exec_inst(t_process *process, t_env *env);
 
 #endif
 	

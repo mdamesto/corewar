@@ -13,7 +13,7 @@
 NAME = ../corewar
 
 SRC_NAME = main.c env.c error.c convert.c inst_tools.c get_champ.c parse_args.c\
-		init_champs.c play_game.c
+		init_champs.c play_game.c exec_inst.c
 SRC_PATH = ./src/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

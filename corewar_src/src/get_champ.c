@@ -68,6 +68,7 @@ void	split_header_prog(int fd, t_champ *champ)
 		ft_error(E_MALLOC, NULL);
 	champ->alive = true;
 
+	ft_putnbr(champ->size);
 	if (n != (4 + PROG_NAME_LENGTH + 8 + COMMENT_LENGTH + 4 + champ->size))
 		ft_error(E_BD_CHP_SIZ, NULL);
 }

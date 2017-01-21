@@ -3,11 +3,20 @@
 t_process *new_process(int pc, int nb)
 {
 	t_process *new;
+	int8_t i;
+
+	int zero = 0;
 
 	if (!(new = ft_memalloc(sizeof(t_process))))
 		ft_error(E_MALLOC, NULL);
+	
+	new->reg = ft_tab_set(16, 4);
+	i = -1;
+	while (++i < 16)
+		ft_memcpy(new->reg[i], &zero, 4);
+	
 	new->pc = pc;
-	ft_memcpy(new->r1, &nb, 4);
+	ft_memcpy(new->reg[0], &nb, 4);
 	new->carry = 0;
 	new->wait_cycle = 0;
 
@@ -26,8 +35,8 @@ void	init_champs(t_env *env)
 	}
 	
 	/* -------------------- MEM PROCESS -------------------- */
-	ft_putstr("\n -------- MEM (init_champs.c)--------\n");
-	ft_print_memory(env->mem, MEM_SIZE);
+	//ft_putstr("\n -------- MEM (init_champs.c)--------\n");
+	//ft_print_memory(env->mem, MEM_SIZE);
 	
 	ft_putstr("\n -------- PROCESS (init_champs.c) --------\n");
 	i = -1;
@@ -45,7 +54,11 @@ void	init_champs(t_env *env)
 			ft_putstr("   //->pc: ");
 			ft_putnbr(env->champs[i]->process[j]->pc);
 			ft_putstr("   //->r1: ");
-			ft_putnbr(convert_big_endian(env->champs[i]->process[j]->r1));
+			ft_print_memory(env->champs[i]->process[j]->reg[0], 4);
+			ft_putnbr(atole(env->champs[i]->process[j]->reg[0]));
+			ft_putstr("   //->r2: ");
+			ft_print_memory(env->champs[i]->process[j]->reg[1], 4);
+			ft_putnbr(atole(env->champs[i]->process[j]->reg[1]));
 		}
 		ft_putstr("\n");
 	}

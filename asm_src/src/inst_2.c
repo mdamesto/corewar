@@ -17,7 +17,8 @@ void	ld_lld_and(char *data, char *inst)
 	
 	if (check_arg(split[0]) == 1) 
 		args[0] = get_reg(split[0]);
-	else if (check_arg(split[0]) == 2){
+	else if (check_arg(split[0]) == 2)
+	{
 		args_code = "90";
 		args[0] = get_dir(split[0], 4);
 	}
