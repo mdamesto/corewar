@@ -80,20 +80,28 @@ int exec_ld(unsigned char *mem, int pc, t_process *process)
 
 int exec_st(unsigned char *mem, int pc, t_process *process)
 {
-	char address[2];
-	char arg1[4];
-	char arg2[1];
+	char arg1[1];
+	char arg2[2];
 
-	if (mem[pc + 1] == 0x90) // check args_code
+	if (mem[pc + 1] == 0x50)
 	{
-		ft_memcpy(arg1, &mem[pc + 2], 4); //get arg1 (dir-4B)
-		ft_memcpy(arg2, &mem[pc + 6], 1); //get arg2 (reg-1B)
+		ft_memcpy(arg1, &mem[pc + 2], 1); 
+		ft_memcpy(arg2, &mem[pc + 3], 1);
+		if ((*arg2=1 <= 0x10 || *arg1 >= 0x01) && (*arg2=1 <= 0x10 || *arg1 >= 0x01))
+			ft_memcpy(process->reg[hatole(arg2, 2)], process->reg[hatole(arg1, 1)], REG_SIZE);
+		else
+			return (1);
+		process->pc += 4;
 	}
-	else if(mem[pc + 1] == 0xd0)
+	else if(mem[pc + 1] == 0x70)
 	{
-		ft_memcpy( address, &mem[pc + 2], 2); //get address of data to get (ind-2B)
-		ft_memcpy(arg1, &mem[pc + (hatole(address, 2) % IDX_MOD)], REG_SIZE); //get arg1 (dir 4B)
-		ft_memcpy(arg2, &mem[pc + 4], 1); //get arg2 (reg-1B)
+		ft_memcpy(arg1, &mem[pc + 2], 1);
+		ft_memcpy(arg2, &mem[pc + 3], 2);
+		if (*arg1 <= 0x10 || *arg1 >= 0x01)
+			ft_memcpy(&mem[hatole(arg2, 2) % IDX_MOD], process->reg[hatole(arg1, 1)], REG_SIZE);
+		else
+			return (1);
+		process->pc += 5;
 	}
 	else 
 	{
@@ -101,19 +109,7 @@ int exec_st(unsigned char *mem, int pc, t_process *process)
 		exit(0);
 		return (1);
 	}
-
-	if (*arg2 <= 0x10 || *arg2 >= 0x01) //if reg valid do ld
-	{
-		ft_memcpy(process->reg[hatole(arg2, 1) - 1], arg1, REG_SIZE); // __TODO: if REG_SYZE > 4??
-		process->wait_cycle = 5;
-		process->pc += 7;
-	}
-	else //else pc += 7
-	{
-		process->pc += 7;
-		exit(0);
-		return (1);
-	}
+	process->wait_cycle = 5;
 	exit(0);
 	return (0);
 }
@@ -130,7 +126,7 @@ void	exec_inst(t_process *process, t_env *env)
 	else if (mem[pc] == 0x02)
 		exec_ld(mem, pc, process);
 	else if (mem[pc] == 0x02)
-		;
+		exec_st(mem, pc, process);
 	else if (mem[pc] == 0x03)
 		;
 	else if (mem[pc] == 0x04)
