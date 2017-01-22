@@ -16,7 +16,8 @@ t_process *new_process(int pc, int nb)
 		ft_memcpy(new->reg[i], &zero, 4);
 	
 	new->pc = pc;
-	ft_memcpy(new->reg[0], &nb, 4);
+	nb= revert_endian(nb);
+	ft_memcpy(new->reg[0], &(nb), 4);
 	new->carry = 0;
 	new->wait_cycle = 0;
 
@@ -55,10 +56,10 @@ void	init_champs(t_env *env)
 			ft_putnbr(env->champs[i]->process[j]->pc);
 			ft_putstr("   //->r1: ");
 			ft_print_memory(env->champs[i]->process[j]->reg[0], 4);
-			ft_putnbr(atole(env->champs[i]->process[j]->reg[0]));
+			ft_putnbr(hatole(env->champs[i]->process[j]->reg[0], 4));
 			ft_putstr("   //->r2: ");
 			ft_print_memory(env->champs[i]->process[j]->reg[1], 4);
-			ft_putnbr(atole(env->champs[i]->process[j]->reg[1]));
+			ft_putnbr(hatole(env->champs[i]->process[j]->reg[1], 4));
 		}
 		ft_putstr("\n");
 	}

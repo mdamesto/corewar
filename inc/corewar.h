@@ -70,7 +70,6 @@ void				free_env(void);
 //convert.c
 //char *hex_to_str(char *hex);
 //char *hex_to_prog_size(char *hex);
-int atole(char *str);
 int hatole(char *str, int size);
 int revert_endian(int nb);
 
@@ -91,6 +90,12 @@ void	play_game(t_env *env);
 
 //exec_inst
 void	exec_inst(t_process *process, t_env *env);
+
+int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env);
+int exec_ld(unsigned char *mem, int pc, t_process *process);
+int exec_st(unsigned char *mem, int pc, t_process *process);
+int exec_add_sub(unsigned char *mem, int pc, t_process *process);
+int exec_and(unsigned char *mem, int pc, t_process *process);
 
 #endif
 	

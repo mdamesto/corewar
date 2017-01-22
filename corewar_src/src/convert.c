@@ -1,13 +1,5 @@
 #include "corewar.h"
 
-int atole(char *str)
-{
-	int n;
-
-	n = (str[3] << 24) | (str[2] << 16) | (str[1] << 8) | str[0];
-	return(n);
-}
-
 int hatole(char *str, int siz)
 {
 	int n;
@@ -18,7 +10,7 @@ int hatole(char *str, int siz)
 	else if(siz == 2)
 		n = (str[1]) | str[0] << 8;
 	else if(siz == 4)
-		n = (str[3] << 24) | (str[2] << 16) | (str[1] << 8) | str[0];
+		n = (str[0] << 24) | (str[1] << 16) | (str[2] << 8) | str[3];
 	return(n);
 }
 
@@ -38,6 +30,8 @@ int revert_endian(int nb)
 	ft_memcpy(&nb, str, 4);
 	return (nb);
 }
+
+
 
 /*char *hex_to_str(char *hex)
 {
