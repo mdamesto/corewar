@@ -1,53 +1,57 @@
 #include "corewar.h"
 
-/*static int		get_n(char a, char b, int size)
+char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 {
+	/*
+	*	Get an int tab of args codes to get
+	*	increment pc and return an char[4] array:
+	*
+	*	1 -> Reg: copy reg nb and get it's value
+	*	2 -> Ind: copy adress and get memory adress value 
+	*	3 -> Dir(siz = 2): copy direct value and fill with 0x00
+	* 	4 -> Dir(siz = 4): copy direct value
+	*/
+
 	int n;
-
-	n = 0;
-	if (a == '5') 
-		n = 2;
-	else if(a == 'a')
-		n = 2 * size;
-	else if (a == 'f')
-		n = 4;
-	else if (a == '6' || a == '9')
-		n = 1 + size;
-	else if (a == '7' || a == 'd')
-		n = 3;
-	else if (a == 'b' || a == 'e')
-		n = 2 + size;
-	if (b == '4')
-		n += 1;
-	else if (b == '8')
-		n += size;
-	else if (b == 'c')
-		n += 2;
-	return ((n + 2) * 2);
-}
-
-int 			get_inst_len(char *str)
-{
-	int n;
-
-	n = 0;
-	if(str[0] == '1' && str[1] == '0')
-			n += 4;
-	else if(str[0] == '0' && ft_ishex(str[1]))
+	int i;
+	char **ret;
+	
+	n = 0; 
+	if (mem[pc] == 0x0b) //skip first param in sti case
+		n = 1;
+	i = -1;
+	ret = ft_tab_set(3, 4);
+	while (++i < 2)
 	{
-		if(str[1] == '1' )
-			n += 10;
-		else if (str[1] == '9' || str[1] == 'c' || str[1] == 'f')
-			n += 6;
-		else if(str[1] == '4' || str[1] == '5')
-			n += 10;
-		else if (str[1] == 'a' || str[1] == 'b' || str[1] == 'e' || str[1] == '3') //op for wich size direct = 2
-			n += get_n(str[2], str[3], 2);
-		else if (str[1] == '2' || str[1] == '6' || str[1] == '7' || str[1] == '8' || str[1] == 'd') //op for wich size direct = 4
-			n += get_n(str[2], str[3], 4);
-	}
-	else
-		ft_error(E_BD_OP, NULL);
-	return (n);
+		if (tab[i] == 1)
+		{
+			ft_putstr("IN REG\n");
+			ft_memcpy(ret[i], &mem[pc + 2 + n], 1);
+			if (tab[i] == 1 && ret[i][0] > 0x0f)
+				return (ret = NULL);
+			GET_REGV(ret[i]);
+			n++;
 
-}*/
+		}
+		else if (tab[i] == 2)
+		{
+			ft_memcpy(ret[i], &mem[pc + 2 + n], 2);
+			GET_INDV(ret[i], pc);
+			n += 2;
+		}
+		else if (tab[i] == 3)
+		{
+			ft_putstr("IN DIR\n");
+			ft_memset(ret[i], 0x00, 2);
+			ft_memcpy(&ret[i][2], &mem[pc + 2 + n], 2);
+			n += 2;
+		}
+		else if (tab[i] == 4)
+		{
+			ft_memcpy(ret[i], &mem[pc + 2 + n], 4);
+			n += 4;
+		}
+	}
+	process->pc += (2 + n);
+	return (ret);
+}

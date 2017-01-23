@@ -25,6 +25,14 @@
 # define E_BD_OP		7
 # define E_BD_CHP_SIZ	8
 
+# define GET_REGNB(x) hatole((x), 1) - 1
+# define GET_REGV(x) ft_memcpy((x), process->reg[GET_REGNB((x))], REG_SIZE)
+# define GET_INDV(x, y) ft_memcpy((x), &mem[(y) + (hatole((x), 2) % IDX_MOD)], REG_SIZE)
+/*
+** Fix'd the C remainder to be more like a modulo op. Added (-1) in 
+** negative case to handle adress[0 - 255] for 256 adresses.
+*/
+# define MODFIX(x, y) (((x) % (y) < 0) ? (x) % (y) + (y - 1): (x) % (y))
 
 typedef struct	s_process
 {
@@ -75,6 +83,7 @@ int revert_endian(int nb);
 
 //inst_tools
 //int 	get_inst_len(char *str);
+char **get_args(unsigned char *mem, int pc, int *tab, t_process *process);
 
 //get_champ.c
 void	get_champ(char *str, t_env *env);
@@ -89,13 +98,17 @@ void	init_champs(t_env *env);
 void	play_game(t_env *env);
 
 //exec_inst
-void	exec_inst(t_process *process, t_env *env);
+int	exec_inst(t_process *process, t_env *env);
 
 int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env);
 int exec_ld(unsigned char *mem, int pc, t_process *process);
 int exec_st(unsigned char *mem, int pc, t_process *process);
 int exec_add_sub(unsigned char *mem, int pc, t_process *process);
-int exec_and(unsigned char *mem, int pc, t_process *process);
+int exec_and_or_xor(unsigned char *mem, int pc, t_process *process);
+int exec_zjmp(unsigned char *mem, int pc, t_process *process);
+int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process);
+int exec_sti(unsigned char *mem, int pc, t_process *process);
+int exec_fork_lfork(int i, int j, t_env *env);
 
 #endif
 	

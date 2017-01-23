@@ -58,7 +58,7 @@ void	play_game(t_env *env)
 {
 	t_champ **champs;
 	int8_t i;
-	int16_t j;
+	int8_t j;
 
 	champs = env->champs;
 	while(!env->end)
@@ -72,7 +72,8 @@ void	play_game(t_env *env)
 				if (!champs[i]->process[j]->wait_cycle) 
 				{
 					//ft_putstr("\nexec instr: ");
-					exec_inst(champs[i]->process[j], env);
+					if (exec_inst(champs[i]->process[j], env) == 1)
+						exec_fork_lfork(i, j, env);
 				}
 				else
 					champs[i]->process[j]->wait_cycle--;
@@ -83,6 +84,7 @@ void	play_game(t_env *env)
 		}
 
 	}
+
 	ft_putstr(env->champs[0]->name);
 	ft_putstr(" (champion nb: ");
 	ft_putnbr(env->champs[0]->nb);

@@ -8,9 +8,13 @@ int hatole(char *str, int siz)
 	if (siz == 1)
 		n = str[0];
 	else if(siz == 2)
-		n = (str[1]) | str[0] << 8;
+		n = ((str[0] << 8) & 0xff00) |
+			((str[1]) & 0xff);
 	else if(siz == 4)
-		n = (str[0] << 24) | (str[1] << 16) | (str[2] << 8) | str[3];
+		n = ((str[0] << 24) & 0xff000000) | 
+			((str[1] << 16) & 0xff0000) | 
+			((str[2] << 8) & 0xff00)| 
+			((str[3]) & 0xff);
 	return(n);
 }
 
