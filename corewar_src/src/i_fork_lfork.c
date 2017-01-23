@@ -70,8 +70,6 @@ int exec_fork_lfork(int i, int j, t_env *env)
 		;
 	env->champs[i]->process[j] = fork;
 
-
-
 	ft_putstr("arg: ");
 	ft_print_memory(arg, 4);
 	int nb = hatole(arg, 4);

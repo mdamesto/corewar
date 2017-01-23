@@ -32,7 +32,7 @@
 ** Fix'd the C remainder to be more like a modulo op. Added (-1) in 
 ** negative case to handle adress[0 - 255] for 256 adresses.
 */
-# define MODFIX(x, y) (((x) % (y) < 0) ? (x) % (y) + (y - 1): (x) % (y))
+# define MODFIX(x, y) (((x) % (y) < 0) ? (x) % (y) + (y ): (x) % (y))
 
 typedef struct	s_process
 {
