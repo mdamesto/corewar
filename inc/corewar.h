@@ -76,14 +76,13 @@ t_env				*get_env(t_env *env);
 void				free_env(void);
 
 //convert.c
-//char *hex_to_str(char *hex);
-//char *hex_to_prog_size(char *hex);
 int hatole(char *str, int size);
 int revert_endian(int nb);
 
 //inst_tools
-//int 	get_inst_len(char *str);
 char **get_args(unsigned char *mem, int pc, int *tab, t_process *process);
+void	cpy_from_mem(char *dst, char *src, int siz, int pc);
+void	cpy_to_mem(char *dst, char *src, int siz, int pc);
 
 //get_champ.c
 void	get_champ(char *str, t_env *env);

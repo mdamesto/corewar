@@ -52,3 +52,25 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 	process->pc += (2 + n);
 	return (ret);
 }
+
+void	cpy_from_mem(char *dst, char *src, int siz, int pc)
+{
+	int ext;
+
+	ext = 0;
+	if ((pc + siz) >= MEM_SIZE)
+		ext = ((pc + siz) % MEM_SIZE) + 1;
+	ft_memcpy(dst, &src[pc], siz - ext);
+	ft_memcpy(&dst[siz - ext], &src[0], ext);
+}
+
+void	cpy_to_mem(char *dst, char *src, int siz, int pc)
+{
+	int ext;
+
+	ext = 0;
+	if ((pc + siz) >= MEM_SIZE)
+		ext = ((pc + siz) % MEM_SIZE) + 1;
+	ft_memcpy(&dst[pc], src, siz - ext);
+	ft_memcpy(&dst[0], &src[siz - ext], ext);
+}
