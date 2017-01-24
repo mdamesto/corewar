@@ -127,10 +127,12 @@ void	aff(char *data, char *inst)
 {
 	char	**args;
 	char 	**split;
+	char 	*args_code;
 
 	args = init_args();
 	split = ft_strsplit(data, ',');
 	ft_tab_trim(split);
+	args_code = "40";
 
 	if (!split[0] || split[1])
 		ft_error(E_ARG_NB);
@@ -143,5 +145,5 @@ void	aff(char *data, char *inst)
 
 	if (split)
 		free(split);
-	inst_to_env(inst, NULL, args);
+	inst_to_env(inst, args_code, args);
 }

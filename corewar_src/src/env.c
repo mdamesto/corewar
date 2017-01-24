@@ -9,6 +9,9 @@ void				init_env(void)
 	
 	if (!(new->champs = (t_champ**)ft_memalloc(sizeof(t_champ*) * (MAX_PLAYERS + 1))))
 		ft_error(E_MALLOC, NULL);
+	new->champs[2] = NULL;
+	new->champs[3] = NULL;
+	new->champs[4] = NULL;
 
 	ft_memset(new->mem, '\0', MEM_SIZE);
 	

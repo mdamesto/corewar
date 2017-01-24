@@ -1,6 +1,72 @@
 #include "corewar.h"
 
-int exec_ld(unsigned char *mem, int pc, t_process *process)
+int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
+{
+	int address;
+	int wait;
+	char arg0[4];
+	char arg1[1];
+
+	address = -1;
+	wait = 0;
+	ft_putstr("--------- In exec_ld_lld (exec_inst.c) ----------\n");
+
+	if (mem[pc + 1] == 0x90) // Get param 1 depend of arg_code
+	{
+		ft_memcpy(arg0, &mem[pc + 2], 4); //get arg0 (dir-4B)
+		process->pc += 6;
+	}
+	else if(mem[pc + 1] == 0xd0)
+	{
+		ft_memcpy(arg0, &mem[pc + 2], 2); //get ind (ind-2B)
+		if (mem[pc] == 0x02) //calc adress of data to get depend of op_code (IDX_MOD or not)
+		{
+			address = (pc + MODFIX(hatole(arg0, 2), IDX_MOD)) % MEM_SIZE;
+			wait = 5;
+		}
+		else
+		{
+			address = MODFIX(pc + hatole(arg0, 2), MEM_SIZE);
+			wait = 10;
+		}
+		ft_memcpy(arg0, &mem[address], REG_SIZE); //get data
+		process->pc += 4;
+	}
+	else
+	{
+		process->pc += 2;
+		exit(0);
+		return (1);
+	}
+	
+	// get param 2 (REG)
+	ft_memcpy(arg1, &mem[process->pc], 1);
+	process->pc++;
+	if (arg1[0] > 0x0f)
+		return (1);
+
+	//	Do ld
+	ft_memcpy(process->reg[GET_REGNB(arg1)], arg0, REG_SIZE);
+	process->wait_cycle = wait;
+	
+	// DEBUG
+	if (address != -1)
+	{
+		ft_putstr("adress: ");
+		ft_putnbr(address);
+		ft_putstr("\n");
+		ft_print_memory(&mem[address], 4);
+	}
+	ft_putstr("\nreg nb: ");
+	ft_putnbr(GET_REGNB(arg1) + 1);
+	ft_putstr("\n");
+	ft_print_memory(arg0, 4);
+	ft_print_memory(process->reg[GET_REGNB(arg1)], 4);
+	
+	return (0);
+}
+
+/*int exec_ld(unsigned char *mem, int pc, t_process *process)
 {
 	char address[2];
 	char arg1[4];
@@ -39,7 +105,6 @@ int exec_ld(unsigned char *mem, int pc, t_process *process)
 		return (1);
 	}
 
-	/* ----- ADRESS & ARGS -----*/
 	ft_putstr("--------- In exec_ld (exec_inst.c) ----------\n");
 	if(mem[pc + 1] == 0xd0) {
 		ft_putstr("\nadress IDX_MOD ");
@@ -50,7 +115,6 @@ int exec_ld(unsigned char *mem, int pc, t_process *process)
 	ft_putstr("arg1: ");
 	ft_print_memory(arg1, 4);
 
-	/* ------ REG LD ------ */
 	ft_putstr("\nprocess->reg[");
 	ft_putnbr(hatole(arg2, 1));
 	ft_putstr("]: ");
@@ -63,4 +127,4 @@ int exec_ld(unsigned char *mem, int pc, t_process *process)
 
 	exit(0);
 	return (0);
-}
+}*/

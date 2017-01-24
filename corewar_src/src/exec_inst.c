@@ -10,7 +10,7 @@ int	exec_inst(t_process *process, t_env *env)
 	if (mem[pc] == 0x01)
 		exec_live(mem, pc, process, env);
 	else if (mem[pc] == 0x02)
-		exec_ld(mem, pc, process);
+		exec_ld_lld(mem, pc, process);
 	else if (mem[pc] == 0x03)
 		exec_st(mem, pc, process);
 	else if (mem[pc] == 0x04)
@@ -32,13 +32,13 @@ int	exec_inst(t_process *process, t_env *env)
 	else if (mem[pc] == 0x0c)
 		return (1);
 	else if (mem[pc] == 0x0d)
-		;
+		exec_ld_lld(mem, pc, process);
 	else if (mem[pc] == 0x0e)
-		;
+		exec_ldi_lldi(mem, pc, process);
 	else if (mem[pc] == 0x0f)
-		;
+		return (1);
 	else if (mem[pc] == 0x10)
-		;
+		exec_aff(mem, pc, process);
 	else 
 		process->pc++;
 	return (0);

@@ -6,10 +6,10 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 	char 		**args;
 	int			sum;
 	int 		tab[2];
-	int 		add;
+	int 		address;
 
 	args = NULL;
-	add = 0;
+	address = 0;
 	// Set tab depend on arg_code
 	if (mem[(pc + 1) % MEM_SIZE] == 0x54) 
 		ft_memcpy(tab, "\x01\x00\x00\x00\x01\x00\x00\x00", 8); //set tab to int {1,1}
@@ -45,24 +45,18 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 	// get adress -- depend of op_code (IDX_MOD or not) 
 	if (mem[pc] == 0x0a)
 	{
-		if ((pc + (sum % IDX_MOD)) > 0)
-			add = (pc + (sum % IDX_MOD)) % MEM_SIZE;
-		else
-			add = MEM_SIZE - 1 + (pc + (sum % IDX_MOD));
+		address = (pc + MODFIX(sum, IDX_MOD)) % MEM_SIZE;
 		process->wait_cycle = 25;
 
 	}
 	else if (mem[pc] == 0x0e)
 	{
-		if ((pc + sum) > 0)
-			add = (pc + sum) % MEM_SIZE;
-		else
-			add = MEM_SIZE - 1 + (pc + sum) % MEM_SIZE;
+		address = MODFIX(pc + sum, MEM_SIZE);
 		process->wait_cycle = 50;
 	}
 	
 	// ld mem[add] in reg[arg2]
-	ft_memcpy(process->reg[hatole(args[2], 1)], &mem[add], REG_SIZE);
+	ft_memcpy(process->reg[hatole(args[2], 1)], &mem[address], REG_SIZE);
 	
 	/* --- DEBUG --- */
 	ft_putstr("\nargs[0]: ");
@@ -74,8 +68,8 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 	ft_putstr("\nsum: ");
 	ft_putnbr(sum);
 	ft_putstr("\n ");
-	ft_putstr("\nadd: ");
-	ft_putnbr(add);
+	ft_putstr("\naddress: ");
+	ft_putnbr(address);
 	ft_putstr("\n ");
 	ft_print_memory(process->reg[hatole(args[2], 1) - 1], 4);
 	exit(0);

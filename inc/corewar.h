@@ -101,7 +101,7 @@ void	play_game(t_env *env);
 int	exec_inst(t_process *process, t_env *env);
 
 int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env);
-int exec_ld(unsigned char *mem, int pc, t_process *process);
+int exec_ld_lld(unsigned char *mem, int pc, t_process *process);
 int exec_st(unsigned char *mem, int pc, t_process *process);
 int exec_add_sub(unsigned char *mem, int pc, t_process *process);
 int exec_and_or_xor(unsigned char *mem, int pc, t_process *process);
@@ -109,6 +109,7 @@ int exec_zjmp(unsigned char *mem, int pc, t_process *process);
 int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process);
 int exec_sti(unsigned char *mem, int pc, t_process *process);
 int exec_fork_lfork(int i, int j, t_env *env);
+int exec_aff(unsigned char *mem, int pc, t_process *process);
 
 #endif
 	

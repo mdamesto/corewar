@@ -7,7 +7,7 @@ void	ld_lld_and(char *data, char *inst)
 	char 	**split;
 
 
-	args_code = "50";;
+	args_code = "50";
 	args = init_args();
 	split = ft_strsplit(data, ',');
 	ft_tab_trim(split);

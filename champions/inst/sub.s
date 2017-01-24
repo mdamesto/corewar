@@ -1,5 +1,6 @@
 .name "and"
 .comment "single op"
-	
-fork %-3
+
+ld %52,r3 	
+aff r3;
 
