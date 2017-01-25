@@ -49,28 +49,81 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 			n += 4;
 		}
 	}
-	process->pc += (2 + n);
+	INC_PC(2 + n);
 	return (ret);
 }
 
-void	cpy_from_mem(char *dst, char *src, int siz, int pc)
+void	cpy_from_mem(char *dst, unsigned char *mem, int siz, int pc)
 {
 	int ext;
 
 	ext = 0;
-	if ((pc + siz) >= MEM_SIZE)
-		ext = ((pc + siz) % MEM_SIZE) + 1;
-	ft_memcpy(dst, &src[pc], siz - ext);
-	ft_memcpy(&dst[siz - ext], &src[0], ext);
+	if ((pc + siz) > MEM_SIZE)
+		ext = (pc + siz) % MEM_SIZE;
+
+	ft_memcpy(dst, &mem[pc], siz - ext);
+	ft_memcpy(&dst[siz - ext], &mem[0], ext);
+
+	// DEBUG
+	ft_putstr("*__FROM__\n");
+	/*ft_putstr("siz: ");
+	ft_putnbr(siz);
+	ft_putstr("\npc: ");
+	ft_putnbr(pc);
+	ft_putstr("\npc + siz: ");
+	ft_putnbr(pc + siz);
+	ft_putstr("\next: ");
+	ft_putnbr(ext);
+	ft_putstr("\n");*/
+	
+	ft_putstr("Copying ");
+	ft_putnbr(siz - ext);
+	ft_putstr(" Byte from mem[");
+	ft_putnbr(pc);
+	ft_putstr("] to dst\n");
+	if (ext) 
+	{
+		ft_putstr("Copying ");
+		ft_putnbr(ext);
+		ft_putstr(" Byte from mem[0] to dst[");
+		ft_putnbr(siz - ext);
+		ft_putstr("]\n");
+	}
 }
 
-void	cpy_to_mem(char *dst, char *src, int siz, int pc)
+void	cpy_to_mem(unsigned char *mem, char *src, int siz, int pc)
 {
 	int ext;
 
 	ext = 0;
-	if ((pc + siz) >= MEM_SIZE)
-		ext = ((pc + siz) % MEM_SIZE) + 1;
-	ft_memcpy(&dst[pc], src, siz - ext);
-	ft_memcpy(&dst[0], &src[siz - ext], ext);
+	if ((pc + siz) > MEM_SIZE)
+		ext = (pc + siz) % MEM_SIZE;
+	ft_memcpy(&mem[pc], src, siz - ext);
+	ft_memcpy(&mem[0], &src[siz - ext], ext);
+
+	// DEBUG
+	ft_putstr("*__TO__\n");
+	/*ft_putstr("siz: ");
+	ft_putnbr(siz);
+	ft_putstr("\npc: ");
+	ft_putnbr(pc);
+	ft_putstr("\npc + siz: ");
+	ft_putnbr(pc + siz);
+	ft_putstr("\next: ");
+	ft_putnbr(ext);
+	ft_putstr("\n");*/
+	
+	ft_putstr("Copying ");
+	ft_putnbr(siz - ext);
+	ft_putstr(" Byte from src to mem[");
+	ft_putnbr(pc);
+	ft_putstr("]\n");
+	if (ext)
+	{
+		ft_putstr("Copying ");
+		ft_putnbr(ext);
+		ft_putstr(" Byte from src[");
+		ft_putnbr(siz - ext);
+		ft_putstr("] to mem[0]\n");
+	}
 }

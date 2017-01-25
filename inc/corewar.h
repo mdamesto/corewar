@@ -25,6 +25,8 @@
 # define E_BD_OP		7
 # define E_BD_CHP_SIZ	8
 
+# define MMS(x) (x) % MEM_SIZE
+# define INC_PC(x) process->pc = MMS(process->pc + (x))
 # define GET_REGNB(x) hatole((x), 1) - 1
 # define GET_REGV(x) ft_memcpy((x), process->reg[GET_REGNB((x))], REG_SIZE)
 # define GET_INDV(x, y) ft_memcpy((x), &mem[(y) + (hatole((x), 2) % IDX_MOD)], REG_SIZE)
@@ -81,8 +83,8 @@ int revert_endian(int nb);
 
 //inst_tools
 char **get_args(unsigned char *mem, int pc, int *tab, t_process *process);
-void	cpy_from_mem(char *dst, char *src, int siz, int pc);
-void	cpy_to_mem(char *dst, char *src, int siz, int pc);
+void	cpy_from_mem(char *dst, unsigned char *src, int siz, int pc);
+void	cpy_to_mem(unsigned char *dst, char *src, int siz, int pc);
 
 //get_champ.c
 void	get_champ(char *str, t_env *env);
@@ -109,6 +111,16 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process);
 int exec_sti(unsigned char *mem, int pc, t_process *process);
 int exec_fork_lfork(int i, int j, t_env *env);
 int exec_aff(unsigned char *mem, int pc, t_process *process);
+
+//args_switch.c
+int		args_switch(char code, int *tab, t_process *process, int op);
+
+
+
+# define DBG_INSTS 1
+# define DBG_STI 0
+# define DBG_LIVE 0
+# define DBG_LD 0
 
 #endif
 	

@@ -1,6 +1,6 @@
 .name "and"
 .comment "single op"
 
-ld %52,r3 	
-aff r3;
+sti	r1, %:live, %1
+live: live %1
 
