@@ -24,7 +24,7 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 	{
 		if (tab[i] == 1)
 		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 1);
+			ft_memcpy(ret[i], &mem[pc + n], 1);
 			if (tab[i] == 1 && ret[i][0] > 0x0f)
 				return (ret = NULL);
 			GET_REGV(ret[i]);
@@ -33,23 +33,23 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 		}
 		else if (tab[i] == 2)
 		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 2);
-			GET_INDV(ret[i], pc);
+			ft_memcpy(ret[i], &mem[pc + n], 2);
+			GET_INDV(ret[i], pc - 2);
 			n += 2;
 		}
 		else if (tab[i] == 3)
 		{
 			ft_memset(ret[i], 0x00, 2);
-			ft_memcpy(&ret[i][2], &mem[pc + 2 + n], 2);
+			ft_memcpy(&ret[i][2], &mem[pc + n], 2);
 			n += 2;
 		}
 		else if (tab[i] == 4)
 		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 4);
+			ft_memcpy(ret[i], &mem[pc + n], 4);
 			n += 4;
 		}
 	}
-	INC_PC(2 + n);
+	INC_PC(n);
 	return (ret);
 }
 
@@ -65,8 +65,8 @@ void	cpy_from_mem(char *dst, unsigned char *mem, int siz, int pc)
 	ft_memcpy(&dst[siz - ext], &mem[0], ext);
 
 	// DEBUG
-	ft_putstr("*__FROM__\n");
-	/*ft_putstr("siz: ");
+	/*ft_putstr("*__FROM__\n");
+	ft_putstr("siz: ");
 	ft_putnbr(siz);
 	ft_putstr("\npc: ");
 	ft_putnbr(pc);
@@ -74,7 +74,7 @@ void	cpy_from_mem(char *dst, unsigned char *mem, int siz, int pc)
 	ft_putnbr(pc + siz);
 	ft_putstr("\next: ");
 	ft_putnbr(ext);
-	ft_putstr("\n");*/
+	ft_putstr("\n");
 	
 	ft_putstr("Copying ");
 	ft_putnbr(siz - ext);
@@ -88,7 +88,7 @@ void	cpy_from_mem(char *dst, unsigned char *mem, int siz, int pc)
 		ft_putstr(" Byte from mem[0] to dst[");
 		ft_putnbr(siz - ext);
 		ft_putstr("]\n");
-	}
+	}*/
 }
 
 void	cpy_to_mem(unsigned char *mem, char *src, int siz, int pc)
@@ -102,8 +102,8 @@ void	cpy_to_mem(unsigned char *mem, char *src, int siz, int pc)
 	ft_memcpy(&mem[0], &src[siz - ext], ext);
 
 	// DEBUG
-	ft_putstr("*__TO__\n");
-	/*ft_putstr("siz: ");
+	/*ft_putstr("*__TO__\n");
+	ft_putstr("siz: ");
 	ft_putnbr(siz);
 	ft_putstr("\npc: ");
 	ft_putnbr(pc);
@@ -111,7 +111,7 @@ void	cpy_to_mem(unsigned char *mem, char *src, int siz, int pc)
 	ft_putnbr(pc + siz);
 	ft_putstr("\next: ");
 	ft_putnbr(ext);
-	ft_putstr("\n");*/
+	ft_putstr("\n");
 	
 	ft_putstr("Copying ");
 	ft_putnbr(siz - ext);
@@ -125,5 +125,5 @@ void	cpy_to_mem(unsigned char *mem, char *src, int siz, int pc)
 		ft_putstr(" Byte from src[");
 		ft_putnbr(siz - ext);
 		ft_putstr("] to mem[0]\n");
-	}
+	}*/
 }

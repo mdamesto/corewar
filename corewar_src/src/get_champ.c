@@ -73,6 +73,29 @@ void	split_header_prog(int fd, t_champ *champ)
 		ft_error(E_BD_CHP_SIZ, NULL);
 }
 
+void static debug_champ(int i, t_champ *new)
+{
+	ft_putstr("\n---- CHAMPS ----\n");
+	ft_putstr("\ni: ");
+	ft_putnbr(i - 1);
+	ft_putstr("\n");
+	ft_putstr("\nChamp number: ");
+	ft_putnbr(new->nb);
+	ft_putstr("\n");
+	ft_putstr("champ name: ");
+	ft_putstr(new->name);
+	ft_putstr("\n");
+	ft_putstr("champ size: ");
+	ft_putnbr(new->size);
+	ft_putstr("\n");
+	ft_putstr("champ comment: ");
+	ft_putstr(new->comment);
+	ft_putstr("\n");
+	ft_putstr("champ inst: \n");
+	ft_print_memory(new->inst, new->size);
+	ft_putstr("\n");
+}
+
 void	get_champ(char *str, t_env *env)
 {
 	static int i = 0;
@@ -94,25 +117,7 @@ void	get_champ(char *str, t_env *env)
 	else
 		new->nb = get_champ_nb(env, i);
 	env->champs[i++] = new;
-	
-	/* ------- NEW CHAMP -----------*/
-	ft_putstr("\n---- In get_champ() (get_champs.c) ----\n");
-	ft_putstr("\ni: ");
-	ft_putnbr(i - 1);
-	ft_putstr("\n");
-	ft_putstr("\nChamp number: ");
-	ft_putnbr(new->nb);
-	ft_putstr("\n");
-	ft_putstr("champ name: ");
-	ft_putstr(new->name);
-	ft_putstr("\n");
-	ft_putstr("champ size: ");
-	ft_putnbr(new->size);
-	ft_putstr("\n");
-	ft_putstr("champ comment: ");
-	ft_putstr(new->comment);
-	ft_putstr("\n");
-	ft_putstr("champ inst: \n");
-	ft_print_memory(new->inst, new->size);
-	ft_putstr("\n");
+
+	if (DBG_CHAMP)
+		debug_champ(i, new);
 }

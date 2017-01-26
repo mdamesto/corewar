@@ -27,14 +27,15 @@
 
 # define MMS(x) (x) % MEM_SIZE
 # define INC_PC(x) process->pc = MMS(process->pc + (x))
+# define INV_CARRY (process->carry ? (process->carry = 0): (process->carry = 1))
 # define GET_REGNB(x) hatole((x), 1) - 1
 # define GET_REGV(x) ft_memcpy((x), process->reg[GET_REGNB((x))], REG_SIZE)
-# define GET_INDV(x, y) ft_memcpy((x), &mem[(y) + (hatole((x), 2) % IDX_MOD)], REG_SIZE)
+# define GET_INDV(x, y) cpy_from_mem((x), mem, REG_SIZE, MMS((y) + MODFIX(hatole((x), 2), IDX_MOD)))
 /*
 ** Fix'd the C remainder to be more like a modulo op. Added (-1) in 
 ** negative case to handle adress[0 - 255] for 256 adresses.
 */
-# define MODFIX(x, y) (((x) % (y) < 0) ? (x) % (y) + (y ): (x) % (y))
+# define MODFIX(x, y) (((x) % (y) < 0) ? (x) % (y) + (y): (x) % (y))
 
 typedef struct	s_process
 {
@@ -80,6 +81,7 @@ void				free_env(void);
 //convert.c
 int hatole(char *str, int size);
 int revert_endian(int nb);
+void revert_bytes(char *str, int len);
 
 //inst_tools
 char **get_args(unsigned char *mem, int pc, int *tab, t_process *process);
@@ -92,14 +94,17 @@ void	get_champ(char *str, t_env *env);
 //parse_args.c
 void	parse_args(int argc, char **argv, t_env *env);
 
-//init_champs.c
-void	init_champs(t_env *env);
+//init_process.c
+void	init_process(t_env *env);
+void	print_process(t_process *process);
+t_process *new_process(int pc, int nb);
+t_process *fork_process(int pc, t_process *process);
 
 //play_game.c
 void	play_game(t_env *env);
 
 //exec_inst
-int	exec_inst(t_process *process, t_env *env);
+int	exec_inst(t_process *process, t_env *env, int i, int j);
 
 int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env);
 int exec_ld_lld(unsigned char *mem, int pc, t_process *process);
@@ -113,14 +118,24 @@ int exec_fork_lfork(int i, int j, t_env *env);
 int exec_aff(unsigned char *mem, int pc, t_process *process);
 
 //args_switch.c
-int		args_switch(char code, int *tab, t_process *process, int op);
+int		args_switch(unsigned char code, int *tab, int op);
 
 
+# define DBG_CHAMP 1
+# define DBG_MEM 0
+# define DBG_PRCS 0
 
-# define DBG_INSTS 1
+# define DBG_INSTS 0
 # define DBG_STI 0
 # define DBG_LIVE 0
-# define DBG_LD 0
+# define DBG_LD 1
+# define DBG_ST 0
+# define DBG_ADD 1
+# define DBG_OR 1
+# define DBG_ZJMP 1
+# define DBG_LDI 0
+# define DBG_FORK 0
+# define DBG_AFF 0
 
 #endif
 	

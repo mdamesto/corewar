@@ -20,7 +20,7 @@ void				init_env(void)
 	new->cycle_to_die = CYCLE_TO_DIE;
 	new->current_cycle = 0;
 
-	if (!(new->lives = (int *)ft_memalloc(sizeof(int) * 100)))
+	if (!(new->lives = (int *)ft_memalloc(sizeof(int) * 1000)))
 		ft_error(E_MALLOC, NULL);
 	new->lives_nb = 0;
 

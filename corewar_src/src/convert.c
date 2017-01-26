@@ -34,3 +34,17 @@ int revert_endian(int nb)
 	ft_memcpy(&nb, str, 4);
 	return (nb);
 }
+
+void revert_bytes(char *str, int len)
+{
+	char tmp;
+	int i;
+
+	i = -1;
+	while (--len > ++i)
+	{
+		tmp = str[i];
+		str[i] = str[len];
+		str[len] = tmp;
+	}
+}

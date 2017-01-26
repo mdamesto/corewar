@@ -1,6 +1,7 @@
 .name "and"
 .comment "single op"
 
-sti	r1, %:live, %1
-live: live %1
+and %12000, 0, r1
+or %12000, 0, r1
+xor %12000, 0, r1
 

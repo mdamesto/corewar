@@ -54,7 +54,7 @@ void	parse_args(int argc, char **argv, t_env *env)
 		else
 			get_champ(argv[i], env);
 	}
-	if (!env->champs[1])
-		ft_error(E_CHP_NB, NULL);
+	//if (!env->champs[1])
+		//ft_error(E_CHP_NB, NULL);
 	//sort_by_champ_nb(env); ----------------- TODO
 }

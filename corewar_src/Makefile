@@ -13,7 +13,7 @@
 NAME = ../corewar
 
 SRC_NAME = main.c env.c error.c convert.c inst_tools.c get_champ.c parse_args.c\
-		init_champs.c play_game.c exec_inst.c args_switch.c\
+		init_process.c play_game.c exec_inst.c args_switch.c\
 		i_live.c i_ld_lld.c i_st.c i_add_sub.c i_and_or_xor.c i_zjmp.c\
 		i_ldi_lldi.c i_sti.c i_fork_lfork.c i_aff.c
 SRC_PATH = ./src/

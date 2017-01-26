@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 	init_env();
 	env = get_env(NULL);
 	parse_args(argc, argv, env);
-	init_champs(env);
+	init_process(env);
 	play_game(env);
 
 	return 0;

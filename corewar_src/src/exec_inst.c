@@ -1,6 +1,6 @@
 #include "corewar.h"
 
-int	exec_inst(t_process *process, t_env *env)
+int	exec_inst(t_process *process, t_env *env, int i, int j)
 {
 	unsigned char *mem;
 	uint32_t pc; 
@@ -40,6 +40,17 @@ int	exec_inst(t_process *process, t_env *env)
 	else if (mem[pc] == 0x10)
 		exec_aff(mem, pc, process);
 	else 
-		process->pc++;
+	{
+		return (1);
+		INC_PC(1);
+	}
+	ft_putstr("**PLAYER [");
+	ft_putnbr(i + 1);
+	ft_putstr("] -- Process [");
+	ft_putnbr(j + 1);
+	ft_putstr("] -- PC: ");
+	ft_putnbr(env->champs[i]->process[j]->pc);
+	ft_putstr("\n");
+
 	return (0);
 }
