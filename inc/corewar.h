@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "op.h"
+# include "ncurses.h"
 
 # define E_MALLOC		1
 # define E_BD_ARG 		2
@@ -55,6 +56,7 @@ typedef struct	s_champ
 	int 	nb;
 	t_process **process;
 	bool	alive;
+	int 	color;
 }				t_champ;
 
 typedef struct	s_env
@@ -63,12 +65,15 @@ typedef struct	s_env
 	t_champ 	**champs;
 	int			cycle_to_die;
 	int 		current_cycle;
+	int 		cycle;
 	int			*lives;
 	int 		lives_nb;
 	int			dump;
 	int			next_champ_nb;
 	bool		end;
 }				t_env;
+
+void render(t_env *env);
 
 //error.c
 void	ft_error(int code, char *str);
@@ -128,11 +133,11 @@ int		args_switch(unsigned char code, int *tab, int op);
 # define DBG_INSTS 0
 # define DBG_STI 0
 # define DBG_LIVE 0
-# define DBG_LD 1
+# define DBG_LD 0
 # define DBG_ST 0
-# define DBG_ADD 1
-# define DBG_OR 1
-# define DBG_ZJMP 1
+# define DBG_ADD 0
+# define DBG_OR 0
+# define DBG_ZJMP 0
 # define DBG_LDI 0
 # define DBG_FORK 0
 # define DBG_AFF 0

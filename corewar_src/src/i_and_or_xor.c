@@ -14,7 +14,7 @@ static void	debug_or(char **args, int sum)
 
 int exec_and_or_xor(unsigned char *mem, int pc, t_process *process)
 {
-	ft_putstr("\n--------- AND_OR_XOR ----------\n");
+	//ft_putstr("\n--------- AND_OR_XOR ----------\n");
 	char 		**args;
 	uint32_t	sum;
 	int 		tab[2];
@@ -26,8 +26,6 @@ int exec_and_or_xor(unsigned char *mem, int pc, t_process *process)
 
 	if (!(args = get_args(mem, MMS(pc + 2), tab, process)))
 			return (1);
-	ft_print_memory(args[0], 4);
-	ft_print_memory(args[1], 4);
 	
 	cpy_from_mem(args[2], mem, 1, MMS(process->pc));
 	INC_PC(1);

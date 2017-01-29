@@ -44,13 +44,14 @@ int	exec_inst(t_process *process, t_env *env, int i, int j)
 		return (1);
 		INC_PC(1);
 	}
-	ft_putstr("**PLAYER [");
+	i = j;
+	/*ft_putstr("**PLAYER [");
 	ft_putnbr(i + 1);
 	ft_putstr("] -- Process [");
 	ft_putnbr(j + 1);
 	ft_putstr("] -- PC: ");
 	ft_putnbr(env->champs[i]->process[j]->pc);
-	ft_putstr("\n");
+	ft_putstr("\n");*/
 
 	return (0);
 }

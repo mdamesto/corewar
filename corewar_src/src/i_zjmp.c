@@ -15,7 +15,7 @@ static void	debug_zjmp(int pc, t_process *process)
 int exec_zjmp(unsigned char *mem, int pc, t_process *process)
 {
 	
-	ft_putstr("\n--------- ZJMP ----------\n");
+	//ft_putstr("\n--------- ZJMP ----------\n");
 	char arg[2];
 
 	ft_memcpy(arg, &mem[pc + 1], 2);

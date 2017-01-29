@@ -39,7 +39,7 @@ CC = gcc
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(INC) $^ -o $@ $(LDFLAGS)
+	$(CC) $(INC) -lncurses $^ -o $@ $(LDFLAGS)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)

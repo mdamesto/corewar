@@ -20,7 +20,7 @@ static void	debug_fork(char *arg, t_process *process, t_process *fork )
 
 int exec_fork_lfork(int i, int j, t_env *env)
 {
-	ft_putstr("\n--------- FORK_LFORK ----------\n");
+	//ft_putstr("\n--------- FORK_LFORK ----------\n");
 	t_process *process;
 	t_process *fork;
 	char arg[2];
@@ -44,13 +44,13 @@ int exec_fork_lfork(int i, int j, t_env *env)
 
 	fork = fork_process(fork_pc, process);
 
-	ft_putstr("arg: ");
+	/*ft_putstr("arg: ");
 	ft_putnbr(*(short int*)arg);
 	ft_putstr(" pc: ");
 	ft_putnbr(process->pc);
 	ft_putstr(" fork pc: ");
 	ft_putnbr(fork_pc);
-	ft_putstr("\n");
+	ft_putstr("\n");*/
 	
 	INC_PC(3);
 	while (env->champs[i]->process[++j])

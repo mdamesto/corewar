@@ -11,7 +11,7 @@ static void	debug_add(char **args, int i)
 
 int exec_add_sub(unsigned char *mem, int pc, t_process *process)
 {
-	ft_putstr("\n--------- ADD_SUB ----------\n");
+	//ft_putstr("\n--------- ADD_SUB ----------\n");
 	int i;
 
 	int tab[2];

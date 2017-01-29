@@ -12,7 +12,7 @@ static void	debug_aff(char c)
 
 int exec_aff(unsigned char *mem, int pc, t_process *process)
 {
-	ft_putstr("--------- AFF ----------\n");
+	//ft_putstr("--------- AFF ----------\n");
 	char arg[4];
 	int c;
 

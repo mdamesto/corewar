@@ -20,7 +20,7 @@ static void	debug_ldi(char **args, int address, t_process *process)
 
 int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 {
-	ft_putstr("\n--------- LDI_LLDI ----------\n");
+	//ft_putstr("\n--------- LDI_LLDI ----------\n");
 	char 		**args;
 	int 		tab[2];
 	int 		address;

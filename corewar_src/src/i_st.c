@@ -23,7 +23,7 @@ static void	debug_st(unsigned char *mem, char *arg0, char *arg1, int pc)
 
 int exec_st(unsigned char *mem, int pc, t_process *process)
 {
-	ft_putstr("\n--------- ST ----------\n");
+	//ft_putstr("\n--------- ST ----------\n");
 	char arg0[1];
 	char arg1[2];
 

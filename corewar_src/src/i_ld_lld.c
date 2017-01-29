@@ -18,7 +18,7 @@ static void	debug_ld(unsigned char *mem, char *arg1, int address, t_process *pro
 
 int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
 {
-	ft_putstr("\n--------- LD_LLD ----------\n");
+	//ft_putstr("\n--------- LD_LLD ----------\n");
 	//-------------------------- TODO (clean it)
 	int address;
 	int wait;

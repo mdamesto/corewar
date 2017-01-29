@@ -10,7 +10,7 @@ static void	debug_live(char *tmp)
 
 int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env)
 {
-	ft_putstr("\n--------- LIVE ----------\n");
+	//ft_putstr("\n--------- LIVE ----------\n");
 	char tmp[4];
 
 	cpy_from_mem(tmp, mem, 4, MMS(pc + 1));

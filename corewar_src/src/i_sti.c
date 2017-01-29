@@ -20,7 +20,7 @@ static void	debug_sti(unsigned char *mem, char **args, int address)
 
 int exec_sti(unsigned char *mem, int pc, t_process *process)
 {
-	ft_putstr("\n--------- STI ----------\n");
+	//ft_putstr("\n--------- STI ----------\n");
 	char 		**args;
 	int 		tab[2];
 	int			sum;
