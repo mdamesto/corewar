@@ -33,7 +33,7 @@ void  ilight_pc(t_env *env, t_champ **champs, WINDOW *main)
     j = 0;
     while(champs[i]->process[j])
     {
-      printw("pc: %d ", champs[i]->process[j]->pc);
+      //printw("pc: %d ", champs[i]->process[j]->pc);
       str[0] = hex[env->mem[champs[i]->process[j]->pc] / 16];
       str[1] = hex[env->mem[champs[i]->process[j]->pc] % 16];
       if (j == 0)
@@ -57,25 +57,19 @@ void render(t_env *env)
   WINDOW *menu;
   char *str;
   int i;
-  char ch;
-
-  initscr();
-  raw();
-  start_color();
-  init_pair(1, COLOR_RED, COLOR_BLACK);
-  init_pair(2, COLOR_GREEN, COLOR_BLACK);
-  init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-  init_pair(4, COLOR_WHITE, COLOR_BLACK);
-  init_pair(5, COLOR_RED, COLOR_BLUE);
-  init_pair(6, COLOR_GREEN, COLOR_BLUE);
-  init_pair(7, COLOR_YELLOW, COLOR_BLUE);
-  init_pair(8, COLOR_WHITE, COLOR_BLUE);
-  init_pair(9, COLOR_BLACK, COLOR_WHITE);
 
   main = subwin(stdscr, 50, 193, 1, 1);
   menu = subwin(stdscr, 50, 50, 1, 196);
   wbkgd(main, COLOR_PAIR(9));
   wbkgd(menu, COLOR_PAIR(9));
+  
+  if (!env)
+  {
+    endwin();
+    free(main);
+    free(menu);
+    exit(0);
+  }
 
   i = 0;
   while (i < 64)
@@ -86,36 +80,54 @@ void render(t_env *env)
   }
   ilight_pc(env, env->champs, main);
 
+  werase(menu);
   mvwprintw(menu ,0 , 0, "Cycle: %d", env->cycle);
-  mvwprintw(menu ,1 , 0, "Player 1 waiting cycle: %d", env->champs[0]->process[0]->wait_cycle);
+  mvwprintw(menu ,1 , 0, "Cycle to die: %d", env->cycle_to_die);
+  mvwprintw(menu ,2 , 0, "Lives number: %d", env->lives_nb);
 
-  ch = getch();
-  if (ch == 'e')
-  {
-    endwin();
-    free(main);
-    exit(0);
-  }
-  else
-  {
-    wrefresh(main);
-    wrefresh(menu);
-  }
+  mvwprintw(menu ,12 , 0, "Player 1 waiting cycle: %d", env->champs[0]->process[0]->wait_cycle);
+  if (env->champs[1])
+    mvwprintw(menu ,13 , 0, "Player 2 waiting cycle: %d", env->champs[1]->process[0]->wait_cycle);
+  if (env->champs[2])
+    mvwprintw(menu ,14 , 0, "Player 2 waiting cycle: %d", env->champs[2]->process[0]->wait_cycle);
+  if (env->champs[3])
+    mvwprintw(menu ,15 , 0, "Player 2 waiting cycle: %d", env->champs[3]->process[0]->wait_cycle);
+
+  wrefresh(main);
+  wrefresh(menu);
 }
 
 
 int main(int argc, char **argv)
-{
-	
+{	
   t_env *env;
 
 	init_env();
 	env = get_env(NULL);
 	parse_args(argc, argv, env);
 	init_process(env);
-	play_game(env);
-  //render(env);
 	
+  if (DISPLAY)
+  {
+    initscr();
+    cbreak();
+    noecho();
+    nodelay(stdscr, TRUE);
+    scrollok(stdscr, TRUE);
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(4, COLOR_WHITE, COLOR_BLACK);
+    init_pair(5, COLOR_RED, COLOR_BLUE);
+    init_pair(6, COLOR_GREEN, COLOR_BLUE);
+    init_pair(7, COLOR_YELLOW, COLOR_BLUE);
+    init_pair(8, COLOR_WHITE, COLOR_BLUE);
+    init_pair(9, COLOR_BLACK, COLOR_WHITE);
+  }
+  
+  play_game(env);
+  free(env);
   return 0;
 }
 

@@ -26,7 +26,8 @@ void	remove_comment(t_env *env)
 	env->line = tmp;
 }
 
-int 	check_empty_line(char *line){
+int 	check_empty_line(char *line)
+{
 	int i;
 
 	i = 0;
@@ -43,7 +44,6 @@ int gnl(void)
 {
 	int ret;
 	int loop;
-	char *tmp;
 	t_env *env;
 
 	loop = 1;
@@ -57,8 +57,6 @@ int gnl(void)
 		remove_comment(env);
 		loop = check_empty_line(env->line);
 	}
-	tmp = env->line;
-	env->line = ft_strtrim(env->line);
-	free(tmp);
+	env->line = ft_strtrim_f(env->line);
 	return (ret);
 }

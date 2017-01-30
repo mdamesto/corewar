@@ -68,6 +68,7 @@ typedef struct	s_env
 	int 		cycle;
 	int			*lives;
 	int 		lives_nb;
+	int 		lives_tab_size;
 	int			dump;
 	int			next_champ_nb;
 	bool		end;
@@ -125,6 +126,8 @@ int exec_aff(unsigned char *mem, int pc, t_process *process);
 //args_switch.c
 int		args_switch(unsigned char code, int *tab, int op);
 
+
+# define DISPLAY 0
 
 # define DBG_CHAMP 1
 # define DBG_MEM 0

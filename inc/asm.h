@@ -89,6 +89,7 @@ void	ft_error(int code);
 
 //gnl.c
 int gnl(void);
+int 	check_empty_line(char *line);
 
 //parsing.c
 void	parsing_champion(t_env *env);

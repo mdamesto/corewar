@@ -2,6 +2,7 @@
 
 static void	debug_fork(char *arg, t_process *process, t_process *fork )
 {
+	ft_putstr("\n--------- FORK_LFORK ----------\n");
 	ft_putstr("arg: ");
 	ft_putnbr(hatole(arg, 2));
 	ft_print_memory(arg, 2);
@@ -20,7 +21,6 @@ static void	debug_fork(char *arg, t_process *process, t_process *fork )
 
 int exec_fork_lfork(int i, int j, t_env *env)
 {
-	//ft_putstr("\n--------- FORK_LFORK ----------\n");
 	t_process *process;
 	t_process *fork;
 	char arg[2];
@@ -41,7 +41,6 @@ int exec_fork_lfork(int i, int j, t_env *env)
 		INV_CARRY;
 		fork_pc = MODFIX(process->pc + *(short int*)arg, MEM_SIZE);
 	}
-
 	fork = fork_process(fork_pc, process);
 
 	/*ft_putstr("arg: ");
@@ -52,10 +51,14 @@ int exec_fork_lfork(int i, int j, t_env *env)
 	ft_putnbr(fork_pc);
 	ft_putstr("\n");*/
 	
-	INC_PC(3);
 	while (env->champs[i]->process[++j])
 		;
+	if(!(env->champs[i]->process = realloc(env->champs[i]->process, sizeof(t_process*) * (j + 2))))
+		ft_error(E_MALLOC, NULL);
 	env->champs[i]->process[j] = fork;
+	env->champs[i]->process[j + 1] = NULL;
+	INC_PC(3);
+
 	if (DBG_INSTS || DBG_FORK)
 		debug_fork(&arg[0], process, fork);
 	return (0);

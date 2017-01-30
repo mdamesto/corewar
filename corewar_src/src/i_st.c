@@ -3,7 +3,7 @@
 static void	debug_st(unsigned char *mem, char *arg0, char *arg1, int pc)
 {
 	ft_putstr("--------- ST ----------\n");
-	ft_putstr("\nCopying reg[");
+	ft_putstr("Copying reg[");
 	ft_putnbr(GET_REGNB(arg0));
 	ft_putstr("]: to ");
 	if (mem[MMS(pc + 1)] == 0x50)

@@ -39,14 +39,14 @@ int 	get_champ_nb(t_env *env, int i)
 	return n;
 }
 
-int get_size(char *data)
+int get_size(unsigned char *data)
 {
 	int ret;
 
 	if (data[0] || data[1])
 		ft_error(E_BD_CHP_SIZ, NULL);
 	ret = 0;
-	ret = data[3] + data[2] * 16;
+	ret = data[3] + data[2] * 256;
 	return (ret);
 }
 
@@ -61,11 +61,15 @@ void	split_header_prog(int fd, t_champ *champ)
 	
 	ft_memcpy(champ->name, &data[4], PROG_NAME_LENGTH);
 	ft_memcpy(tmp, &data[4 + PROG_NAME_LENGTH + 4], 4);
-	champ->size = get_size(tmp);
+	champ->size = get_size((unsigned char*)tmp);
 	ft_memcpy(champ->comment, &data[4 + PROG_NAME_LENGTH + 8], COMMENT_LENGTH);
+	ft_putstr("\nchamp->size: ");
+	ft_putnbr(champ->size);
 	ft_memcpy(champ->inst, &data[4 + PROG_NAME_LENGTH + 8 + COMMENT_LENGTH + 4], champ->size);
-	if (!(champ->process = ft_memalloc(sizeof(t_process*) * 100))) //imp a good method to realloc it ---- TODO
+	if (!(champ->process = malloc(sizeof(t_process*) * 2)))
 		ft_error(E_MALLOC, NULL);
+	champ->process[0] = NULL;
+	champ->process[1] = NULL;
 	champ->alive = true;
 
 	ft_putnbr(champ->size);

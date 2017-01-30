@@ -34,7 +34,10 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 	cpy_from_mem(args[2], mem, 1, process->pc);
 	INC_PC(1);
 	if (*args[2] > 0x0f)
+	{
+		ft_tab_free(args);
 		return (1);
+	}
 	
 	sum = hatole(args[0], 4) + hatole(args[1], 4);
 	
@@ -54,5 +57,7 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 	
 	if (DBG_INSTS || DBG_LDI)
 		debug_ldi(args, address, process);
+
+	ft_tab_free(args);
 	return (0);
 }

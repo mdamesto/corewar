@@ -72,8 +72,8 @@ void				free_env(void) {
 			free(env->filename);
 		if (env->line)
 			free(env->line);
-		if (env->data)
-			ft_tab_free(env->data);
+		//if (env->data)
+			//ft_tab_free(env->data);
 		//free lists Label Instr
 		free(env);
 	}

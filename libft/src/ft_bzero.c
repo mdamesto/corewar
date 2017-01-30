@@ -20,10 +20,10 @@ void	ft_bzero(void *s, size_t n)
 	bp = s;
 	while (n > 8)
 	{
-		*bp++ = 0;
+		*bp++ = '\0';
 		n -= 8;
 	}
 	sp = (char *)bp;
 	while (n--)
-		*sp++ = 0; 
+		*sp++ = '\0'; 
 }

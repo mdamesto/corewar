@@ -14,6 +14,11 @@ int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env)
 	char tmp[4];
 
 	cpy_from_mem(tmp, mem, 4, MMS(pc + 1));
+	if (env->lives_nb >= env->lives_tab_size)
+	{
+		env->lives_tab_size *= 2;
+		env->lives = realloc(env->lives, sizeof(int) * env->lives_tab_size);
+	}
 	env->lives[env->lives_nb++] = hatole(tmp, 4);
 	process->wait_cycle = 10;
 	INC_PC(5);

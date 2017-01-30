@@ -2,6 +2,7 @@
 
 static void	debug_ld(unsigned char *mem, char *arg1, int address, t_process *process)
 {
+	ft_putstr("\n--------- LD_LLD ----------\n");
 	if (address != -1)
 	{
 		ft_putstr("adress: ");
@@ -33,6 +34,11 @@ int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
 	{
 		cpy_from_mem(arg0, mem, 4, MMS(pc + 2));
 		INC_PC(4);
+		if (mem[pc] == 0x02)
+			wait = 5;
+		else
+			wait = 10;
+
 	}
 	else if(mem[MMS(pc + 1)] == 0xd0)
 	{

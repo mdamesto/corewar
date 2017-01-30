@@ -27,17 +27,17 @@ static	int		check_dir(char *arg)
 	int nb;
 
 	tmp = ft_strnew(10);
-	if (arg[1] != LABEL_CHAR)
+	if (arg[1] != LABEL_CHAR) // if label -> skip check
 	{
 		i = 1;
 		while (arg[i])
 		{
 			tmp[i - 1] = arg[i];
-			if (i > 10 || !ft_isdigit(arg[i++]))
+			if ((!ft_isdigit(arg[i]) && arg[i] != '-') || i++ > 10)
 				ft_error(E_BD_DIR);
 		}
 		nb = ft_atoi(tmp);
-		if (nb < 0 || nb > 2147483647)
+		if ((unsigned)nb > 4294967295)
 			ft_error(E_BD_DIR);
 	}
 	return (2);
@@ -55,12 +55,13 @@ static	int		check_ind(char *arg)
 		i = 0;
 		while (arg[i])
 		{
-			tmp[i - 1] = arg[i];
-			if (i > 5 || !ft_isdigit(arg[i++]))
+			tmp[i] = arg[i];
+			ft_putchar(arg[i]);
+			if ((!ft_isdigit(arg[i]) && arg[i] != '-') || i++ > 5)
 				ft_error(E_BD_IND);
 		}
 		nb = ft_atoi(tmp);
-		if (nb < 0 || nb > 65535)
+		if (nb < -32768 || nb > 65535)
 			ft_error(E_BD_IND);
 	}
 	return (3);

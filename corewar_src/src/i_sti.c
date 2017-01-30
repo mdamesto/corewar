@@ -34,7 +34,10 @@ int exec_sti(unsigned char *mem, int pc, t_process *process)
 	cpy_from_mem(args[2], mem, 1, MMS(pc + 2));
 	INC_PC(1);
 	if (*args[2] > 0x0f)
+	{
+		ft_tab_free(args);
 		return (1);
+	}
 	
 	sum = hatole(args[0], 4) + hatole(args[1], 4);
 	address = MMS((pc + MODFIX(sum, IDX_MOD)));
@@ -44,5 +47,6 @@ int exec_sti(unsigned char *mem, int pc, t_process *process)
 	if (DBG_INSTS || DBG_STI)
 		debug_sti(mem, args, address);
 	
+	ft_tab_free(args);
 	return (0);
 }

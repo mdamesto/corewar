@@ -50,3 +50,33 @@ char		*ft_strtrim(char const *s)
 	}
 	return (c);
 }
+
+char		*ft_strtrim_f(char *s)
+{
+	char	*c;
+	char	*r;
+	int		i;
+	int		j;
+
+	if (s == NULL)
+		return (NULL);
+	i = ft_start(s);
+	j = 0;
+	while (s[j])
+		j++;
+	if (i == j)
+		return (ft_strnew(0));
+	j--;
+	while (s[j] == ' ' || s[j] == ' ' || s[j] == '\n' || s[j] == '\t')
+		j--;
+	c = ft_strnew(j - i + 1);
+	r = c;
+	while (i <= j)
+	{
+		*r = s[i];
+		r++;
+		i++;
+	}
+	free(s);
+	return (c);
+}

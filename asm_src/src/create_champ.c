@@ -79,3 +79,4 @@ void			create_champion(t_env *env)
 	ft_putstr(ft_strjoin(env->filename, ".cor"));
 	ft_putstr("\n");
 }
+

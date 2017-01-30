@@ -30,7 +30,10 @@ int exec_and_or_xor(unsigned char *mem, int pc, t_process *process)
 	cpy_from_mem(args[2], mem, 1, MMS(process->pc));
 	INC_PC(1);
 	if (*args[2] > 0x0f)
+	{
+		ft_tab_free(args);
 		return (1);
+	}
 
 	if (mem[pc] == 0x06) 							//	if and
 		sum = *(int*)args[0] & *(int*)args[1];
@@ -49,5 +52,7 @@ int exec_and_or_xor(unsigned char *mem, int pc, t_process *process)
 	
 	if (DBG_INSTS || DBG_OR)
 		debug_or(args, sum);
+	
+	ft_tab_free(args);
 	return (0);
 }
