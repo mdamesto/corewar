@@ -29,5 +29,6 @@ int exec_aff(unsigned char *mem, int pc, t_process *process)
 
 	if (DBG_INSTS || DBG_AFF)
 		debug_aff(c);
+	
 	return (0);
 }

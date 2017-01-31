@@ -5,6 +5,8 @@ static void	debug_fork(char *arg, t_process *process, t_process *fork )
 	ft_putstr("\n--------- FORK_LFORK ----------\n");
 	ft_putstr("arg: ");
 	ft_putnbr(hatole(arg, 2));
+	process = NULL;
+	fork = NULL;
 	ft_print_memory(arg, 2);
 	ft_putstr("\nprocess->pc + MODFIX(hatole(arg, 4), IDX_MOD):  ");
 	ft_putnbr(process->pc + MODFIX(hatole(arg, 4), IDX_MOD));
@@ -21,6 +23,7 @@ static void	debug_fork(char *arg, t_process *process, t_process *fork )
 
 int exec_fork_lfork(int i, int j, t_env *env)
 {
+	//ft_putstr("\n--------- FORK_LFORK ----------\n");
 	t_process *process;
 	t_process *fork;
 	char arg[2];
@@ -61,5 +64,7 @@ int exec_fork_lfork(int i, int j, t_env *env)
 
 	if (DBG_INSTS || DBG_FORK)
 		debug_fork(&arg[0], process, fork);
+
+	process->carry = 0;
 	return (0);
 }

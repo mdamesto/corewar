@@ -29,7 +29,7 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 	INC_PC(2);
 	if(args_switch(mem[MMS(pc + 1)], tab, 2))
 		return (1);
-	if (!(args = get_args(mem, MMS(pc + 1), &tab[0], process)))
+	if (!(args = get_args(mem, pc, &tab[0], process)))
 			return (1);
 	cpy_from_mem(args[2], mem, 1, process->pc);
 	INC_PC(1);
@@ -53,7 +53,12 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 	}
 	
  	cpy_from_mem(process->reg[GET_REGNB(args[2])], mem, REG_SIZE, address);
- 	INV_CARRY;
+ 	
+ 	GET_REGV(args[2]);
+ 	if(hatole(args[2], 4) == 0)
+ 		process->carry = 1;
+	else
+		process->carry = 0;
 	
 	if (DBG_INSTS || DBG_LDI)
 		debug_ldi(args, address, process);

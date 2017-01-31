@@ -85,6 +85,10 @@ void render(t_env *env)
   mvwprintw(menu ,1 , 0, "Cycle to die: %d", env->cycle_to_die);
   mvwprintw(menu ,2 , 0, "Lives number: %d", env->lives_nb);
 
+  int reg2 = 0;
+  ft_memcpy(&reg2, env->champs[0]->process[0]->reg[1], 4);
+  revert_endian(reg2);
+  mvwprintw(menu ,11 , 0, "Player 1 reg 2 value: %d", reg2);
   mvwprintw(menu ,12 , 0, "Player 1 waiting cycle: %d", env->champs[0]->process[0]->wait_cycle);
   if (env->champs[1])
     mvwprintw(menu ,13 , 0, "Player 2 waiting cycle: %d", env->champs[1]->process[0]->wait_cycle);

@@ -127,9 +127,9 @@ int exec_aff(unsigned char *mem, int pc, t_process *process);
 int		args_switch(unsigned char code, int *tab, int op);
 
 
-# define DISPLAY 0
+# define DISPLAY 1
 
-# define DBG_CHAMP 1
+# define DBG_CHAMP 0
 # define DBG_MEM 0
 # define DBG_PRCS 0
 

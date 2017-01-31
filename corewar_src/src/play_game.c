@@ -124,7 +124,7 @@ void	play_game(t_env *env)
 					}
 				}
 				env->cycle++;
-				if (++env->current_cycle == env->cycle_to_die)
+				if (++env->current_cycle > env->cycle_to_die)
 					check_live(env);
 				render(env);
 			}
@@ -153,9 +153,16 @@ void	play_game(t_env *env)
 			if (++env->current_cycle == env->cycle_to_die)
 				check_live(env);
 			lol++;
-			if (lol == 1000)
-				//exit(0);
-				;
+			//int reg2 = 0;
+  			//ft_memcpy(&reg2, env->champs[0]->process[0]->reg[1], 4);
+  			
+  			//ft_print_memory(env->champs[0]->process[0]->reg[1], 4);
+  			
+  			//revert_endian(reg2);
+  			//ft_putstr("\nreg2: ");
+  			//ft_putnbr(reg2);
+			if (lol == 1500)
+				exit(0);
 		}
 
 	}

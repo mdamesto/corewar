@@ -24,7 +24,7 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 	{
 		if (tab[i] == 1)
 		{
-			ft_memcpy(ret[i], &mem[pc + n], 1);
+			ft_memcpy(ret[i], &mem[pc + 2 + n], 1);
 			if (tab[i] == 1 && ret[i][0] > 0x0f)
 				return (ret = NULL);
 			GET_REGV(ret[i]);
@@ -33,19 +33,19 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 		}
 		else if (tab[i] == 2)
 		{
-			ft_memcpy(ret[i], &mem[pc + n], 2);
+			ft_memcpy(ret[i], &mem[pc + 2 + n], 2);
 			GET_INDV(ret[i], pc - 2);
 			n += 2;
 		}
 		else if (tab[i] == 3)
 		{
 			ft_memset(ret[i], 0x00, 2);
-			ft_memcpy(&ret[i][2], &mem[pc + n], 2);
+			ft_memcpy(&ret[i][2], &mem[pc + 2 + n], 2);
 			n += 2;
 		}
 		else if (tab[i] == 4)
 		{
-			ft_memcpy(ret[i], &mem[pc + n], 4);
+			ft_memcpy(ret[i], &mem[pc + 2 + n], 4);
 			n += 4;
 		}
 	}

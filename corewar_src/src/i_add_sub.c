@@ -2,6 +2,7 @@
 
 static void	debug_add(char **args, int i)
 {
+	ft_putstr("\n--------- ADD_SUB ----------\n");
 	ft_putstr("process->reg[");
 	ft_putnbr(hatole(args[2], 1));
 	ft_putstr("] = ");
@@ -21,7 +22,7 @@ int exec_add_sub(unsigned char *mem, int pc, t_process *process)
 	if (mem[MMS(pc + 1)] != 0x54)
 		return (1);
 	ft_memcpy(tab, "\x01\x00\x00\x00\x01\x00\x00\x00", 8);
-	if (!(args = get_args(mem, pc + 2, &tab[0], process)))
+	if (!(args = get_args(mem, pc, &tab[0], process)))
 		return (1);
 	cpy_from_mem(args[2],mem, 1, process->pc);
 	INC_PC(1);
@@ -35,8 +36,12 @@ int exec_add_sub(unsigned char *mem, int pc, t_process *process)
 	
 	ft_memcpy(process->reg[GET_REGNB(args[2])], &(i), REG_SIZE);
 	process->wait_cycle = 10;
-	INV_CARRY;
 	
+	if (revert_endian(i) == 0)
+		process->carry = 1;
+	else
+		process->carry = 0;
+
 	if (DBG_INSTS || DBG_ADD)
 		debug_add(args, revert_endian(i));
 	return (0);

@@ -51,5 +51,6 @@ int exec_st(unsigned char *mem, int pc, t_process *process)
 
 	if (DBG_INSTS || DBG_ST)
 		debug_st(mem, arg0, arg1, pc);
+
 	return (0);
 }

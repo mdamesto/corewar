@@ -29,10 +29,9 @@ int exec_sti(unsigned char *mem, int pc, t_process *process)
 	INC_PC(2);
 	if(args_switch(mem[MMS(pc + 1)], tab, 3))
 		return (1);
-	if (!(args = get_args(mem, MMS(pc + 1), &tab[0], process)))
+	if (!(args = get_args(mem, pc, &tab[0], process)))
 			return (1);
 	cpy_from_mem(args[2], mem, 1, MMS(pc + 2));
-	INC_PC(1);
 	if (*args[2] > 0x0f)
 	{
 		ft_tab_free(args);

@@ -2,6 +2,7 @@
 
 static void	debug_zjmp(int pc, t_process *process)
 {
+	ft_putstr("\n--------- ZJMP ----------\n");
 	if(process->carry)
 	{
 		ft_putstr("Zjmp from ");
@@ -29,5 +30,6 @@ int exec_zjmp(unsigned char *mem, int pc, t_process *process)
 
 	if (DBG_INSTS || DBG_ZJMP)
 		debug_zjmp(pc, process);
+
 	return (0);
 }

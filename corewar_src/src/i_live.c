@@ -25,5 +25,6 @@ int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env)
 
 	if (DBG_INSTS || DBG_LIVE)
 		debug_live(tmp);
+	
 	return (0);
 }

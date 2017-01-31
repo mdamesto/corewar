@@ -2,9 +2,10 @@
 
 static void	debug_or(char **args, int sum)
 {
-	ft_print_memory(args[0], 4);
-	ft_print_memory(args[1], 4);
-	ft_print_memory(&sum, 4);
+	ft_putstr("\n--------- AND_OR_XOR ----------\n");
+	//ft_print_memory(args[0], 4);
+	//ft_print_memory(args[1], 4);
+	//ft_print_memory(&sum, 4);
 	ft_putstr("Copying sum: ");
 	ft_putnbr(revert_endian(sum));
 	ft_putstr(" to reg[");
@@ -24,7 +25,7 @@ int exec_and_or_xor(unsigned char *mem, int pc, t_process *process)
 	if(args_switch(mem[MMS(pc + 1)], tab, 1))
 		return (1);
 
-	if (!(args = get_args(mem, MMS(pc + 2), tab, process)))
+	if (!(args = get_args(mem, pc, tab, process)))
 			return (1);
 	
 	cpy_from_mem(args[2], mem, 1, MMS(process->pc));
