@@ -33,17 +33,27 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 			return (1);
 	cpy_from_mem(args[2], mem, 1, process->pc);
 	INC_PC(1);
-	if (*args[2] > 0x0f)
+	if (*args[2] < 1 || *args[2] > 16)
 	{
 		ft_tab_free(args);
 		return (1);
 	}
 	
 	sum = hatole(args[0], 4) + hatole(args[1], 4);
-	
+
+	/*ft_putstr("\n HERE");
+	ft_print_memory(args[0], 4);
+	ft_putstr("\nhatole(args[0], 4) ");
+	ft_putnbr(hatole(args[0], 4));
+	ft_putstr("\nhatole(args[1], 4) ");
+	ft_putnbr(hatole(args[1], 4));
+	ft_putstr("\nsum: ");
+	ft_putnbr(sum);
+	ft_putstr("\n");*/
+
 	if (mem[pc] == 0x0a) 		// 	if ldi
 	{
-		address = (pc + MODFIX(sum, IDX_MOD)) % MEM_SIZE;
+		address = MODFIX(pc + (sum % IDX_MOD), MEM_SIZE);
 		process->wait_cycle = 25;
 	}
 	else						//	if lldi
@@ -54,14 +64,16 @@ int exec_ldi_lldi(unsigned char *mem, int pc, t_process *process)
 	
  	cpy_from_mem(process->reg[GET_REGNB(args[2])], mem, REG_SIZE, address);
  	
+ 	t_env *env;
+	env = get_env(NULL);
+ 	if (env->debug || DBG_LDI)
+		debug_ldi(args, address, process);
+
  	GET_REGV(args[2]);
  	if(hatole(args[2], 4) == 0)
  		process->carry = 1;
 	else
 		process->carry = 0;
-	
-	if (DBG_INSTS || DBG_LDI)
-		debug_ldi(args, address, process);
 
 	ft_tab_free(args);
 	return (0);

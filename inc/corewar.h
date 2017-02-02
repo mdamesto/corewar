@@ -70,8 +70,10 @@ typedef struct	s_env
 	int 		lives_nb;
 	int 		lives_tab_size;
 	int			dump;
+	int 		next_fixed;
 	int			next_champ_nb;
 	bool		end;
+	int 		debug;
 }				t_env;
 
 void render(t_env *env);
@@ -88,6 +90,7 @@ void				free_env(void);
 int hatole(char *str, int size);
 int revert_endian(int nb);
 void revert_bytes(char *str, int len);
+short revert_endian_2(short nb);
 
 //inst_tools
 char **get_args(unsigned char *mem, int pc, int *tab, t_process *process);

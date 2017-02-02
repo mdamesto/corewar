@@ -29,6 +29,9 @@ int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
 	address = -1;
 	wait = 0;
 
+	t_env *env;
+	env = get_env(NULL);
+
 	INC_PC(2);
 	if (mem[MMS(pc + 1)] == 0x90) //if arg0 is DIR (4B)
 	{
@@ -62,9 +65,9 @@ int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
 	
 	cpy_from_mem(arg1, mem, 1, process->pc);
 	INC_PC(1);
-	if (arg1[0] > 0x0f)
+	if (arg1[0] < 1 || arg1[0] > 16)
 		return (1);
-
+	
 	ft_memcpy(process->reg[GET_REGNB(arg1)], arg0, REG_SIZE);
 	process->wait_cycle = wait;
 	
@@ -73,7 +76,8 @@ int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
 	else
 		process->carry = 0;
 	
-	if(DBG_INSTS || DBG_LD)
+
+	if(env->debug || DBG_LD)
 		debug_ld(mem, arg1, address, process);
 	
 	return (0);

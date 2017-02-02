@@ -1,6 +1,6 @@
 #include "asm.h"
 
-void	ld_lld_and(char *data, char *inst)
+void	ld_lld(char *data, char *inst)
 {
 	char	**args;
 	char 	*args_code;
@@ -88,9 +88,12 @@ void	ldi_lldi(char *data, char *inst)
 	}
 	else 
 		ft_error(E_BD_ARG);
-
+	
 	if (check_arg(split[2]) == 1)
-		 ft_strcpy(tab_args_code[2], "01");
+	{
+		args[2] = get_reg(split[2]);
+		ft_strcpy(tab_args_code[2], "01");
+	}
 	else 
 		ft_error(E_BD_ARG);
 

@@ -5,6 +5,8 @@ int		ft_atoi_check(char *str)
 	int i;
 
 	i = -1;
+	if (str[0] == '-')
+		i++;
 	while (str[++i])
 		if (!ft_isdigit(str[i]))
 			ft_error(E_BD_ARG, str);
@@ -29,6 +31,7 @@ void	get_opt(char *opt, char *value, t_env *env)
 		if (value) 
 		{
 			env->next_champ_nb = ft_atoi_check(value);
+			env->next_fixed = 1;
 			//ft_putstr("\nNEXT CHAMP NB = ");
 			//ft_putnbr(env->next_champ_nb);
 		}

@@ -17,7 +17,7 @@ static void norme1(char **data)
 	if(!(ft_strcmp(data[0], "fork")))
 		live_zjump_fork_lfork(data[1], "0c", 2);
 	else if(!(ft_strcmp(data[0], "lld")))
-		ld_lld_and(data[1], "0d");
+		ld_lld(data[1], "0d");
 	else if(!(ft_strcmp(data[0], "lldi")))
 		ldi_lldi(data[1], "0e");
 	else if(!(ft_strcmp(data[0], "lfork")))
@@ -33,7 +33,7 @@ void	inst_switch(char **data)
 	if(!(ft_strcmp(data[0], "live")))
 		live_zjump_fork_lfork(data[1], "01", 4);
 	else if(!(ft_strcmp(data[0], "ld")))
-		ld_lld_and(data[1], "02");
+		ld_lld(data[1], "02");
 	else if(!(ft_strcmp(data[0], "st")))
 		st(data[1], "03");
 	else if(!(ft_strcmp(data[0], "add")))
@@ -41,11 +41,11 @@ void	inst_switch(char **data)
 	else if(!(ft_strcmp(data[0], "sub")))
 		add_sub(data[1], "05");
 	else if(!(ft_strcmp(data[0], "and")))
-		ld_lld_and(data[1], "06");
+		or_xor_and(data[1], "06");
 	else if(!(ft_strcmp(data[0], "or")))
-		or_xor(data[1], "07");
+		or_xor_and(data[1], "07");
 	else if(!(ft_strcmp(data[0], "xor")))
-		or_xor(data[1], "08");
+		or_xor_and(data[1], "08");
 	else if(!(ft_strcmp(data[0], "zjmp")))
 		live_zjump_fork_lfork(data[1], "09", 2);
 	else if(!(ft_strcmp(data[0], "ldi")))

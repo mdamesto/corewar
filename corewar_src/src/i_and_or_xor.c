@@ -30,7 +30,7 @@ int exec_and_or_xor(unsigned char *mem, int pc, t_process *process)
 	
 	cpy_from_mem(args[2], mem, 1, MMS(process->pc));
 	INC_PC(1);
-	if (*args[2] > 0x0f)
+	if (*args[2] > 0x10)
 	{
 		ft_tab_free(args);
 		return (1);
@@ -51,7 +51,10 @@ int exec_and_or_xor(unsigned char *mem, int pc, t_process *process)
 	else
 		process->carry = 0;
 	
-	if (DBG_INSTS || DBG_OR)
+	t_env *env;
+	env = get_env(NULL);
+
+	if (env->debug || DBG_OR)
 		debug_or(args, sum);
 	
 	ft_tab_free(args);

@@ -21,13 +21,16 @@ int exec_aff(unsigned char *mem, int pc, t_process *process)
 		return (1);
 	cpy_from_mem(arg, mem, 1, MMS(pc + 2));
 	INC_PC(1);
-	if (*arg > 0x0f)
+	if (*arg < 1 || *arg > 16)
 		return (1);
 	ft_memcpy(arg, process->reg[GET_REGNB(arg)], 4);
 	c = MODFIX(hatole(arg, 4), 256);
 	write(1, &c, 1);
 
-	if (DBG_INSTS || DBG_AFF)
+	t_env *env;
+	env = get_env(NULL);
+
+	if (env->debug || DBG_AFF)
 		debug_aff(c);
 	
 	return (0);

@@ -53,7 +53,7 @@ void	add_sub(char *data, char *inst)
 	inst_to_env(inst, args_code, args);
 }
 
-void	or_xor(char *data, char *inst)
+void	or_xor_and(char *data, char *inst)
 {
 	char	**args;
 	char 	**tab_args_code;

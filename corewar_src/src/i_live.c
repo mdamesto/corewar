@@ -23,7 +23,7 @@ int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env)
 	process->wait_cycle = 10;
 	INC_PC(5);
 
-	if (DBG_INSTS || DBG_LIVE)
+	if (env->debug || DBG_LIVE)
 		debug_live(tmp);
 	
 	return (0);

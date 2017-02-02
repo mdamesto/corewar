@@ -25,7 +25,7 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 		if (tab[i] == 1)
 		{
 			ft_memcpy(ret[i], &mem[pc + 2 + n], 1);
-			if (tab[i] == 1 && ret[i][0] > 0x0f)
+			if (ret[i][0] < 1 || ret[i][0] > 16)
 				return (ret = NULL);
 			GET_REGV(ret[i]);
 			n++;
@@ -39,8 +39,24 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 		}
 		else if (tab[i] == 3)
 		{
-			ft_memset(ret[i], 0x00, 2);
-			ft_memcpy(&ret[i][2], &mem[pc + 2 + n], 2);
+			if (mem[pc] == 0x0a)
+			{
+				char tmp[2];
+				short tmpnb;
+				ft_memcpy(tmp, &mem[pc + 2 + n], 2);
+				revert_bytes(tmp, 2);
+				ft_memcpy(&tmpnb, tmp, 2);
+				tmpnb = -tmpnb;
+				int test = 0;
+				test -= tmpnb;
+				test = revert_endian(test);
+				ft_memcpy(ret[i], &test, 4);
+			}
+			else
+			{
+				ft_memset(ret[i], 0x00, 2);
+				ft_memcpy(&ret[i][2], &mem[pc + 2 + n], 2);
+			}
 			n += 2;
 		}
 		else if (tab[i] == 4)
@@ -63,6 +79,7 @@ void	cpy_from_mem(char *dst, unsigned char *mem, int siz, int pc)
 
 	ft_memcpy(dst, &mem[pc], siz - ext);
 	ft_memcpy(&dst[siz - ext], &mem[0], ext);
+
 
 	// DEBUG
 	/*ft_putstr("*__FROM__\n");

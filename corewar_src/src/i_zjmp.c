@@ -28,7 +28,10 @@ int exec_zjmp(unsigned char *mem, int pc, t_process *process)
 		INC_PC(3);
 	process->wait_cycle = 20;
 
-	if (DBG_INSTS || DBG_ZJMP)
+	t_env *env;
+	env = get_env(NULL);
+
+	if (env->debug || DBG_ZJMP)
 		debug_zjmp(pc, process);
 
 	return (0);

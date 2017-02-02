@@ -26,9 +26,9 @@ int exec_add_sub(unsigned char *mem, int pc, t_process *process)
 		return (1);
 	cpy_from_mem(args[2],mem, 1, process->pc);
 	INC_PC(1);
-	if (*args[2] > 0x0f)
+	if (*args[2] < 1 || *args[2] > 16)
 		return (1);
-	
+
 	if (mem[pc] == 0x04)
 		i = revert_endian(hatole(args[0], 4) + hatole(args[1], 4));
 	if (mem[pc] == 0x05)
@@ -42,7 +42,10 @@ int exec_add_sub(unsigned char *mem, int pc, t_process *process)
 	else
 		process->carry = 0;
 
-	if (DBG_INSTS || DBG_ADD)
+	t_env *env;
+	env = get_env(NULL);
+
+	if (env->debug || DBG_ADD)
 		debug_add(args, revert_endian(i));
 	return (0);
 }

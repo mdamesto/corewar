@@ -35,6 +35,19 @@ int revert_endian(int nb)
 	return (nb);
 }
 
+short revert_endian_2(short nb)
+{
+	char str[2];
+	char tmp;
+
+	ft_memcpy(str, &nb, 2);
+	tmp = str[0];
+	str[0] = str[1];
+	str[1] = tmp;
+	ft_memcpy(&nb, str, 2);
+	return (nb);
+}
+
 void revert_bytes(char *str, int len)
 {
 	char tmp;

@@ -92,7 +92,7 @@ void	play_game(t_env *env)
 	int j;
 	char ch;
 
-	int lol = 0;
+	//int lol = 0;
 	champs = env->champs;
 	while(!env->end)
 	{
@@ -139,20 +139,47 @@ void	play_game(t_env *env)
 				{
 					if (!champs[i]->process[j]->wait_cycle) 
 					{
-						ft_putstr("\nPROCESS NB: ");
-						ft_putnbr(j);
-						ft_putstr("\n");
-						if (exec_inst(champs[i]->process[j], env, i, j) == 1)
-							exec_fork_lfork(i, j, env);
+						env->debug = 0;
+						
+						/*if (j == 2)
+							lol++;
+						if(j == 2 && lol >= 35 && lol <= 55){
+							ft_putstr("\nPROCESS NB: ");
+							ft_putnbr(j);
+							ft_putstr("\n");
+							ft_putstr("\nPROCESS PC: ");
+							ft_putnbr(champs[i]->process[j]->pc);
+							ft_putstr("\n");
+							ft_putstr("\nNEXT OP: ");
+							ft_print_memory(&(env->mem[champs[i]->process[j]->pc]), 1);
+							ft_putstr("\n");
+
+							env->debug = 1;
+						}
+						if (lol == 55){
+							ft_print_memory(env->mem, MEM_SIZE);
+							ft_putstr("\n Cycle: ");
+							ft_putnbr(env->cycle);
+							exit(0);
+						}*/
+
+						//if (j == 0 || j == 2){
+							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
+								exec_fork_lfork(i, j, env);
+						//}
 					}
 					else
 						champs[i]->process[j]->wait_cycle--;
 				}
 			}
 			env->cycle++;
-			if (++env->current_cycle == env->cycle_to_die)
+			if (++env->current_cycle > env->cycle_to_die)
+			{
 				check_live(env);
-			lol++;
+				ft_putstr("cycle to die: ");
+				ft_putnbr(env->cycle_to_die);
+				ft_putstr("\n");
+			}
 			//int reg2 = 0;
   			//ft_memcpy(&reg2, env->champs[0]->process[0]->reg[1], 4);
   			
@@ -161,8 +188,6 @@ void	play_game(t_env *env)
   			//revert_endian(reg2);
   			//ft_putstr("\nreg2: ");
   			//ft_putnbr(reg2);
-			if (lol == 1500)
-				exit(0);
 		}
 
 	}

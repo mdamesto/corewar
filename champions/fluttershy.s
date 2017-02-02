@@ -44,17 +44,18 @@ ardefchk:
 	zjmp	%:ardefinit
 ardefloop:	
 	ld		%0, r16
-	zjmp	%:ardefwrite
+	zjmp	%:ardefwrite 
+#end of entry
 
-
-coregeni:
+#coregen -> st r1 for all lives and loop on lives 
+coregeni: 
 	st		r1, 6
 
-coregen:
+coregen: 
 	live	%123012
 	fork	%:coregen
 
-coreinit:
+coreinit: 
 	st		r1, 58
 	st		r1, 58
 	st		r1, 58
@@ -79,6 +80,7 @@ corelive:
 	live	%985341
 	live	%985341
 	zjmp	%:corelive
+#end of coregen
 
 avdefgeni:
 	st 		r1, 6
@@ -112,6 +114,7 @@ avdefloop:
 	ld		%0, r16
 	zjmp	%:avdefwrite
 
+#torpgen cpy torpinit at +400 then jmp to +400  
 torpgeni:
 	st		r1, 6
 
@@ -142,5 +145,6 @@ torpchk:
 torploop:
 	ld		%0, r15
 	zjmp	%:torpwrite
+# end of torpgen
 
 avdeftgt:

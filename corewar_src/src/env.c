@@ -27,8 +27,10 @@ void				init_env(void)
 		ft_error(E_MALLOC, NULL);
 
 	new->dump = -1;
-	new->next_champ_nb = -1;
+	new->next_fixed = 0;
 	new->end = false;
+
+	new->debug = DBG_INSTS;
 	
 	get_env(new);
 }

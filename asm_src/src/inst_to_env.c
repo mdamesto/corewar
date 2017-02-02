@@ -63,6 +63,7 @@ void			inst_to_env(char *inst, char *args_code, char **args)
 		env->add_to_adress += 2;
 	else
 		env->add_to_adress++;
+
 	full_inst = get_full_inst(inst, args_code, args);
 	add_inst_to_env(env, full_inst);
 	env->c_adress += env->add_to_adress;

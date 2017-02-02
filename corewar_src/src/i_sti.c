@@ -32,18 +32,21 @@ int exec_sti(unsigned char *mem, int pc, t_process *process)
 	if (!(args = get_args(mem, pc, &tab[0], process)))
 			return (1);
 	cpy_from_mem(args[2], mem, 1, MMS(pc + 2));
-	if (*args[2] > 0x0f)
+	if (*args[2] > 0x10)
 	{
 		ft_tab_free(args);
 		return (1);
 	}
 	
 	sum = hatole(args[0], 4) + hatole(args[1], 4);
-	address = MMS((pc + MODFIX(sum, IDX_MOD)));
+	address = MODFIX(pc + sum, MEM_SIZE);
 	process->wait_cycle = 25;
 	cpy_to_mem(mem, process->reg[GET_REGNB(args[2])], REG_SIZE, address);
 	
-	if (DBG_INSTS || DBG_STI)
+	t_env *env;
+	env = get_env(NULL);
+
+	if (env->debug || DBG_STI)
 		debug_sti(mem, args, address);
 	
 	ft_tab_free(args);

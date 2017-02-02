@@ -63,8 +63,6 @@ void	split_header_prog(int fd, t_champ *champ)
 	ft_memcpy(tmp, &data[4 + PROG_NAME_LENGTH + 4], 4);
 	champ->size = get_size((unsigned char*)tmp);
 	ft_memcpy(champ->comment, &data[4 + PROG_NAME_LENGTH + 8], COMMENT_LENGTH);
-	ft_putstr("\nchamp->size: ");
-	ft_putnbr(champ->size);
 	ft_memcpy(champ->inst, &data[4 + PROG_NAME_LENGTH + 8 + COMMENT_LENGTH + 4], champ->size);
 	if (!(champ->process = malloc(sizeof(t_process*) * 2)))
 		ft_error(E_MALLOC, NULL);
@@ -72,7 +70,6 @@ void	split_header_prog(int fd, t_champ *champ)
 	champ->process[1] = NULL;
 	champ->alive = true;
 
-	ft_putnbr(champ->size);
 	if (n != (4 + PROG_NAME_LENGTH + 8 + COMMENT_LENGTH + 4 + champ->size))
 		ft_error(E_BD_CHP_SIZ, NULL);
 }
@@ -113,10 +110,10 @@ void	get_champ(char *str, t_env *env)
 	if (!(new = ft_memalloc(sizeof(t_champ))))
 		ft_error(E_MALLOC, NULL);
 	split_header_prog(fd, new);
-	if (env->next_champ_nb > 0)
+	if (env->next_fixed)
 	{
 		new->nb = env->next_champ_nb;
-		env->next_champ_nb = -1;
+		env->next_fixed = 0;
 	}
 	else
 		new->nb = get_champ_nb(env, i);

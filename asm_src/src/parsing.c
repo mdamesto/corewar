@@ -21,7 +21,7 @@ static	char	**split_first_word(char *str) {
 	return (ret);
 }
 
-static	void	get_label(t_env * env)
+static	int	get_label(t_env * env)
 {
 	int i;
 	char *label;
@@ -29,14 +29,9 @@ static	void	get_label(t_env * env)
 	i = -1;
 	label = NULL;
 	while (env->line[++i] && env->line[i] != ' ' && env->line[i] != '	' && env->line[i] != LABEL_CHAR)
-			ft_putnbr(i);
+			;
 	if (i == 0)
-	{
-		if (env->line[i])
 			ft_error(E_BD_LBL);
-		else
-			return ;
-	}
 	if (env->line[i] == LABEL_CHAR)
 		label = ft_strtrim(ft_strget(env->line, 0, i));
 	else
@@ -50,18 +45,15 @@ static	void	get_label(t_env * env)
 		add_label(env, label);
 		env->line = ft_strcut_f(env->line, 0, ft_strlen(label) + 1);
 		if (check_empty_line(env->line))
-			gnl();
+			if(!gnl())
+				return (0);
+
 		get_label(env);
 	}
+	return (1);
 
 }
 
-static	void	get_instruction(t_env *env)
-{
-	get_label(env);
-	if (*(env->data))
-		inst_switch(env->data);
-}
 
 void			parsing_champion(t_env *env) 
 {
@@ -69,7 +61,10 @@ void			parsing_champion(t_env *env)
 	get_name(env);
 	get_comment(env);
 	while(gnl() != 0) 
-		get_instruction(env);
+	{
+		if (get_label(env))
+			inst_switch(env->data);
+	}
 	replace_labels(env);
 	//print_name_comment(env)	/* ------- NAME_COMMENT ------ */
 	print_labels(env); 		/* ------- PRINT LABELS ------ */ 

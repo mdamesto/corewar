@@ -77,8 +77,8 @@ char	**init_args(void);
 
 void	live_zjump_fork_lfork(char *data, char *inst, size_t siz);
 void	add_sub(char *data, char *inst);
-void	ld_lld_and(char *data, char *inst);
-void	or_xor(char *data, char *inst);
+void	ld_lld(char *data, char *inst);
+void	or_xor_and(char *data, char *inst);
 void	ldi_lldi(char *data, char *inst);
 void	sti(char *data, char *inst);
 void	st(char *data, char *inst);

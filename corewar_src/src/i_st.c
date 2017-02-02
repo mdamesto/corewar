@@ -4,7 +4,7 @@ static void	debug_st(unsigned char *mem, char *arg0, char *arg1, int pc)
 {
 	ft_putstr("--------- ST ----------\n");
 	ft_putstr("Copying reg[");
-	ft_putnbr(GET_REGNB(arg0));
+	ft_putnbr(GET_REGNB(arg0) + 1);
 	ft_putstr("]: to ");
 	if (mem[MMS(pc + 1)] == 0x50)
 	{
@@ -33,7 +33,7 @@ int exec_st(unsigned char *mem, int pc, t_process *process)
 	{
 		cpy_from_mem(arg1, mem, 1, MMS(pc + 3));
 		INC_PC(2);
-		if (*arg0 > 0x0f && *arg1 > 0x0f)
+		if (*arg0 > 0x10 && *arg1 > 0x10)
 			return (1);
 		ft_memcpy(process->reg[GET_REGNB(arg1)], process->reg[GET_REGNB(arg0)], REG_SIZE);
 	}
@@ -41,7 +41,7 @@ int exec_st(unsigned char *mem, int pc, t_process *process)
 	{
 		cpy_from_mem(arg1, mem, 2, MMS(pc + 3));
 		INC_PC(3);
-		if (*arg0 > 0x0f)
+		if (*arg0 > 0x10)
 			return (1);
 		ft_memcpy(&mem[MMS(pc + MODFIX(hatole(arg1, 2), IDX_MOD))], process->reg[GET_REGNB(arg0)], REG_SIZE);
 	}
@@ -49,7 +49,10 @@ int exec_st(unsigned char *mem, int pc, t_process *process)
 		return (1);
 	process->wait_cycle = 5;
 
-	if (DBG_INSTS || DBG_ST)
+	t_env *env;
+	env = get_env(NULL);
+
+	if (env->debug || DBG_ST)
 		debug_st(mem, arg0, arg1, pc);
 
 	return (0);
