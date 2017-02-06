@@ -1,5 +1,7 @@
 #include "corewar.h"
 
+int debug_fd = -1;
+
 char *get_str(unsigned char *mem)
 {
   const char hex[] = "0123456789abcdef ";
@@ -105,30 +107,15 @@ void render(t_env *env)
 int main(int argc, char **argv)
 {	
   t_env *env;
+  debug_fd = open("/dev/ttys002", O_WRONLY);
 
 	init_env();
 	env = get_env(NULL);
+  if (DISPLAY)
+    init_display(env);
 	parse_args(argc, argv, env);
 	init_process(env);
 	
-  if (DISPLAY)
-  {
-    initscr();
-    cbreak();
-    noecho();
-    nodelay(stdscr, TRUE);
-    scrollok(stdscr, TRUE);
-    start_color();
-    init_pair(1, COLOR_RED, COLOR_BLACK);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(4, COLOR_WHITE, COLOR_BLACK);
-    init_pair(5, COLOR_RED, COLOR_BLUE);
-    init_pair(6, COLOR_GREEN, COLOR_BLUE);
-    init_pair(7, COLOR_YELLOW, COLOR_BLUE);
-    init_pair(8, COLOR_WHITE, COLOR_BLUE);
-    init_pair(9, COLOR_BLACK, COLOR_WHITE);
-  }
   
   play_game(env);
   free(env);

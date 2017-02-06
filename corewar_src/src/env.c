@@ -9,29 +9,19 @@ void				init_env(void)
 	
 	if (!(new->champs = (t_champ**)ft_memalloc(sizeof(t_champ*) * (MAX_PLAYERS + 1))))
 		ft_error(E_MALLOC, NULL);
-	new->champs[0] = NULL;
-	new->champs[1] = NULL;
-	new->champs[2] = NULL;
-	new->champs[3] = NULL;
-	new->champs[4] = NULL;
-
 	ft_memset(new->mem, '\0', MEM_SIZE);
-	
 	new->cycle_to_die = CYCLE_TO_DIE;
 	new->current_cycle = 0;
 	new->cycle = 0;
-
 	new->lives_nb = 0;
 	new->lives_tab_size = 64;
 	if (!(new->lives = (int *)ft_memalloc(sizeof(int) * new->lives_tab_size)))
 		ft_error(E_MALLOC, NULL);
-
 	new->dump = -1;
 	new->next_fixed = 0;
 	new->end = false;
-
 	new->debug = DBG_INSTS;
-	
+
 	get_env(new);
 }
 
@@ -80,7 +70,6 @@ void				free_champ(t_champ *champ)
 
 void				free_env(void)
 {
-	
 	t_env *env;
 	int i;
 

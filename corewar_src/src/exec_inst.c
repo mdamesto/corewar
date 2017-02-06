@@ -3,7 +3,7 @@
 int	exec_inst(t_process *process, t_env *env, int i, int j)
 {
 	unsigned char *mem;
-	uint32_t pc; 
+	unsigned pc;
 
 	mem = env->mem;
 	pc = process->pc;

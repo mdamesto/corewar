@@ -1,49 +1,5 @@
 #include "corewar.h"
 
-t_process *new_process(int pc, int nb)
-{
-	t_process *new;
-	int8_t i;
-
-	int zero = 0;
-
-	if (!(new = ft_memalloc(sizeof(t_process))))
-		ft_error(E_MALLOC, NULL);
-	
-	new->reg = ft_tab_set(16, 4);
-	i = -1;
-	while (++i < 16)
-		ft_memcpy(new->reg[i], &zero, 4);
-	
-	new->pc = pc;
-	nb= revert_endian(nb);
-	ft_memcpy(new->reg[0], &(nb), 4);
-	new->carry = 0;
-	new->wait_cycle = 0;
-
-	return (new);
-}
-
-t_process *fork_process(int pc, t_process *process)
-{
-	t_process *new;
-	int8_t i;
-
-	if (!(new = ft_memalloc(sizeof(t_process))))
-		ft_error(E_MALLOC, NULL);
-	
-	new->reg = ft_tab_set(16, 4);
-	i = -1;
-	while (++i < 16)
-		ft_memcpy(new->reg[i], process->reg[i], 4);
-	
-	new->pc = pc;
-	new->carry = process->carry;
-	new->wait_cycle = process->wait_cycle;
-
-	return (new);
-}
-
 void	print_process(t_process *process)
 {
 	int i;
@@ -87,23 +43,65 @@ void static debug_process(t_env *env)
 	ft_putstr("\n");
 }
 
+t_process *new_process(int pc, t_champ *champ)
+{
+	t_process *new;
+	int i;
+	int nb;
+	int zero = 0;
+
+	if (!(new = ft_memalloc(sizeof(t_process))))
+		ft_error(E_MALLOC, NULL);
+	new->champ = champ;
+	new->reg = ft_tab_set(16, 4);
+	i = -1;
+	while (++i < 16)
+		ft_memcpy(new->reg[i], &zero, 4);
+	new->pc = pc;
+	nb = champ->nb;
+	ft_print_memory(&nb, 4);
+	ft_memcpy(new->reg[0], &nb, 4);
+	ft_putstr("\nHERE: ");
+	ft_print_memory(new->reg[0], 4);
+	new->carry = 0;
+	new->wait_cycle = 0;
+
+	return (new);
+}
+
+t_process *fork_process(int pc, t_process *process)
+{
+	t_process *new;
+	int i;
+
+	if (!(new = ft_memalloc(sizeof(t_process))))
+		ft_error(E_MALLOC, NULL);
+	new->champ = process->champ;
+	new->reg = ft_tab_set(16, 4);
+	i = -1;
+	while (++i < 16)
+		ft_memcpy(new->reg[i], process->reg[i], 4);
+	new->pc = pc;
+	new->carry = process->carry;
+	new->wait_cycle = process->wait_cycle;
+
+	return (new);
+}
+
 void	init_process(t_env *env)
 {
 	int i;
 
 	i = -1;
-	// ----------------------- TODO
 	while (env->champs[++i])
 	{
 		ft_memcpy(&(env->mem[(MEM_SIZE / 4) * i]), env->champs[i]->inst, env->champs[i]->size);
-		env->champs[i]->process[0] = new_process((MEM_SIZE / 4) * i, env->champs[i]->nb);
+		env->champs[i]->process[0] = new_process((MEM_SIZE / 4) * i, env->champs[i]);
+		if (DISPLAY)
+			print_on_mem(env->champs[i]->inst, (MEM_SIZE / 4) * i, env->champs[i]->size, env->champs[i]->color);
 	}
-	
 	if (DBG_MEM)
-	{
-		ft_putstr("\n -------- MEM --------\n");
 		ft_print_memory(env->mem, MEM_SIZE);
-	}
 	if (DBG_PRCS)
 		debug_process(env);
 }

@@ -92,9 +92,9 @@ void	play_game(t_env *env)
 	int j;
 	char ch;
 
-	//int lol = 0;
+	int lol = 0;
 	champs = env->champs;
-	while(!env->end)
+	while(/*!env->end*/1)
 	{
 		if (DISPLAY)
 		{
@@ -141,9 +141,9 @@ void	play_game(t_env *env)
 					{
 						env->debug = 0;
 						
-						/*if (j == 2)
+						if (j == 0)
 							lol++;
-						if(j == 2 && lol >= 35 && lol <= 55){
+						if(j == 0 && lol >= 0 && lol <= 10){
 							ft_putstr("\nPROCESS NB: ");
 							ft_putnbr(j);
 							ft_putstr("\n");
@@ -156,17 +156,17 @@ void	play_game(t_env *env)
 
 							env->debug = 1;
 						}
-						if (lol == 55){
-							ft_print_memory(env->mem, MEM_SIZE);
+						if (lol == 200){
+							//ft_print_memory(env->mem, MEM_SIZE);
 							ft_putstr("\n Cycle: ");
 							ft_putnbr(env->cycle);
 							exit(0);
-						}*/
+						}
 
-						//if (j == 0 || j == 2){
+						if (j == 0){
 							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
 								exec_fork_lfork(i, j, env);
-						//}
+						}
 					}
 					else
 						champs[i]->process[j]->wait_cycle--;

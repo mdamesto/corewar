@@ -1,5 +1,71 @@
 #include "corewar.h"
 
+void	hex_2_to_le(char *str)
+{
+	short tmpshort;
+	int tmpint;
+	char tmp;
+	
+	tmpint = 0;
+	tmp = str[0];
+	str[0] = str[1];
+	str[1] = tmp;
+	ft_memcpy(&tmpshort, str, 2);
+	tmpint += tmpshort;
+	ft_memcpy(str, &tmpint, 4);
+}
+
+void	hex_4_to_le(char *str)
+{
+	char tmp;
+	 tmp = str[0];
+	 str[0] = str[3];
+	 str[3] = tmp;
+	 tmp = str[1];
+	 str[1] = str[2];
+	 str[2] = tmp;
+}
+
+int	hex_2_to_int_le(char *str)
+{
+	short tmpshort;
+	int tmpint;
+	char tmp;
+	
+	tmpint = 0;
+	tmp = str[0];
+	str[0] = str[1];
+	str[1] = tmp;
+	ft_memcpy(&tmpshort, str, 2);
+	tmpint += tmpshort;
+	
+	return (tmpint);
+}
+
+int	hex_4_to_int_le(char *str)
+{
+	char tmp;
+	int ret;
+
+	tmp = str[0];
+	str[0] = str[3];
+	str[3] = tmp;
+	tmp = str[1];
+	str[1] = str[2];
+	str[2] = tmp;
+	
+	ft_memcpy(&ret, str, 4);
+	return (ret); 
+}
+
+int	hex_to_int(char *str)
+{
+	int ret;
+
+	ft_memcpy(&ret, str, 4);
+	return (ret); 
+}
+
 int hatole(char *str, int siz)
 {
 	int n;
@@ -8,8 +74,10 @@ int hatole(char *str, int siz)
 	if (siz == 1)
 		n = str[0];
 	else if(siz == 2)
+	{
 		n = ((str[0] << 8) & 0xff00) |
 			((str[1]) & 0xff);
+	}
 	else if(siz == 4)
 		n = ((str[0] << 24) & 0xff000000) | 
 			((str[1] << 16) & 0xff0000) | 
@@ -61,3 +129,6 @@ void revert_bytes(char *str, int len)
 		str[len] = tmp;
 	}
 }
+
+
+

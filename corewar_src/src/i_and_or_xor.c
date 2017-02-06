@@ -1,5 +1,19 @@
 #include "corewar.h"
 
+/*static void	debug_or(char **args, int sum)
+{
+	ft_putstr_fd("\n--------- AND_OR_XOR ----------\n", debug_fd);
+	//ft_print_memory(args[0], 4);
+	//ft_print_memory(args[1], 4);
+	//ft_print_memory(&sum, 4);
+	ft_putstr_fd("Copying sum: ", debug_fd);
+	ft_putnbr_fd(revert_endian(sum), debug_fd);
+	ft_putstr_fd(" to reg[", debug_fd);
+	ft_putnbr_fd(hatole(args[2], 1), debug_fd);
+	ft_putstr_fd("].\n", debug_fdtty);
+}*/
+
+
 static void	debug_or(char **args, int sum)
 {
 	ft_putstr("\n--------- AND_OR_XOR ----------\n");

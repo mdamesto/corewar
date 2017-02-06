@@ -18,11 +18,7 @@ void	get_opt(char *opt, char *value, t_env *env)
 	if (!ft_strncmp(opt, "-dump\0", 6))
 	{
 		if (value) 
-		{
 			env->dump = ft_atoi_check(value);
-			//ft_putstr("\nDUMP = ");
-			//ft_putnbr(env->dump);
-		}
 		else
 			ft_error(E_BD_ARG, NULL);
 	}
@@ -32,8 +28,6 @@ void	get_opt(char *opt, char *value, t_env *env)
 		{
 			env->next_champ_nb = ft_atoi_check(value);
 			env->next_fixed = 1;
-			//ft_putstr("\nNEXT CHAMP NB = ");
-			//ft_putnbr(env->next_champ_nb);
 		}
 		else
 			ft_error(E_BD_ARG, NULL);
@@ -51,6 +45,8 @@ void	parse_args(int argc, char **argv, t_env *env)
 	{
 		if (argv[i][0] == '-')
 		{
+			if (!argv[i + 1])
+				ft_error(E_BD_ARG, NULL);
 			get_opt(argv[i], argv[i + 1], env);
 			i++;
 		}
@@ -59,8 +55,8 @@ void	parse_args(int argc, char **argv, t_env *env)
 	}
 	i = -1;
 	while (env->champs[++i])
-		env->champs[i]->color = i;
-	//if (!env->champs[1])
-		//ft_error(E_CHP_NB, NULL);
+		env->champs[i]->color = i + 1;
+	if (!env->champs[0])
+		ft_error(E_CHP_NB, NULL);
 	//sort_by_champ_nb(env); ----------------- TODO
 }

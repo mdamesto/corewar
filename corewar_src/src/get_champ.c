@@ -1,6 +1,29 @@
 #include "corewar.h"
 #include <stdio.h>
 
+void static debug_champ(int i, t_champ *new)
+{
+	ft_putstr("\n---- CHAMPS ----\n");
+	ft_putstr("\ni: ");
+	ft_putnbr(i - 1);
+	ft_putstr("\n");
+	ft_putstr("\nChamp number: ");
+	ft_putnbr(new->nb);
+	ft_putstr("\n");
+	ft_putstr("champ name: ");
+	ft_putstr(new->name);
+	ft_putstr("\n");
+	ft_putstr("champ size: ");
+	ft_putnbr(new->size);
+	ft_putstr("\n");
+	ft_putstr("champ comment: ");
+	ft_putstr(new->comment);
+	ft_putstr("\n");
+	ft_putstr("champ inst: \n");
+	ft_print_memory(new->inst, new->size);
+	ft_putstr("\n");
+}
+
 int		ft_check_ext(char *file, char *ext, size_t siz)
 {
 	int i;
@@ -64,43 +87,16 @@ void	split_header_prog(int fd, t_champ *champ)
 	champ->size = get_size((unsigned char*)tmp);
 	ft_memcpy(champ->comment, &data[4 + PROG_NAME_LENGTH + 8], COMMENT_LENGTH);
 	ft_memcpy(champ->inst, &data[4 + PROG_NAME_LENGTH + 8 + COMMENT_LENGTH + 4], champ->size);
-	if (!(champ->process = malloc(sizeof(t_process*) * 2)))
+	if (!(champ->process = ft_memalloc(sizeof(t_process*) * 2)))
 		ft_error(E_MALLOC, NULL);
-	champ->process[0] = NULL;
-	champ->process[1] = NULL;
-	champ->alive = true;
-
 	if (n != (4 + PROG_NAME_LENGTH + 8 + COMMENT_LENGTH + 4 + champ->size))
 		ft_error(E_BD_CHP_SIZ, NULL);
-}
-
-void static debug_champ(int i, t_champ *new)
-{
-	ft_putstr("\n---- CHAMPS ----\n");
-	ft_putstr("\ni: ");
-	ft_putnbr(i - 1);
-	ft_putstr("\n");
-	ft_putstr("\nChamp number: ");
-	ft_putnbr(new->nb);
-	ft_putstr("\n");
-	ft_putstr("champ name: ");
-	ft_putstr(new->name);
-	ft_putstr("\n");
-	ft_putstr("champ size: ");
-	ft_putnbr(new->size);
-	ft_putstr("\n");
-	ft_putstr("champ comment: ");
-	ft_putstr(new->comment);
-	ft_putstr("\n");
-	ft_putstr("champ inst: \n");
-	ft_print_memory(new->inst, new->size);
-	ft_putstr("\n");
 }
 
 void	get_champ(char *str, t_env *env)
 {
 	static int i = 0;
-	int fd; 
+	int fd;
 	t_champ *new;
 	
 	if (ft_check_ext(str, ".cor", 4))
@@ -110,6 +106,7 @@ void	get_champ(char *str, t_env *env)
 	if (!(new = ft_memalloc(sizeof(t_champ))))
 		ft_error(E_MALLOC, NULL);
 	split_header_prog(fd, new);
+
 	if (env->next_fixed)
 	{
 		new->nb = env->next_champ_nb;

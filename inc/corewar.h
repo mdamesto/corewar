@@ -17,6 +17,8 @@
 # include "op.h"
 # include "ncurses.h"
 
+extern int	debug_fd;
+
 # define E_MALLOC		1
 # define E_BD_ARG 		2
 # define E_BD_OPT		3
@@ -40,6 +42,7 @@
 
 typedef struct	s_process
 {
+	struct s_champ *champ;
 	int 	pc;
 	char 	**reg;
 	short	carry;
@@ -74,6 +77,8 @@ typedef struct	s_env
 	int			next_champ_nb;
 	bool		end;
 	int 		debug;
+	WINDOW		*w_main;
+	WINDOW		*w_menu;
 }				t_env;
 
 void render(t_env *env);
@@ -91,6 +96,11 @@ int hatole(char *str, int size);
 int revert_endian(int nb);
 void revert_bytes(char *str, int len);
 short revert_endian_2(short nb);
+void	hex_2_to_le(char *str);
+void	hex_4_to_le(char *str);
+int	hex_to_int(char *str);
+int	hex_2_to_int_le(char *str);
+int	hex_4_to_int_le(char *str);
 
 //inst_tools
 char **get_args(unsigned char *mem, int pc, int *tab, t_process *process);
@@ -106,7 +116,7 @@ void	parse_args(int argc, char **argv, t_env *env);
 //init_process.c
 void	init_process(t_env *env);
 void	print_process(t_process *process);
-t_process *new_process(int pc, int nb);
+//t_process *new_process(int pc, int nb);
 t_process *fork_process(int pc, t_process *process);
 
 //play_game.c
@@ -129,14 +139,18 @@ int exec_aff(unsigned char *mem, int pc, t_process *process);
 //args_switch.c
 int		args_switch(unsigned char code, int *tab, int op);
 
+//display.c
+void init_display(t_env *env);
+void    print_on_mem(char *str, int start, int len, int color);
 
-# define DISPLAY 1
+
+# define DISPLAY 0
 
 # define DBG_CHAMP 0
 # define DBG_MEM 0
 # define DBG_PRCS 0
 
-# define DBG_INSTS 0
+# define DBG_INSTS 1
 # define DBG_STI 0
 # define DBG_LIVE 0
 # define DBG_LD 0
