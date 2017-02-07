@@ -107,7 +107,7 @@ void render(t_env *env)
 int main(int argc, char **argv)
 {	
   t_env *env;
-  debug_fd = open("/dev/ttys001", O_WRONLY);
+  debug_fd = open("/dev/ttys000", O_WRONLY);
 
 	init_env();
 	env = get_env(NULL);

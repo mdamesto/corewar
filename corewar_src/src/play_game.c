@@ -93,7 +93,6 @@ void	play_game(t_env *env)
 	//char ch;
 
 	int lol = 0;
-	char champs_pc[4096];
 
 	champs = env->champs;
 	while(/*!env->end*/1)
@@ -120,9 +119,9 @@ void	play_game(t_env *env)
 						{
 							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
 								exec_fork_lfork(i, j, env);
-							print_pc(champs[i]->process[j]->pc, champs[i]->process[j]->inc_pc, champs[i]->color, env)
-							champs[i]->process[j]->pc = MMS(pc + champs[i]->process[j]->inc_pc);
-							champs[i]->process[j]->inc_pc = 0;
+							//print_pc(champs[i]->process[j]->pc, champs[i]->process[j]->inc_pc, champs[i]->color, env);
+							//champs[i]->process[j]->pc = MMS(champs[i]->process[j]->pc + champs[i]->process[j]->inc_pc);
+							//champs[i]->process[j]->inc_pc = 0;
 						}
 						else
 							champs[i]->process[j]->wait_cycle--;

@@ -141,11 +141,7 @@ void	cpy_to_mem(unsigned char *mem, char *src, int pc, t_process *process)
 	ft_memcpy(&mem[0], &tmp[4 - ext], ext);
 
 	if (DISPLAY)
-	{
-		ft_putstr_fd("\nadress: ", debug_fd);
-		ft_putnbr_fd(pc, debug_fd);
 		print_inst(tmp, pc, process->champ->color);
-	}
 
 	// DEBUG
 	/*ft_putstr("*__TO__\n");

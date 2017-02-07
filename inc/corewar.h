@@ -30,7 +30,7 @@ extern int	debug_fd;
 
 # define INT *(int*)
 # define MMS(x) (x) % MEM_SIZE
-# define INC_PC(x) process->inc_pc += (x)
+# define INC_PC(x) process->pc = (process->pc + (x)) % MEM_SIZE
 # define INV_CARRY (process->carry ? (process->carry = 0): (process->carry = 1))
 # define GET_REGNB(x) hatole((x), 1) - 1
 # define GET_REGV(x) ft_memcpy((x), process->reg[GET_REGNB((x))], REG_SIZE)

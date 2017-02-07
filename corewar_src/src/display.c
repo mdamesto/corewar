@@ -169,32 +169,48 @@ void    print_champs(char *str, int start, int len, int color)
     getch(); //REMOVE
 }
 
-void  print_pc(pc, inc_pc, color, t_env *env)
+void  print_pc(int pc, int inc_pc, int color, t_env *env)
 {
     int line;
     int col;
     char tmp[3];
     const char hex[] = "0123456789abcdef";
 
+    ft_putstr_fd("\nPRINT_PC: ", debug_fd);
+    ft_putstr_fd("\npc: ", debug_fd);
+    ft_putnbr_fd(pc, debug_fd);
+    ft_putstr_fd("\ninc_pc: ", debug_fd);
+    ft_putnbr_fd(inc_pc, debug_fd);
+
     //remove old pc
     line = pc / 64;
     col = (pc % 64) * 3 + 1;
-    tmp[0] = hex[mem[pc] / 16];
-    tmp[1] = hex[mem[pc] % 16];
+    ft_putstr_fd("\nREMOVE: ", debug_fd);
+    ft_putstr_fd("\nline: ", debug_fd);
+    ft_putnbr_fd(line, debug_fd);
+    ft_putstr_fd("\ncol: ", debug_fd);
+    ft_putnbr_fd(col, debug_fd);
+    tmp[0] = hex[env->mem[pc] / 16];
+    tmp[1] = hex[env->mem[pc] % 16];
     tmp[2] = '\0';
-    wattron(env->w_main, COLOR_PAIR(champ->color));
+    wattron(env->w_main, COLOR_PAIR(color));
     mvwprintw(env->w_main, line, col, tmp);
-    wattroff(env->w_main, COLOR_PAIR(champ->color));
+    wattroff(env->w_main, COLOR_PAIR(color));
 
     //ilight new pc
-    line = pc + inc_pc / 64;
+    line = (pc + inc_pc) / 64;
     col = ((pc + inc_pc) % 64) * 3 + 1;
-    tmp[0] = hex[mem[pc + inc_pc] / 16];
-    tmp[1] = hex[mem[pc + inc_pc] % 16];
+    ft_putstr_fd("\nILIGHT: ", debug_fd);
+    ft_putstr_fd("\nline: ", debug_fd);
+    ft_putnbr_fd(line, debug_fd);
+    ft_putstr_fd("\ncol: ", debug_fd);
+    ft_putnbr_fd(col, debug_fd);
+    tmp[0] = hex[env->mem[pc + inc_pc] / 16];
+    tmp[1] = hex[env->mem[pc + inc_pc] % 16];
     tmp[2] = '\0';
-    wattron(env->w_main, COLOR_PAIR(champ->color + 4));
+    wattron(env->w_main, COLOR_PAIR(color + 4));
     mvwprintw(env->w_main, line, col, tmp);
-    wattroff(env->w_main, COLOR_PAIR(champ->color + 4));
+    wattroff(env->w_main, COLOR_PAIR(color + 4));
 
 
 }
