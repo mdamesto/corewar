@@ -28,8 +28,9 @@ extern int	debug_fd;
 # define E_BD_OP		7
 # define E_BD_CHP_SIZ	8
 
+# define INT *(int*)
 # define MMS(x) (x) % MEM_SIZE
-# define INC_PC(x) process->pc = MMS(process->pc + (x))
+# define INC_PC(x) process->inc_pc += (x)
 # define INV_CARRY (process->carry ? (process->carry = 0): (process->carry = 1))
 # define GET_REGNB(x) hatole((x), 1) - 1
 # define GET_REGV(x) ft_memcpy((x), process->reg[GET_REGNB((x))], REG_SIZE)
@@ -42,8 +43,9 @@ extern int	debug_fd;
 
 typedef struct	s_process
 {
-	struct s_champ *champ;
+	struct 	s_champ *champ;
 	int 	pc;
+	int 	inc_pc;
 	char 	**reg;
 	short	carry;
 	int 	wait_cycle;
@@ -105,7 +107,7 @@ int	hex_4_to_int_le(char *str);
 //inst_tools
 char **get_args(unsigned char *mem, int pc, int *tab, t_process *process);
 void	cpy_from_mem(char *dst, unsigned char *src, int siz, int pc);
-void	cpy_to_mem(unsigned char *dst, char *src, int siz, int pc);
+void	cpy_to_mem(unsigned char *mem, char *src, int pc, t_process *process);
 
 //get_champ.c
 void	get_champ(char *str, t_env *env);
@@ -140,17 +142,19 @@ int exec_aff(unsigned char *mem, int pc, t_process *process);
 int		args_switch(unsigned char code, int *tab, int op);
 
 //display.c
-void init_display(t_env *env);
-void    print_on_mem(char *str, int start, int len, int color);
+void 	init_display(t_env *env);
+void    print_champs(char *str, int start, int len, int color);
+void    print_inst(char *str, int start, int color);
+void  	print_pc(int pc, int inc_pc, int color, t_env *env);
 
 
-# define DISPLAY 0
+# define DISPLAY 1
 
 # define DBG_CHAMP 0
 # define DBG_MEM 0
 # define DBG_PRCS 0
 
-# define DBG_INSTS 1
+# define DBG_INSTS 0
 # define DBG_STI 0
 # define DBG_LIVE 0
 # define DBG_LD 0

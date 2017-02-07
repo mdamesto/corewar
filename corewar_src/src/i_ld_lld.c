@@ -1,61 +1,38 @@
 #include "corewar.h"
 
-static void	debug_ld(unsigned char *mem, char *arg1, int address, t_process *process)
+static void	debug_ld(char *arg0, char *arg1)
 {
 	ft_putstr("\n--------- LD_LLD ----------\n");
-	if (address != -1)
-	{
-		ft_putstr("adress: ");
-		ft_putnbr(address);
-		ft_putstr("\n");
-		ft_print_memory(&mem[address], 4);
-		ft_putstr("\n");
-	}
-	ft_putstr("reg nb: ");
-	ft_putnbr(hatole(arg1, 1));
+	ft_putstr("loaded: ");
+	ft_putnbr(INT arg0);
 	ft_putstr("\n");
-	ft_print_memory(process->reg[GET_REGNB(arg1)], 4);
+	ft_putstr("to reg nb: ");
+	ft_putnbr((INT arg1) + 1);
+	ft_putstr("\n");
 }
 
 int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
 {
-	//ft_putstr("\n--------- LD_LLD ----------\n");
-	//-------------------------- TODO (clean it)
 	int address;
-	int wait;
 	char arg0[4];
-	char arg1[1];
-
-	address = -1;
-	wait = 0;
-
-	t_env *env;
-	env = get_env(NULL);
+	char arg1[4];
 
 	INC_PC(2);
 	if (mem[MMS(pc + 1)] == 0x90) //if arg0 is DIR (4B)
 	{
-		cpy_from_mem(arg0, mem, 4, MMS(pc + 2));
+		cpy_from_mem(arg0, mem, REG_SIZE, pc + 2);
 		INC_PC(4);
-		if (mem[pc] == 0x02)
-			wait = 5;
-		else
-			wait = 10;
 
 	}
-	else if(mem[MMS(pc + 1)] == 0xd0)
+	else if(mem[MMS(pc + 1)] == 0xd0) //if arg0 is Ind (2B)
 	{
-		cpy_from_mem(arg0, mem, 2, MMS(pc + 2)); //if arg0 is Ind (2B)
-		revert_bytes(arg0, 2);
+		cpy_from_mem(arg0, mem, 2, pc + 2);
+		address = pc + INT arg0;
+		process->wait_cycle = 10;
 		if (mem[pc] == 0x02) //if op is ld (IDX_MOD)
 		{
-			address = MODFIX(pc + *(short int*)arg0 % IDX_MOD, MEM_SIZE);
-			wait = 5;
-		}
-		else //if op is lld
-		{
-			address = MODFIX(pc + *(short int*)arg0, MEM_SIZE);
-			wait = 10;
+			address = pc + INT arg0 % IDX_MOD;
+			process->wait_cycle = 5;
 		}
 		cpy_from_mem(arg0, mem, REG_SIZE, address);
 		INC_PC(2);
@@ -65,20 +42,21 @@ int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
 	
 	cpy_from_mem(arg1, mem, 1, process->pc);
 	INC_PC(1);
-	if (arg1[0] < 1 || arg1[0] > 16)
+	if (arg1[0] < 0 || arg1[0] > 15)
 		return (1);
 	
-	ft_memcpy(process->reg[GET_REGNB(arg1)], arg0, REG_SIZE);
-	process->wait_cycle = wait;
+	ft_memcpy(process->reg[INT arg1], arg0, REG_SIZE);
 	
-	if (hatole(arg0, 4) == 0)
+	if (INT arg0 == 0)
 		process->carry = 1;
 	else
 		process->carry = 0;
 	
+	t_env *env;
+	env = get_env(NULL);
 
 	if(env->debug || DBG_LD)
-		debug_ld(mem, arg1, address, process);
+		debug_ld(arg0, arg1);
 	
 	return (0);
 }

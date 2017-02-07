@@ -90,24 +90,26 @@ void	play_game(t_env *env)
 	t_champ **champs;
 	int i;
 	int j;
-	char ch;
+	//char ch;
 
 	int lol = 0;
+	char champs_pc[4096];
+
 	champs = env->champs;
 	while(/*!env->end*/1)
 	{
 		if (DISPLAY)
 		{
-			if (kbhit())
+			/*if (kbhit())
 			{
 				if (getch() == ' ')
 					while ((ch = getch()) != ' ')
 						;
 				else
 	            	render(NULL);
-			}
-	        else 
-	        {
+			}*/
+	        //else 
+	        //{
 				i = -1;
 				while (champs[++i])
 				{
@@ -118,6 +120,9 @@ void	play_game(t_env *env)
 						{
 							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
 								exec_fork_lfork(i, j, env);
+							print_pc(champs[i]->process[j]->pc, champs[i]->process[j]->inc_pc, champs[i]->color, env)
+							champs[i]->process[j]->pc = MMS(pc + champs[i]->process[j]->inc_pc);
+							champs[i]->process[j]->inc_pc = 0;
 						}
 						else
 							champs[i]->process[j]->wait_cycle--;
@@ -126,8 +131,8 @@ void	play_game(t_env *env)
 				env->cycle++;
 				if (++env->current_cycle > env->cycle_to_die)
 					check_live(env);
-				render(env);
-			}
+				//render(env);
+			//}
 		}
 		else
 		{
@@ -141,29 +146,28 @@ void	play_game(t_env *env)
 					{
 						env->debug = 0;
 						
-						if (j == 0)
+						if (j == 2)
 							lol++;
-						if(j == 0 && lol >= 0 && lol <= 10){
+						if(j == 2 && lol >= 140 && lol <= 170){
 							ft_putstr("\nPROCESS NB: ");
 							ft_putnbr(j);
-							ft_putstr("\n");
 							ft_putstr("\nPROCESS PC: ");
 							ft_putnbr(champs[i]->process[j]->pc);
-							ft_putstr("\n");
 							ft_putstr("\nNEXT OP: ");
 							ft_print_memory(&(env->mem[champs[i]->process[j]->pc]), 1);
 							ft_putstr("\n");
 
 							env->debug = 1;
 						}
-						if (lol == 200){
-							//ft_print_memory(env->mem, MEM_SIZE);
+						if (lol == 170){
+							ft_print_memory(env->mem, MEM_SIZE);
 							ft_putstr("\n Cycle: ");
 							ft_putnbr(env->cycle);
 							exit(0);
 						}
 
-						if (j == 0){
+						if (j == 2 || j == 0)
+						{
 							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
 								exec_fork_lfork(i, j, env);
 						}

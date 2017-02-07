@@ -58,11 +58,9 @@ t_process *new_process(int pc, t_champ *champ)
 	while (++i < 16)
 		ft_memcpy(new->reg[i], &zero, 4);
 	new->pc = pc;
+	new->inc_pc = 0;
 	nb = champ->nb;
-	ft_print_memory(&nb, 4);
 	ft_memcpy(new->reg[0], &nb, 4);
-	ft_putstr("\nHERE: ");
-	ft_print_memory(new->reg[0], 4);
 	new->carry = 0;
 	new->wait_cycle = 0;
 
@@ -82,6 +80,7 @@ t_process *fork_process(int pc, t_process *process)
 	while (++i < 16)
 		ft_memcpy(new->reg[i], process->reg[i], 4);
 	new->pc = pc;
+	new->inc_pc = 0;
 	new->carry = process->carry;
 	new->wait_cycle = process->wait_cycle;
 
@@ -98,7 +97,7 @@ void	init_process(t_env *env)
 		ft_memcpy(&(env->mem[(MEM_SIZE / 4) * i]), env->champs[i]->inst, env->champs[i]->size);
 		env->champs[i]->process[0] = new_process((MEM_SIZE / 4) * i, env->champs[i]);
 		if (DISPLAY)
-			print_on_mem(env->champs[i]->inst, (MEM_SIZE / 4) * i, env->champs[i]->size, env->champs[i]->color);
+			print_champs(env->champs[i]->inst, (MEM_SIZE / 4) * i, env->champs[i]->size, env->champs[i]->color);
 	}
 	if (DBG_MEM)
 		ft_print_memory(env->mem, MEM_SIZE);

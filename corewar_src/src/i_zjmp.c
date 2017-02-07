@@ -15,15 +15,12 @@ static void	debug_zjmp(int pc, t_process *process)
 
 int exec_zjmp(unsigned char *mem, int pc, t_process *process)
 {
-	
-	//ft_putstr("\n--------- ZJMP ----------\n");
-	char arg[2];
+	char arg[4];
 
-	ft_memcpy(arg, &mem[pc + 1], 2);
-	revert_bytes(arg, 2);
+	cpy_from_mem(arg, mem, 2, pc + 1);
 
 	if (process->carry == 1)
-		INC_PC(MODFIX(*(short int*)arg % IDX_MOD, MEM_SIZE));
+		INC_PC(MODFIX(INT arg % IDX_MOD, MEM_SIZE));
 	else
 		INC_PC(3);
 	process->wait_cycle = 20;
@@ -33,6 +30,8 @@ int exec_zjmp(unsigned char *mem, int pc, t_process *process)
 
 	if (env->debug || DBG_ZJMP)
 		debug_zjmp(pc, process);
+
+	process->carry = 0;
 
 	return (0);
 }

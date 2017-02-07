@@ -12,19 +12,18 @@ static void	debug_aff(char c)
 
 int exec_aff(unsigned char *mem, int pc, t_process *process)
 {
-	//ft_putstr("--------- AFF ----------\n");
 	char arg[4];
 	int c;
 
 	INC_PC(2);
 	if (mem[MMS(pc + 1)] != 0x40)
 		return (1);
-	cpy_from_mem(arg, mem, 1, MMS(pc + 2));
+	cpy_from_mem(arg, mem, 1, pc + 2);
 	INC_PC(1);
-	if (*arg < 1 || *arg > 16)
+	if (*arg < 0 || *arg > 15)
 		return (1);
-	ft_memcpy(arg, process->reg[GET_REGNB(arg)], 4);
-	c = MODFIX(hatole(arg, 4), 256);
+	ft_memcpy(arg, process->reg[INT arg], 4);
+	c = MODFIX(INT arg, 256);
 	write(1, &c, 1);
 
 	t_env *env;

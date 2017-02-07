@@ -16,7 +16,6 @@ int exec_fork_lfork(int i, int j, t_env *env)
 	char arg[4];
 	int fork_pc;
 
-	//ft_print_memory(env->mem, MEM_SIZE);
 	process = env->champs[i]->process[j];
 	cpy_from_mem(arg, env->mem, 2, MMS(process->pc + 1));
 
@@ -42,6 +41,6 @@ int exec_fork_lfork(int i, int j, t_env *env)
 
 	if (env->debug || DBG_FORK)
 		debug_fork(fork_pc);
-
+	
 	return (0);
 }

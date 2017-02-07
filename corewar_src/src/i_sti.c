@@ -10,20 +10,18 @@ static void	debug_sti(unsigned char *mem, char **args, int address)
 	ft_putnbr(hatole(args[1], 4));
 	ft_print_memory(args[1], 4);*/
 	ft_putstr("Copying 4 Bytes from reg[");
-	ft_putnbr(hatole(args[2], 1));
+	ft_putnbr(INT args[2] + 1);
 	ft_putstr("] to mem[");
-	ft_putnbr(address);
+	ft_putnbr(MODFIX(address, MEM_SIZE));
 	ft_putstr("]\n");
-	ft_print_memory(&mem[address], 4);
+	ft_print_memory(&mem[MODFIX(address, MEM_SIZE)], 4);
 	ft_putstr("\n");
 }
 
 int exec_sti(unsigned char *mem, int pc, t_process *process)
 {
-	//ft_putstr("\n--------- STI ----------\n");
 	char 		**args;
 	int 		tab[2];
-	int			sum;
 	int 		address;
 
 	INC_PC(2);
@@ -32,16 +30,16 @@ int exec_sti(unsigned char *mem, int pc, t_process *process)
 	if (!(args = get_args(mem, pc, &tab[0], process)))
 			return (1);
 	cpy_from_mem(args[2], mem, 1, MMS(pc + 2));
-	if (*args[2] > 0x10)
+	if (*args[2] < 0 || *args[2] > 15)
 	{
 		ft_tab_free(args);
 		return (1);
 	}
 	
-	sum = hatole(args[0], 4) + hatole(args[1], 4);
-	address = MODFIX(pc + sum, MEM_SIZE);
+	address = pc + INT args[0] + INT args[1];
+	cpy_to_mem(mem, process->reg[INT args[2]], address, process);
 	process->wait_cycle = 25;
-	cpy_to_mem(mem, process->reg[GET_REGNB(args[2])], REG_SIZE, address);
+
 	
 	t_env *env;
 	env = get_env(NULL);

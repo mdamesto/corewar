@@ -13,7 +13,6 @@ int exec_live(unsigned char *mem, int pc, t_process *process, t_env *env)
 	char tmp[4];
 
 	cpy_from_mem(tmp, mem, 4, MMS(pc + 1));
-	ft_print_memory(tmp, 4);
 	if (env->lives_nb >= env->lives_tab_size)
 	{
 		env->lives_tab_size *= 2;

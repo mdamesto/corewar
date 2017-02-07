@@ -9,70 +9,6 @@
 *	3 -> Dir(siz = 2): copy direct value and fill with 0x00
 * 	4 -> Dir(siz = 4): copy direct value
 */
-char **get_args_le(unsigned char *mem, int pc, int *tab, t_process *process)
-{
-	int n;
-	int i;
-	char **ret;
-	
-	n = 0; 
-	if (mem[pc] == 0x0b) //skip first param in sti case
-		n = 1;
-	i = -1;
-	ret = ft_tab_set(3, 4);
-	while (++i < 2)
-	{
-		if (tab[i] == 1)
-		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 1);
-			if (ret[i][0] < 1 || ret[i][0] > 16)
-				return (ret = NULL);
-			GET_REGV(ret[i]);
-			revert_bytes(ret[i], 4);
-			n++;
-
-		}
-		else if (tab[i] == 2)
-		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 2);
-			GET_INDV(ret[i], pc - 2);
-			revert_bytes(ret[i], 4);
-			n += 2;
-		}
-		else if (tab[i] == 3)
-		{
-			if (mem[pc] == 0x0a)
-			{
-				char tmp[2];
-				short tmpnb;
-				ft_memcpy(tmp, &mem[pc + 2 + n], 2);
-				revert_bytes(tmp, 2);
-				ft_memcpy(&tmpnb, tmp, 2);
-				tmpnb = -tmpnb;
-				int test = 0;
-				test -= tmpnb;
-				test = revert_endian(test);
-				ft_memcpy(ret[i], &test, 4);
-			}
-			else
-			{
-				ft_memset(ret[i], 0x00, 2);
-				ft_memcpy(&ret[i][2], &mem[pc + 2 + n], 2);
-				revert_bytes(ret[i], 4);
-			}
-			n += 2;
-		}
-		else if (tab[i] == 4)
-		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 4);
-			revert_bytes(ret[i], 4);
-			n += 4;
-		}
-	}
-	INC_PC(n);
-	return (ret);
-}
-
 char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 {
 	int n;
@@ -88,45 +24,28 @@ char **get_args(unsigned char *mem, int pc, int *tab, t_process *process)
 	{
 		if (tab[i] == 1)
 		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 1);
-			if (ret[i][0] < 1 || ret[i][0] > 16)
+			cpy_from_mem(ret[i], mem, 1, pc + 2 + n);
+			if (ret[i][0] < 0 || ret[i][0] > 15)
 				return (ret = NULL);
-			GET_REGV(ret[i]);
+			ft_memcpy(ret[i], process->reg[INT ret[i]], REG_SIZE);
 			n++;
 
 		}
 		else if (tab[i] == 2)
 		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 2);
-			GET_INDV(ret[i], pc - 2);
-			n += 2;
+			cpy_from_mem(ret[i], mem, IND_SIZE, pc + 2 + n);
+			cpy_from_mem(ret[i], mem, REG_SIZE, pc + INT ret[i]);
+			n += IND_SIZE;
 		}
 		else if (tab[i] == 3)
 		{
-			if (mem[pc] == 0x0a)
-			{
-				char tmp[2];
-				short tmpnb;
-				ft_memcpy(tmp, &mem[pc + 2 + n], 2);
-				revert_bytes(tmp, 2);
-				ft_memcpy(&tmpnb, tmp, 2);
-				tmpnb = -tmpnb;
-				int test = 0;
-				test -= tmpnb;
-				test = revert_endian(test);
-				ft_memcpy(ret[i], &test, 4);
-			}
-			else
-			{
-				ft_memset(ret[i], 0x00, 2);
-				ft_memcpy(&ret[i][2], &mem[pc + 2 + n], 2);
-			}
-			n += 2;
+			cpy_from_mem(ret[i], mem, IND_SIZE, pc + 2 + n);
+			n += IND_SIZE;
 		}
 		else if (tab[i] == 4)
 		{
-			ft_memcpy(ret[i], &mem[pc + 2 + n], 4);
-			n += 4;
+			/*n += */cpy_from_mem(ret[i], mem, REG_SIZE, pc + 2 + n);
+			n += DIR_SIZE;
 		}
 	}
 	INC_PC(n);
@@ -140,6 +59,7 @@ void	cpy_from_mem(char *dst, unsigned char *mem, int siz, int pc)
 	int i;
 	int len;
 
+	pc = MODFIX(pc, MEM_SIZE);
 	ext = 0;
 	if ((pc + siz) > MEM_SIZE)
 		ext = (pc + siz) % MEM_SIZE;
@@ -157,7 +77,15 @@ void	cpy_from_mem(char *dst, unsigned char *mem, int siz, int pc)
 		dst[len] = tmp;
 	}
 
-	//if siz = 2 fill withe 0x00 if + 0xff if neg
+	//if siz = 1 || 2 fill withe 0x00 if + 0xff if neg
+	if (siz == 1)
+	{
+		if ((unsigned char)dst[0] > 0x80)
+			ft_memcpy(&dst[1], "\xff\xff\xff", 2);
+		else
+			ft_memcpy(&dst[1], "\x00\x00\x00", 2);
+		dst[0]--; //decrementent reg since reg 1 is stored in reg[0], ect...
+	}
 	if (siz == 2)
 	{
 		if ((unsigned char)dst[1] > 0x80)
@@ -193,32 +121,31 @@ void	cpy_from_mem(char *dst, unsigned char *mem, int siz, int pc)
 	}*/
 }
 
-void	cpy_to_mem(unsigned char *mem, char *src, int siz, int pc)
+void	cpy_to_mem(unsigned char *mem, char *src, int pc, t_process *process)
 {
-	int ext;
-	char tmp;
 	int i;
-	int len;
+	int ext;
+	char tmp[4];
 
+	pc = MODFIX(pc, MEM_SIZE);
+	
 	//revert endian
-	ft_putstr("\ncpy to mem pre revert: ");
-	ft_print_memory(src, 4);
-	len = siz;
 	i = -1;
-	while (--len > ++i)
-	{
-		tmp = src[i];
-		src[i] = src[len];
-		src[len] = tmp;
-	}
-	ft_putstr("\ncpy to mem post revert: ");
-	ft_print_memory(src, 4);
+	while (++i < 4)
+		tmp[i] = src[3 - i];
 
 	ext = 0;
-	if ((pc + siz) > MEM_SIZE)
-		ext = (pc + siz) % MEM_SIZE;
-	ft_memcpy(&mem[pc], src, siz - ext);
-	ft_memcpy(&mem[0], &src[siz - ext], ext);
+	if ((pc + 4) > MEM_SIZE)
+		ext = (pc + 4) % MEM_SIZE;
+	ft_memcpy(&mem[pc], tmp, 4 - ext);
+	ft_memcpy(&mem[0], &tmp[4 - ext], ext);
+
+	if (DISPLAY)
+	{
+		ft_putstr_fd("\nadress: ", debug_fd);
+		ft_putnbr_fd(pc, debug_fd);
+		print_inst(tmp, pc, process->champ->color);
+	}
 
 	// DEBUG
 	/*ft_putstr("*__TO__\n");
