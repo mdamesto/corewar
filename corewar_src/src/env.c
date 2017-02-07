@@ -21,6 +21,7 @@ void				init_env(void)
 	new->next_fixed = 0;
 	new->end = false;
 	new->debug = DBG_INSTS;
+	new->process_nb = 0;
 
 	get_env(new);
 }

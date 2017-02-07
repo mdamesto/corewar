@@ -43,7 +43,7 @@ void static debug_process(t_env *env)
 	ft_putstr("\n");
 }
 
-t_process *new_process(int pc, t_champ *champ)
+t_process *new_process(int pc, t_champ *champ, t_env *env)
 {
 	t_process *new;
 	int i;
@@ -58,16 +58,17 @@ t_process *new_process(int pc, t_champ *champ)
 	while (++i < 16)
 		ft_memcpy(new->reg[i], &zero, 4);
 	new->pc = pc;
-	new->inc_pc = 0;
+	new->old_pc = pc;
 	nb = champ->nb;
 	ft_memcpy(new->reg[0], &nb, 4);
 	new->carry = 0;
 	new->wait_cycle = 0;
 
+	env->process_nb++;
 	return (new);
 }
 
-t_process *fork_process(int pc, t_process *process)
+t_process *fork_process(int pc, t_process *process, t_env *env)
 {
 	t_process *new;
 	int i;
@@ -80,10 +81,11 @@ t_process *fork_process(int pc, t_process *process)
 	while (++i < 16)
 		ft_memcpy(new->reg[i], process->reg[i], 4);
 	new->pc = pc;
-	new->inc_pc = 0;
+	new->old_pc = pc;
 	new->carry = process->carry;
 	new->wait_cycle = process->wait_cycle;
 
+	env->process_nb++;
 	return (new);
 }
 
@@ -95,7 +97,7 @@ void	init_process(t_env *env)
 	while (env->champs[++i])
 	{
 		ft_memcpy(&(env->mem[(MEM_SIZE / 4) * i]), env->champs[i]->inst, env->champs[i]->size);
-		env->champs[i]->process[0] = new_process((MEM_SIZE / 4) * i, env->champs[i]);
+		env->champs[i]->process[0] = new_process((MEM_SIZE / 4) * i, env->champs[i], env);
 		if (DISPLAY)
 			print_champs(env->champs[i]->inst, (MEM_SIZE / 4) * i, env->champs[i]->size, env->champs[i]->color);
 	}

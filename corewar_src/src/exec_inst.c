@@ -41,8 +41,8 @@ int	exec_inst(t_process *process, t_env *env, int i, int j)
 		exec_aff(mem, pc, process);
 	else 
 	{
-		return (1);
 		INC_PC(1);
+		return (1);
 	}
 	i = j;
 	/*ft_putstr("**PLAYER [");

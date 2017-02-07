@@ -31,7 +31,5 @@ int exec_zjmp(unsigned char *mem, int pc, t_process *process)
 	if (env->debug || DBG_ZJMP)
 		debug_zjmp(pc, process);
 
-	process->carry = 0;
-
 	return (0);
 }

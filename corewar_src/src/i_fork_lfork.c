@@ -29,7 +29,7 @@ int exec_fork_lfork(int i, int j, t_env *env)
 		process->wait_cycle = 1000;
 		fork_pc = MODFIX(process->pc + *(int*)arg, MEM_SIZE);
 	}
-	fork = fork_process(fork_pc, process);
+	fork = fork_process(fork_pc, process, env);
 	
 	while (env->champs[i]->process[++j])
 		;

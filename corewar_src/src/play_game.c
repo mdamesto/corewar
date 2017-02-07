@@ -95,7 +95,7 @@ void	play_game(t_env *env)
 	int lol = 0;
 
 	champs = env->champs;
-	while(/*!env->end*/1)
+	while(/*!env->end*/ 1)
 	{
 		if (DISPLAY)
 		{
@@ -119,14 +119,14 @@ void	play_game(t_env *env)
 						{
 							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
 								exec_fork_lfork(i, j, env);
-							//print_pc(champs[i]->process[j]->pc, champs[i]->process[j]->inc_pc, champs[i]->color, env);
-							//champs[i]->process[j]->pc = MMS(champs[i]->process[j]->pc + champs[i]->process[j]->inc_pc);
-							//champs[i]->process[j]->inc_pc = 0;
+							print_pc(champs[i]->process[j]->pc, champs[i]->process[j]->old_pc, champs[i]->color, env);
+							champs[i]->process[j]->old_pc = champs[i]->process[j]->pc;
 						}
 						else
 							champs[i]->process[j]->wait_cycle--;
 					}
 				}
+				edit_menu(env);
 				env->cycle++;
 				if (++env->current_cycle > env->cycle_to_die)
 					check_live(env);
@@ -145,9 +145,11 @@ void	play_game(t_env *env)
 					{
 						env->debug = 0;
 						
-						if (j == 2)
+						if (j == 1)
 							lol++;
-						if(j == 2 && lol >= 140 && lol <= 170){
+						//if(j == 1 && lol >= 0 && lol <= 20){
+						if (env->mem[champs[i]->process[j]->pc] == 0x09)
+						{
 							ft_putstr("\nPROCESS NB: ");
 							ft_putnbr(j);
 							ft_putstr("\nPROCESS PC: ");
@@ -155,17 +157,17 @@ void	play_game(t_env *env)
 							ft_putstr("\nNEXT OP: ");
 							ft_print_memory(&(env->mem[champs[i]->process[j]->pc]), 1);
 							ft_putstr("\n");
-
-							env->debug = 1;
 						}
-						if (lol == 170){
-							ft_print_memory(env->mem, MEM_SIZE);
+							//env->debug = 1;
+						//}
+						if (lol == 50){
+							//ft_print_memory(env->mem, MEM_SIZE);
 							ft_putstr("\n Cycle: ");
 							ft_putnbr(env->cycle);
 							exit(0);
 						}
 
-						if (j == 2 || j == 0)
+						if (j == 0 || j == 1)
 						{
 							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
 								exec_fork_lfork(i, j, env);
@@ -195,6 +197,8 @@ void	play_game(t_env *env)
 
 	}
 
+	if (DISPLAY)
+		getch();
 	ft_putstr(env->champs[0]->name);
 	ft_putstr(" (champion nb: ");
 	ft_putnbr(env->champs[0]->nb);

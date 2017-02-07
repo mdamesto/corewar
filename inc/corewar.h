@@ -30,7 +30,7 @@ extern int	debug_fd;
 
 # define INT *(int*)
 # define MMS(x) (x) % MEM_SIZE
-# define INC_PC(x) process->pc = (process->pc + (x)) % MEM_SIZE
+# define INC_PC(x) process->pc = MMS(process->pc + (x))
 # define INV_CARRY (process->carry ? (process->carry = 0): (process->carry = 1))
 # define GET_REGNB(x) hatole((x), 1) - 1
 # define GET_REGV(x) ft_memcpy((x), process->reg[GET_REGNB((x))], REG_SIZE)
@@ -45,7 +45,7 @@ typedef struct	s_process
 {
 	struct 	s_champ *champ;
 	int 	pc;
-	int 	inc_pc;
+	int 	old_pc;
 	char 	**reg;
 	short	carry;
 	int 	wait_cycle;
@@ -81,6 +81,7 @@ typedef struct	s_env
 	int 		debug;
 	WINDOW		*w_main;
 	WINDOW		*w_menu;
+	int 		process_nb;
 }				t_env;
 
 void render(t_env *env);
@@ -118,8 +119,8 @@ void	parse_args(int argc, char **argv, t_env *env);
 //init_process.c
 void	init_process(t_env *env);
 void	print_process(t_process *process);
-//t_process *new_process(int pc, int nb);
-t_process *fork_process(int pc, t_process *process);
+t_process *new_process(int pc, t_champ *champ, t_env *env);
+t_process *fork_process(int pc, t_process *process, t_env *env);
 
 //play_game.c
 void	play_game(t_env *env);
@@ -146,9 +147,10 @@ void 	init_display(t_env *env);
 void    print_champs(char *str, int start, int len, int color);
 void    print_inst(char *str, int start, int color);
 void  	print_pc(int pc, int inc_pc, int color, t_env *env);
+void    edit_menu(t_env *env);
 
 
-# define DISPLAY 1
+# define DISPLAY 0
 
 # define DBG_CHAMP 0
 # define DBG_MEM 0
@@ -161,7 +163,7 @@ void  	print_pc(int pc, int inc_pc, int color, t_env *env);
 # define DBG_ST 0
 # define DBG_ADD 0
 # define DBG_OR 0
-# define DBG_ZJMP 0
+# define DBG_ZJMP 1
 # define DBG_LDI 0
 # define DBG_FORK 0
 # define DBG_AFF 0
