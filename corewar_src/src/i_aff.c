@@ -26,6 +26,7 @@ int exec_aff(unsigned char *mem, int pc, t_process *process)
 	c = MODFIX(INT arg, 256);
 	write(1, &c, 1);
 
+	process->wait_cycle = 2;
 	t_env *env;
 	env = get_env(NULL);
 

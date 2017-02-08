@@ -150,7 +150,7 @@ void  	print_pc(int pc, int inc_pc, int color, t_env *env);
 void    edit_menu(t_env *env);
 
 
-# define DISPLAY 0
+# define DISPLAY 1
 
 # define DBG_CHAMP 0
 # define DBG_MEM 0
@@ -163,7 +163,7 @@ void    edit_menu(t_env *env);
 # define DBG_ST 0
 # define DBG_ADD 0
 # define DBG_OR 0
-# define DBG_ZJMP 1
+# define DBG_ZJMP 0
 # define DBG_LDI 0
 # define DBG_FORK 0
 # define DBG_AFF 0

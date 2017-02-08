@@ -28,18 +28,18 @@ int exec_ld_lld(unsigned char *mem, int pc, t_process *process)
 	{
 		cpy_from_mem(arg0, mem, 2, pc + 2);
 		address = pc + INT arg0;
-		process->wait_cycle = 10;
 		if (mem[pc] == 0x02) //if op is ld (IDX_MOD)
-		{
 			address = pc + INT arg0 % IDX_MOD;
-			process->wait_cycle = 5;
-		}
 		cpy_from_mem(arg0, mem, REG_SIZE, address);
 		INC_PC(2);
 	}
 	else
 		return (1);
 	
+	process->wait_cycle = 10;
+	if (mem[pc] == 0x02)
+		process->wait_cycle = 5;
+
 	cpy_from_mem(arg1, mem, 1, process->pc);
 	INC_PC(1);
 	if (arg1[0] < 0 || arg1[0] > 15)

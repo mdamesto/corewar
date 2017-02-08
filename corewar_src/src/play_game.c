@@ -114,6 +114,8 @@ void	play_game(t_env *env)
 				{
 					j = -1;
 					while (champs[i]->process[++j])
+						;
+					while (--j >= 0)
 					{
 						if (!champs[i]->process[j]->wait_cycle) 
 						{
@@ -122,7 +124,7 @@ void	play_game(t_env *env)
 							print_pc(champs[i]->process[j]->pc, champs[i]->process[j]->old_pc, champs[i]->color, env);
 							champs[i]->process[j]->old_pc = champs[i]->process[j]->pc;
 						}
-						else
+						if (champs[i]->process[j]->wait_cycle > 0)
 							champs[i]->process[j]->wait_cycle--;
 					}
 				}
@@ -140,6 +142,9 @@ void	play_game(t_env *env)
 			{
 				j = -1;
 				while (champs[i]->process[++j])
+					;
+				//while (champs[i]->process[++j])
+				while(--j >= 0)
 				{
 					if (!champs[i]->process[j]->wait_cycle) 
 					{
@@ -147,9 +152,11 @@ void	play_game(t_env *env)
 						
 						if (j == 1)
 							lol++;
-						//if(j == 1 && lol >= 0 && lol <= 20){
-						if (env->mem[champs[i]->process[j]->pc] == 0x09)
-						{
+						//if(j == 1 && lol >= 0 && lol <= 20)
+						if (j!= 0 && env->mem[champs[i]->process[j]->pc] == 0x03 &&  (j == 1 || j == 3 || j == 5 || j ==8))
+						{	
+							ft_putstr("\n Cycle: ");
+							ft_putnbr(env->cycle);
 							ft_putstr("\nPROCESS NB: ");
 							ft_putnbr(j);
 							ft_putstr("\nPROCESS PC: ");
@@ -160,20 +167,21 @@ void	play_game(t_env *env)
 						}
 							//env->debug = 1;
 						//}
-						if (lol == 50){
+						if (lol == 30){
 							//ft_print_memory(env->mem, MEM_SIZE);
 							ft_putstr("\n Cycle: ");
 							ft_putnbr(env->cycle);
 							exit(0);
 						}
 
-						if (j == 0 || j == 1)
+						if (j == 0 || j == 1 || j == 3 || j == 5 || j == 8)
 						{
 							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
 								exec_fork_lfork(i, j, env);
 						}
 					}
-					else
+					//else
+					if (champs[i]->process[j]->wait_cycle > 0)
 						champs[i]->process[j]->wait_cycle--;
 				}
 			}

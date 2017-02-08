@@ -57,7 +57,10 @@ int exec_st(unsigned char *mem, int pc, t_process *process)
 	env = get_env(NULL);
 
 	if (env->debug || DBG_ST)
-		debug_st(mem, arg0, arg1, pc);
-
+		if (pc == 602 || pc == 607)
+		{
+			debug_st(mem, arg0, arg1, pc);
+			//ft_print_memory(process->reg[INT arg0], 4);
+		}
 	return (0);
 }

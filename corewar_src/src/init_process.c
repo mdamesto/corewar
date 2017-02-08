@@ -83,7 +83,7 @@ t_process *fork_process(int pc, t_process *process, t_env *env)
 	new->pc = pc;
 	new->old_pc = pc;
 	new->carry = process->carry;
-	new->wait_cycle = process->wait_cycle;
+	new->wait_cycle = process->wait_cycle - 1;
 
 	env->process_nb++;
 	return (new);

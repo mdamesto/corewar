@@ -83,7 +83,7 @@ wall:
 	st		r2, -510
 	zjmp	%:wall
 
-beegees_gen:
+beegees_gen: # 391
 	live	%4239423
 	fork	%:beegees_gen
 	ld		%0, r16
@@ -92,12 +92,12 @@ beegees:
 	live	%3442302
 	zjmp	%:beegees
 
-cc_spawn:
+cc_spawn: #414
 	live	%4320423
 	zjmp	%3
 	fork	%:cc_spawn
 
-cc4:
+cc4: #425
 	live	%4329034
 	fork	%:cc3
 	live	%3401123
@@ -113,7 +113,7 @@ cc4l:
 	ld		%0, r16
 	zjmp	%:choochoo
 
-cc2:
+cc2: #485
 	live	%4342342
 	fork	%:wall_prep
 	ld		%251883523, r2
@@ -122,7 +122,7 @@ cc2:
 	ld		%0, r16
 	zjmp	%:choochoo
 
-cc3:
+cc3: #524
 	live	%4239013
 	fork	%:cc4
 	live	%4093282
@@ -134,14 +134,14 @@ cc3:
 	ld		%0, r16
 	zjmp	%:choochoo
 
-cc1:
+cc1: #578
 	ld		%57672192, r2
 	ld		%318992387, r3
 	ld		%0, r16
 	zjmp	%:choochoo
 
 choochoo:
-	st		r2, 15
+	st		r2, 15 # store after live
 	st		r3, -1
 cc_live:
 	live	%0
