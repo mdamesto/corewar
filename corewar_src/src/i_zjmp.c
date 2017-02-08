@@ -29,7 +29,6 @@ int exec_zjmp(unsigned char *mem, int pc, t_process *process)
 	env = get_env(NULL);
 
 	if (env->debug || DBG_ZJMP)
-		if (pc != 388)
 			debug_zjmp(pc, process);
 
 	return (0);

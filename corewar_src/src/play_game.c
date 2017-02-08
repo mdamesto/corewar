@@ -47,6 +47,7 @@ bool	remove_champ(uint8_t i, t_champ **champs)
 void	check_live(t_env *env)
 {
 	uint8_t i;
+	static int check = 0;
 
 	i = 0;
 	while (env->champs[i])
@@ -60,8 +61,18 @@ void	check_live(t_env *env)
 			i++;
 	}
 	i = 0;
-	if (env->lives_nb >= NBR_LIVE)
+	if (check == 4)
+	{
 		env->cycle_to_die -= CYCLE_DELTA;
+		check = 0;
+	}
+	else if (env->lives_nb >= NBR_LIVE)
+	{
+		env->cycle_to_die -= CYCLE_DELTA;
+		check = 0;
+	}
+	else
+		check++;
 	
 	free(env->lives);
 	if (!(env->lives = (int *)ft_memalloc(sizeof(int) * env->lives_tab_size)))
@@ -150,10 +161,9 @@ void	play_game(t_env *env)
 					{
 						env->debug = 0;
 						
-						if (j == 1)
+						if (j == 0)
 							lol++;
-						//if(j == 1 && lol >= 0 && lol <= 20)
-						if (j!= 0 && env->mem[champs[i]->process[j]->pc] == 0x03 &&  (j == 1 || j == 3 || j == 5 || j ==8))
+						if(j == 0 && lol >= 120 && lol <= 140)
 						{	
 							ft_putstr("\n Cycle: ");
 							ft_putnbr(env->cycle);
@@ -164,21 +174,22 @@ void	play_game(t_env *env)
 							ft_putstr("\nNEXT OP: ");
 							ft_print_memory(&(env->mem[champs[i]->process[j]->pc]), 1);
 							ft_putstr("\n");
+							env->debug = 1;
 						}
 							//env->debug = 1;
 						//}
-						if (lol == 30){
+						if (lol == 200){
 							//ft_print_memory(env->mem, MEM_SIZE);
 							ft_putstr("\n Cycle: ");
 							ft_putnbr(env->cycle);
 							exit(0);
 						}
 
-						if (j == 0 || j == 1 || j == 3 || j == 5 || j == 8)
-						{
+						//if (j == 0 || j == 1 || j == 3 || j == 5 || j == 8)
+						//{
 							if (exec_inst(champs[i]->process[j], env, i, j) == 1)
 								exec_fork_lfork(i, j, env);
-						}
+						//}
 					}
 					//else
 					if (champs[i]->process[j]->wait_cycle > 0)
