@@ -5,9 +5,9 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 #Path Champion
-DIR="resources/players/fail"
+DIR="resources/players"
 
-# Create directory
+# Check if asm is in current dir and put it where it belong
 if [ -f asm ]
 then mv asm resources/bin/
 fi
@@ -53,13 +53,13 @@ do
 	rm -f champion chapion_zaz
 	name=$(basename "$champion" .zaz.cor)
 	hexdump -C $DIR/${name}.cor > champion
-	if [ !-f $DIR/${name}.cor ]
-		then touch champion
-	fi
-	if [ !-f $DIR/${name}.zaz.cor ]
-		then touch champion_zaz
-	fi
 	hexdump -C $DIR/${name}.zaz.cor > champion_zaz
+	if [ ! -f $DIR/${name}.cor ]
+		then echo "NULL" > champion
+	fi
+	if [ ! -f $DIR/${name}.zaz.cor ]
+		then echo "NULL" > champion_zaz
+	fi
 	cols=80
 	lines=0
 	clear
@@ -82,6 +82,7 @@ do
 		fi
 		lines=$(($lines+1))
  	done < champion 3<champion_zaz
-	read -n 1 -s -p "Press any key to continue $name"
+ 	echo $name
+	read -n 1 -s -p "Press any key to continue"
 	printf "\n"
 done
