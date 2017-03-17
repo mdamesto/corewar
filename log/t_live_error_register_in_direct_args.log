@@ -1,0 +1,4 @@
+Starting parsing... Ha, Ha, Ha, stayiiiiin' aliiiiiiiiiive
+inst: 01
+args: 000003e7
+Error: champions/test/t_live_error_register_in_direct_args: Wrong Direct value on line 5: live %r9

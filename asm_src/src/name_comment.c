@@ -4,18 +4,20 @@ char	*get_content(t_env *env)
 {
 	int i;
 	int j;
-	char ret[COMMENT_LENGTH + 1];
+	char *ret;
 
+	ret = ft_strnew(COMMENT_LENGTH);
 	i = 0;
+	j = 0;
 	if (env->line[i++] != '"')
 		ft_error(EPARSING);
 	while(env->line[i] != '"')
 	{
-		ret[j++] = env->line[i]
+		ret[j++] = env->line[i];
 		if (!env->line[i + 1])
 		{
 			ret[j++] = '\n';
-			if (get_next_line(env->line) != 1)
+			if (get_next_line(env->fd, &(env->line)) != 1)
 				ft_error(EPARSING);
 			i = 0;
 		}
@@ -27,6 +29,7 @@ char	*get_content(t_env *env)
 		ft_error(EPARSING);
 	ret[j] = '\0';
 
+	return (ret);
 }
 
 void	get_name(t_env *env)

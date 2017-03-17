@@ -13,13 +13,13 @@ void	remove_comment(t_env *env)
 	
 	while (env->line[i]) 
 	{	
-		while(env->line[i] && env->line[i] != COMMENT_CHAR)
+		while(env->line[i] && env->line[i] != COMMENT_CHAR && env->line[i] != ';')
 			tmp[j++] = env->line[i++];
-		if (env->line[i] == COMMENT_CHAR)
+		if (env->line[i] == COMMENT_CHAR || env->line[i] == ';')
 			i++;
-		while (env->line[i] && env->line[i] != COMMENT_CHAR)
+		while (env->line[i] && env->line[i] != COMMENT_CHAR && env->line[i] != ';')
 			i++;
-		if (env->line[i] == COMMENT_CHAR)
+		if (env->line[i] == COMMENT_CHAR || env->line[i] == ';')
 			i++;
 	}
 	free(env->line);

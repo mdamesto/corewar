@@ -1,0 +1,60 @@
+Starting parsing... Hastayiiiiin
+l
+iiiiiiiiive
+inst: 0b
+args_code: 68
+args: 01 :%live2: 0001
+inst: 0b
+args_code: 68
+args: 01 :%live22: 0001
+inst: 02
+args_code: 90
+args: 00000001 03
+inst: 02
+args_code: 90
+args: 00000021 06
+inst: 04
+args_code: 54
+args: 02 03 02
+inst: 08
+args_code: 64
+args: 02 0000000f 04
+inst: 01
+args: 00000004
+inst: 09
+args: :%endwhile2:
+inst: 0c
+args: :%forks2:
+inst: 02
+args_code: 90
+args: 00000000 04
+inst: 09
+args: :%forks2:
+inst: 02
+args_code: 90
+args: 00000000 04
+inst: 01
+args: 00000004
+inst: 09
+args: :%live2:
+LABEL_LST: forks(28)/live2(41)/endwhile(62)/live(69)
+
+
+INSTRUCTIONS:
+0b680100450001
+0b680100220001
+02900000000103
+02900000002106
+0454020302
+0864020000000f04
+0100000004
+090010
+0cffeb
+02900000000004
+09ffe1
+02900000000004
+0100000004
+09fffb
+Parsing done!
+Creating champion ...
+Champion created: champions/test/t_comment_multi_line.cor
