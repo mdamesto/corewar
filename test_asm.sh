@@ -25,7 +25,6 @@ rm -f $DIR/*.cor
 for champion in $DIR/*.s
 do
 	name=$(basename "$champion" .s)
-	echo $name
 	./resources/bin/asm_zaz $champion &> ./log/${name}.zaz.log
 	mv $DIR/${name}.cor $DIR/${name}.zaz.cor
 	./resources/bin/asm $champion &> ./log/${name}.log
