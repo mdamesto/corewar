@@ -74,7 +74,7 @@ void			create_champion(t_env *env)
 	
 	fd_cor = open (ft_strjoin(env->filename, ".cor"), O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	write(fd_cor, &header[0], sizeof(header_t) + env->c_adress);
-	
+
 	ft_putstr("\nChampion created: ");
 	ft_putstr(ft_strjoin(env->filename, ".cor"));
 	ft_putstr("\n");

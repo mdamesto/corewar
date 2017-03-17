@@ -1,48 +1,32 @@
 #include "asm.h"
 
-char	*get_content(char *line) 
+char	*get_content(t_env *env) 
 {
 	int i;
-	//int j;
-	//int k;
-	char *ret;
+	int j;
+	char ret[COMMENT_LENGTH + 1];
 
 	i = 0;
-	//k = 0;
-	
-	/*while(line[i] && line[i] != '\"')
-		i++;
-	j = i + 1;
-	while((line[j] && line[j] != '\"') || (line[j] && line[j - 1] == '\\'))
-		j++;
-	if (line[i] != '\"' || line[j] != '\"' || i == j)
+	if (env->line[i++] != '"')
 		ft_error(EPARSING);
-	ret = malloc(sizeof(char *) * (j - i));
-	while (++i < j)
-		ret[k++] = line[i];
-	ret[k] = '\0';
-	while (line[++i])
-		if(line[i] != ' ' && line[i] != '	')
-			ft_error(EPARSING);*/
-
-	if (line[i++] != '\"')
-		ft_error(EPARSING);
-	while(line[i] && (line[i] != '\"' && line[i - 1] != '\\'))
-		i++;
-	if (line[i] != '\"')
-		ft_error(EPARSING);
-	ret = ft_strnew(i);
-	i = 1;
-	while(line[i] && (line[i] != '\"' && line[i - 1] != '\\'))
+	while(env->line[i] != '"')
 	{
-		ret[i - 1] = line[i];
+		ret[j++] = env->line[i]
+		if (!env->line[i + 1])
+		{
+			ret[j++] = '\n';
+			if (get_next_line(env->line) != 1)
+				ft_error(EPARSING);
+			i = 0;
+		}
+		if (j > COMMENT_LENGTH)
+			ft_error(EPARSING);
 		i++;
 	}
-	while (line[++i])
-		if(line[i] != ' ' && line[i] != '	')
-			ft_error(EPARSING);
+	if (env->line[i + 1])
+		ft_error(EPARSING);
+	ret[j] = '\0';
 
-	return (ret);
 }
 
 void	get_name(t_env *env)
@@ -57,9 +41,7 @@ void	get_name(t_env *env)
 		ft_error(ENONAME);
 	env->line = ft_strcut_f(env->line, 0, 5);
 	env->line = ft_strtrim(env->line);
-	content = get_content(env->line);
-	if (!ft_strlen(content))
-		ft_error(ENONAME);
+	content = get_content(env);
 	if (ft_strlen(content) > PROG_NAME_LENGTH + 1)
 		ft_error(E_NM_LEN);
 	ft_strcpy(env->header->prog_name, content);
@@ -75,11 +57,7 @@ void	get_comment(t_env *env)
 		ft_error(ENONAME);
 	env->line = ft_strcut_f(env->line, 0, 8);
 	env->line = ft_strtrim(env->line);
-	content = get_content(env->line);
-	if (!ft_strlen(content))
-		ft_error(ENONAME);
-	if (ft_strlen(content) > PROG_NAME_LENGTH + 1)
-		ft_error(E_NM_LEN);
+	content = get_content(env);
 	ft_strcpy(env->header->comment, content);
 	ft_putstr(content);
 	free(content);
