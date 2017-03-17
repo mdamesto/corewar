@@ -7,7 +7,7 @@ void	live_zjump_fork_lfork(char *data, char *inst, size_t siz)
 
 
 	args = init_args();
-	split = ft_strsplit(data, ',');
+	split = ft_strsplit(data, SEPARATOR_CHAR);
 	ft_tab_trim(split);
 
 	if (!split[0] || split[1])

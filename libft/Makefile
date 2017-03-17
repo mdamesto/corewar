@@ -34,7 +34,20 @@ SRC_NAME =	ft_isascii.c ft_memcmp.c ft_strcmp.c ft_strncmp.c ft_toupper.c\
 			ft_itab_len.c ft_istrlen.c ft_strcut_beg.c ft_rmv_space.c ft_isspace.c ft_strsplit_space.c\
 			ft_strcut_end.c ft_tab_join.c convert_hex_octnb.c fill_hex.c ft_tab_trim.c\
 			ft_bin_to_int.c ft_is_label_char.c ft_strget.c ft_strcut.c ft_print_memory.c\
-			ft_atoi_hex.c
+			ft_atoi_hex.c ft_size_long.c ft_size_int_binary.c ft_size_long.c ft_size_ulong.c\
+			ft_strcat_uchar.c ft_strlen_ls.c ft_strlen_uchar.c ft_strnew_uchar.c ft_strrev.c\
+			ft_itoa_long.c ft_atoi_long.c\
+			utf_byte_size.c ft_isint.c ft_ispos.c ft_itoa_long.c ft_itoa_ulong.c\
+			ft_printf.c string_parser.c ftprintf_struct_init.c next_arg_test.c\
+			print_flags.c print_pad.c print_precision.c\
+			parser_c.c print_c.c print_lc.c\
+			parser_d.c print_d.c\
+			parser_o.c print_o.c\
+			parser_s.c print_s.c print_ls.c\
+			parser_u.c print_u.c\
+			parser_x.c print_x.c\
+			parser_p.c print_p.c\
+			print_utf_char.c
 
 OBJ_PATH = ./obj/
 OBJ_NAME = $(SRC_NAME:.c=.o)

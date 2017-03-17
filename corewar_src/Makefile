@@ -3,19 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: jde-maga <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/11/25 19:20:50 by mdamesto          #+#    #+#              #
-#    Updated: 2017/01/18 18:02:55 by mdamesto         ###   ########.fr        #
+#    Created: 2016/05/20 13:50:50 by jde-maga          #+#    #+#              #
+#    Updated: 2017/02/23 17:30:30 by jde-maga         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
-
 NAME = ../corewar
 
-SRC_NAME = main.c env.c error.c convert.c inst_tools.c get_champ.c parse_args.c\
-		init_process.c play_game.c exec_inst.c args_switch.c display.c\
-		i_live.c i_ld_lld.c i_st.c i_add_sub.c i_and_or_xor.c i_zjmp.c\
-		i_ldi_lldi.c i_sti.c i_fork_lfork.c i_aff.c
+SRC_NAME = main.c inits.c file_parser.c get_variables.c cor_live.c cor_ld.c cor_st.c\
+ 		cor_add.c cor_sub.c cor_and.c cor_or.c cor_xor.c cor_zjmp.c cor_ldi.c cor_sti.c cor_fork.c\
+  		cor_lld.c cor_lldi.c cor_lfork.c cor_aff.c endian_converter.c render.c argument_parser.c\
+  		operations.c live_check.c process_turn.c free_memory.c start_render.c
 SRC_PATH = ./src/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

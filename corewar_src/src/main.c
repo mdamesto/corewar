@@ -1,124 +1,85 @@
-#include "corewar.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jde-maga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/08 16:54:36 by jde-maga          #+#    #+#             */
+/*   Updated: 2017/03/10 18:55:09 by jde-maga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int debug_fd = -1;
+#include <corewar.h>
 
-char *get_str(unsigned char *mem)
+static void	create_starting_process(t_env *env)
 {
-  const char hex[] = "0123456789abcdef ";
-  char *ret;
-  int i;
+	int i;
+	int j;
+	int k;
 
-  ret = ft_strnew(192);
-  i = 0;
-  while (i < 192)
-  {
-    ret[i] = hex[*mem / 16];
-    ret[i + 1] = hex[*mem % 16];
-    ret[i + 2] = hex[16];
-    i += 3;
-    mem++;
-  }
-  return (ret);
+	i = 0;
+	j = 0;
+	k = 0;
+	while (env->player_list[i])
+	{
+		env->process_list[i]->pc = j;
+		env->display[j]->ispc = 1;
+		env->player_list[i]->id = i + 1;
+		while (k != env->player_list[i]->instructions_size)
+		{
+			env->arena->zone[j] = env->player_list[i]->instructions[k];
+			env->display[j]->value = env->arena->zone[j];
+			env->display[j]->champion = i + 1;
+			j++;
+			k++;
+		}
+		i++;
+		j = (MEM_SIZE / env->arena->player_amount) * i;
+		k = 0;
+	}
 }
 
-void  ilight_pc(t_env *env, t_champ **champs, WINDOW *main)
+static void	inject_players(t_env *env)
 {
-  const char hex[] = "0123456789abcdef";
-  int i;
-  int j;
-  char str[3];
+	int i;
 
-  i = 0;
-  str[2] = '\0';
-  while(champs[i])
-  {
-    j = 0;
-    while(champs[i]->process[j])
-    {
-      //printw("pc: %d ", champs[i]->process[j]->pc);
-      str[0] = hex[env->mem[champs[i]->process[j]->pc] / 16];
-      str[1] = hex[env->mem[champs[i]->process[j]->pc] % 16];
-      if (j == 0)
-        wattron(main, COLOR_PAIR(i + 1));
-      else
-        wattron(main, COLOR_PAIR(i + 5));
-      mvwprintw(main , champs[i]->process[j]->pc / 64, champs[i]->process[j]->pc % 64 * 3 + 1, str);
-       if (j == 0)
-        wattroff(main, COLOR_PAIR(i + 1));
-      else
-        wattroff(main, COLOR_PAIR(i + 5));
-      j++;
-    }
-    i++;
-  }
+	i = 0;
+	while (env->player_list[i])
+	{
+		env->process_list[i] = process_init(env->player_list[i]->number, i + 1);
+		env->process_list[i]->reg[0] = swap_bytes(env->player_list[i]->number);
+		env->arena->process_amount++;
+		i++;
+	}
+	create_starting_process(env);
 }
 
-void render(t_env *env)
+int			main(int argc, char **argv)
 {
-  WINDOW *main;
-  WINDOW *menu;
-  char *str;
-  int i;
+	t_env	*env;
+	int		j;
 
-  main = subwin(stdscr, 50, 193, 1, 1);
-  menu = subwin(stdscr, 50, 50, 1, 196);
-  wbkgd(main, COLOR_PAIR(9));
-  wbkgd(menu, COLOR_PAIR(9));
-  
-  if (!env)
-  {
-    endwin();
-    free(main);
-    free(menu);
-    exit(0);
-  }
-
-  i = 0;
-  while (i < 64)
-  {
-    str = get_str(&(env->mem[64 * i]));
-    mvwprintw(main ,i , 1, str);
-    i++;
-  }
-  ilight_pc(env, env->champs, main);
-
-  werase(menu);
-  mvwprintw(menu ,0 , 0, "Cycle: %d", env->cycle);
-  mvwprintw(menu ,1 , 0, "Cycle to die: %d", env->cycle_to_die);
-  mvwprintw(menu ,2 , 0, "Lives number: %d", env->lives_nb);
-
-  int reg2 = 0;
-  ft_memcpy(&reg2, env->champs[0]->process[0]->reg[1], 4);
-  revert_endian(reg2);
-  mvwprintw(menu ,11 , 0, "Player 1 reg 2 value: %d", reg2);
-  mvwprintw(menu ,12 , 0, "Player 1 waiting cycle: %d", env->champs[0]->process[0]->wait_cycle);
-  if (env->champs[1])
-    mvwprintw(menu ,13 , 0, "Player 2 waiting cycle: %d", env->champs[1]->process[0]->wait_cycle);
-  if (env->champs[2])
-    mvwprintw(menu ,14 , 0, "Player 2 waiting cycle: %d", env->champs[2]->process[0]->wait_cycle);
-  if (env->champs[3])
-    mvwprintw(menu ,15 , 0, "Player 2 waiting cycle: %d", env->champs[3]->process[0]->wait_cycle);
-
-  wrefresh(main);
-  wrefresh(menu);
+	env = env_init();
+	if (argc == 1)
+	{
+		ft_printf("no commmands\n");
+		return (0);
+	}
+	j = arg_parser(argc, argv, env);
+	if (j == -1)
+		ft_printf("dump error\n");
+	else if (j == -2)
+		ft_printf("-n error\n");
+	else if (j == -3)
+		ft_printf("file error\n");
+	else if (j == -4)
+		ft_printf("too much players\n");
+	if (j != 1)
+		return (1);
+	inject_players(env);
+	if (DISPLAY)
+		init_display(env);
+	process_turn(env);
+	return (0);
 }
-
-
-int main(int argc, char **argv)
-{	
-  t_env *env;
-  debug_fd = open("/dev/ttys000", O_WRONLY);
-
-	init_env();
-	env = get_env(NULL);
-  if (DISPLAY)
-    init_display(env);
-	parse_args(argc, argv, env);
-	init_process(env);
-	
-  play_game(env);
-  free(env);
-  return 0;
-}
-
-//ASM ABORT AT THE END
