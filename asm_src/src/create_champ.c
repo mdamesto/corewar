@@ -72,7 +72,7 @@ void			create_champion(t_env *env)
 	prog = get_full_insts(env);
 	ft_memcpy(&header[PROG_NAME_LENGTH + COMMENT_LENGTH + 16], prog, env->c_adress);
 	
-	fd_cor = open (ft_strjoin(env->filename, ".cor"), O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+	fd_cor = open (ft_strjoin(env->filename, ".cor"), O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	write(fd_cor, &header[0], sizeof(header_t) + env->c_adress);
 	
 	ft_putstr("\nChampion created: ");
