@@ -65,7 +65,7 @@ do
 	clear
 	while read -r a && read -r b <&3; 
 	do
-		if [ "$a" == "$b" ]
+		if [[ "$a" == "$b" ]]
 			then printf "${GREEN}"
 			tput cup $lines 0
 			printf "%s" "$a"  
