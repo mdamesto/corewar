@@ -6,7 +6,7 @@
 #    By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 19:20:50 by mdamesto          #+#    #+#              #
-#    Updated: 2017/03/17 18:37:16 by jclerc           ###   ########.fr        #
+#    Updated: 2017/03/18 18:01:01 by jclerc           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -70,8 +70,7 @@ $(OBJ_PATH)%.o:	$(SRC_PATH)%.c
 
 clean:
 	rm -f $(OBJ)
-	rmdir $(OBJ_PATH) 
-#	2>/dev/null || echo "" > /dev/null
+	rmdir $(OBJ_PATH) 2>/dev/null || echo "" > /dev/null
 
 fclean:	clean
 	rm -f $(NAME)

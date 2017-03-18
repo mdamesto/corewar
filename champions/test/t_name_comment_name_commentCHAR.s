@@ -1,12 +1,13 @@
-.name "kernel"
-.comment "com" 
+.name "ker;nel.comment"
+.comment "c#om" 
 
 label:
 ld %1,r3
 live %1
 live %:label
 ld:
-ld 0, r4
+ld :ld,r4
+ld :ld, r4
 
 #TEST# COMMENT
 label1:
