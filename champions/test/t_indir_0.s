@@ -1,14 +1,13 @@
 .name "kernel"
 .comment "com" 
 
-label:
-ld %1,r3
 live %1
 live %:label
-ld:
-ld 0, r4
+label:
+ld 9, r4
 
-#TEST# COMMENT
-label1:
-live %4 #coment#
-live  %:label1 ;coment; %4
+#TEST
+ld %0,r3
+label:
+sti	r4, %:label , r2
+add	r2, r3, r2
