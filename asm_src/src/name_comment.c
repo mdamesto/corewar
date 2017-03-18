@@ -20,7 +20,7 @@ char	*get_content(t_env *env)
 			env->line_nb++;
 			if (get_next_line(env->fd, &(env->line)) != 1)
 				ft_error(EPARSING);
-			i = 0;
+			i = -1;
 		}
 		if (j > COMMENT_LENGTH)
 			ft_error(EPARSING);

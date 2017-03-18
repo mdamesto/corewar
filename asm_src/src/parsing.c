@@ -1,26 +1,7 @@
 #include "asm.h"
 
-static void get_inst(char *line)
+static void norme(char *line, int len)
 {
-	int len;
-
-	len = ft_strlen(line);
-	if (len > 4)
-	{
-		if (!ft_strncmp("lfork", line, 5))
-			return (live_zjump_fork_lfork(ft_strcut_beg(line, 5), "0f", 2));
-	}
-	if (len > 3)
-	{
-		if (!ft_strncmp("fork", line, 4))
-			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "0c", 2));
-		else if (!ft_strncmp("live", line, 4))
-			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "01", 4));
-		else if (!ft_strncmp("zjmp", line, 4))
-			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "09", 2));
-		else if (!ft_strncmp("lldi", line, 4))
-			return (ldi_lldi(ft_strcut_beg(line, 4), "0e"));
-	}
 	if (len > 2)
 	{
 		if (!ft_strncmp("add", line, 3))
@@ -49,7 +30,30 @@ static void get_inst(char *line)
 		else if (!ft_strncmp("or", line, 2))
 			return (or_xor_and(ft_strcut_beg(line, 2), "07"));
 	}
+}
 
+static void get_inst(char *line)
+{
+	int len;
+
+	len = ft_strlen(line);
+	if (len > 4)
+	{
+		if (!ft_strncmp("lfork", line, 5))
+			return (live_zjump_fork_lfork(ft_strcut_beg(line, 5), "0f", 2));
+	}
+	if (len > 3)
+	{
+		if (!ft_strncmp("fork", line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "0c", 2));
+		else if (!ft_strncmp("live", line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "01", 4));
+		else if (!ft_strncmp("zjmp", line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "09", 2));
+		else if (!ft_strncmp("lldi", line, 4))
+			return (ldi_lldi(ft_strcut_beg(line, 4), "0e"));
+	}
+	norme(line, len);
 }
 
 static	int	get_label(t_env * env)
@@ -92,7 +96,6 @@ void			parsing_champion(t_env *env)
 			get_inst(env->line);
 	}
 	replace_labels(env);
-	ft_putstr("\nparsing.c: AFTER\n");
 	//print_name_comment(env)	/* ------- NAME_COMMENT ------ */
 	//print_labels(env); 		/* ------- PRINT LABELS ------ */ 
 	//print_inst(env);			/* ------ PRINT ALL INST ----- */

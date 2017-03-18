@@ -50,7 +50,7 @@ uint32_t	convert_be(uint32_t data)
 void			create_champion(t_env *env)
 {
 	int			fd_cor;
-	uint8_t		header[sizeof(header_t)];
+	uint8_t		header[sizeof(header_t) + env->c_adress];
 	uint8_t 	*prog;
 
 	ft_memset(&header[0], 0x42, sizeof(header_t));
