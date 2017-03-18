@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 #Path Champion
-DIR="./resources/players"
+DIR="../champions/test"
 
 # Check if asm is in current dir and put it where it belong
 if [ -f ../asm ]

@@ -1,6 +1,6 @@
 #include "asm.h"
 
-void	norme2(int code, t_env *env)
+void	norme2(int code)
 {
 	if (code == 4)
 		ft_putstr_fd("gnl: read error\n", 2);
@@ -124,7 +124,7 @@ void	ft_error(int code)
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(env->filename, 2);
 	ft_putstr_fd(": ", 2);
-	norme2(code, env);
+	norme2(code);
 	norme3(code, env);
 	norme4(code, env);
 	norme5(code, env);
