@@ -35,7 +35,6 @@ char 	*ft_rmv_space(char *str)
 		if (str[i] != ' ' && str[i] != '	' && str[i] != '\n')
 			ret[len++] = str[i];
 	}
-	ft_putstr(ret);
 	return (ret);
 }
 

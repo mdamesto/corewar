@@ -13,10 +13,6 @@ uint8_t *convert_strhex_to_hex(char *str)
 	{
 		ft_strncpy(tmp, str, 2);
 		ret[i++] = ft_atoi_hex(tmp);
-		/*ft_putstr("\nTMP: ");
-		ft_putstr(tmp);
-		ft_putstr("\nitoa ret[i]: ");
-		ft_putstr(ft_itoa_base(ret[i - 1], 16));*/
 		str += 2;
 	}
 	return (ret);
@@ -57,7 +53,6 @@ void			create_champion(t_env *env)
 	uint8_t		header[sizeof(header_t)];
 	uint8_t 	*prog;
 
-	ft_putstr("\nCreating champion ...");	
 	ft_memset(&header[0], 0x42, sizeof(header_t));
 	ft_memcpy(&header[0], "\x00\xEA\x83\xF3", 4);
 	size_t siz = ft_strlen(env->header->prog_name);
@@ -75,7 +70,7 @@ void			create_champion(t_env *env)
 	fd_cor = open (ft_strjoin(env->filename, ".cor"), O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	write(fd_cor, &header[0], sizeof(header_t) + env->c_adress);
 
-	ft_putstr("\nChampion created: ");
+	ft_putstr("Writing output program to ");
 	ft_putstr(ft_strjoin(env->filename, ".cor"));
 	ft_putstr("\n");
 }

@@ -1,24 +1,55 @@
 #include "asm.h"
 
-static	char	**split_first_word(char *str) {
-	char **ret;
-	int i;
+static void get_inst(char *line)
+{
+	int len;
 
-	ret = NULL;
-	i = 0;
-	while(str[i] && !ret)
+	len = ft_strlen(line);
+	if (len > 4)
 	{
-		if (str[i] == ' ' || str[i] == '	')
-		{
-			ret = ft_tab_set(2, ft_strlen(str));
-			ret[0] = ft_strcpy(ret[0], str);
-			ret[0] = ft_strcut_end(ret[0], ft_strlen(str) - i);
-			ret[1] = ft_strcpy(ret[1], str);
-			ret[1] = ft_strtrim(ft_strcut_beg(ret[1], i));
-		}
-		i++;
+		if (!ft_strncmp("lfork", line, 5))
+			return (live_zjump_fork_lfork(ft_strcut_beg(line, 5), "0f", 2));
 	}
-	return (ret);
+	if (len > 3)
+	{
+		if (!ft_strncmp("fork", line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "0c", 2));
+		else if (!ft_strncmp("live", line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "01", 4));
+		else if (!ft_strncmp("zjmp", line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "09", 2));
+		else if (!ft_strncmp("lldi", line, 4))
+			return (ldi_lldi(ft_strcut_beg(line, 4), "0e"));
+	}
+	if (len > 2)
+	{
+		if (!ft_strncmp("add", line, 3))
+			return (add_sub(ft_strcut_beg(line, 3), "04"));
+		else if (!ft_strncmp("sub", line, 3))
+			return (add_sub(ft_strcut_beg(line, 3), "05"));
+		else if (!ft_strncmp("and", line, 3))
+			return (or_xor_and(ft_strcut_beg(line, 3), "06"));
+		else if (!ft_strncmp("xor", line, 3))
+			return (or_xor_and(ft_strcut_beg(line, 3), "08"));
+		else if (!ft_strncmp("ldi", line, 3))
+			return (ldi_lldi(ft_strcut_beg(line, 3), "0a"));
+		else if (!ft_strncmp("sti", line, 3))
+			return (sti(ft_strcut_beg(line, 3), "0b"));
+		else if (!ft_strncmp("lld", line, 3))
+			return (ld_lld(ft_strcut_beg(line, 3), "0d"));
+		else if (!ft_strncmp("aff", line, 3))
+			return (aff(ft_strcut_beg(line, 3), "10"));
+	}
+	if (len > 1)
+	{
+		if (!ft_strncmp("ld", line, 2))
+			return (ld_lld(ft_strcut_beg(line, 2), "02"));
+		else if (!ft_strncmp("st", line, 2))
+			return (st(ft_strcut_beg(line, 2), "03"));
+		else if (!ft_strncmp("or", line, 2))
+			return (or_xor_and(ft_strcut_beg(line, 2), "07"));
+	}
+
 }
 
 static	int	get_label(t_env * env)
@@ -28,46 +59,41 @@ static	int	get_label(t_env * env)
 
 	i = -1;
 	label = NULL;
-	while (env->line[++i] && env->line[i] != ' ' && env->line[i] != '	' && env->line[i] != LABEL_CHAR)
+	while (env->line[++i] && env->line[i] != LABEL_CHAR /*&& env->line[i] != ' ' && env->line[i] != '	'*/)
 			;
 	if (i == 0)
 			ft_error(E_BD_LBL);
 	if (env->line[i] == LABEL_CHAR)
 		label = ft_strtrim(ft_strget(env->line, 0, i));
-	else
-		env->data = split_first_word(env->line);
 	if (label)
 	{
 		i = -1;
 		while(label[++i])
 			if (!ft_is_label_char(label[i]))
-				ft_error(E_BD_LBL);
+				return (1);
 		add_label(env, label);
 		env->line = ft_strcut_f(env->line, 0, ft_strlen(label) + 1);
 		if (check_empty_line(env->line))
 			if(!gnl())
 				return (0);
-
 		get_label(env);
 	}
 	return (1);
-
 }
 
 
 void			parsing_champion(t_env *env) 
 {
-	ft_putstr("Starting parsing... ");
 	get_name(env);
 	get_comment(env);
-	while(gnl() != 0) 
+	while(gnl() > 0) 
 	{
 		if (get_label(env))
-			inst_switch(env->data);
+			get_inst(env->line);
 	}
 	replace_labels(env);
+	ft_putstr("\nparsing.c: AFTER\n");
 	//print_name_comment(env)	/* ------- NAME_COMMENT ------ */
-	print_labels(env); 		/* ------- PRINT LABELS ------ */ 
-	print_inst(env);			/* ------ PRINT ALL INST ----- */
-	ft_putstr("Parsing done!");
+	//print_labels(env); 		/* ------- PRINT LABELS ------ */ 
+	//print_inst(env);			/* ------ PRINT ALL INST ----- */
 }

@@ -48,8 +48,6 @@ char	*get_ind(char *arg)
 	int i;
 	char *tmp;
 
-	ft_putstr("\nHERE\n");
-		ft_putstr(arg);
 	tmp = ft_strnew(10);
 	env = get_env(NULL);
 	env->add_to_adress += 2;
@@ -60,8 +58,6 @@ char	*get_ind(char *arg)
 		i = -1;
 		while (arg[++i]) 
 			tmp[i] = arg[i];
-		ft_putstr("\nHERE\n");
-		ft_putstr(tmp);
 		return (convert_hex_octnb(ft_atoi(tmp), 2));
 	}
 }

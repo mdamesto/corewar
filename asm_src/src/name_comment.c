@@ -17,6 +17,7 @@ char	*get_content(t_env *env)
 		if (!env->line[i + 1])
 		{
 			ret[j++] = '\n';
+			env->line_nb++;
 			if (get_next_line(env->fd, &(env->line)) != 1)
 				ft_error(EPARSING);
 			i = 0;
@@ -62,6 +63,5 @@ void	get_comment(t_env *env)
 	env->line = ft_strtrim(env->line);
 	content = get_content(env);
 	ft_strcpy(env->header->comment, content);
-	ft_putstr(content);
 	free(content);
 }

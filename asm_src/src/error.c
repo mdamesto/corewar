@@ -18,7 +18,7 @@ void	ft_error(int code) {
 	}
 	
 	env = get_env(NULL);
-	ft_putstr_fd("\nError: ", 2);
+	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(env->filename, 2);
 	ft_putstr_fd(": ", 2);
 

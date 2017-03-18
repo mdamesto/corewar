@@ -57,7 +57,7 @@ void			inst_to_env(char *inst, char *args_code, char **args)
 	t_env *env;
 	char *full_inst;
 
-	print_add_inst(inst, args_code, args); /* ------- ADD_INST -------- */
+	//print_add_inst(inst, args_code, args); /* ------- ADD_INST -------- */
 	env = get_env(NULL);
 	if (args_code)
 		env->add_to_adress += 2;

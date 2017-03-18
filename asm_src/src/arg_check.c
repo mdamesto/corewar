@@ -15,7 +15,7 @@ static	int		check_reg(char *arg)
 			ft_error(E_BD_REG);
 	}
 	nb = ft_atoi(tmp);
-	if (nb < 1 || nb > 16)
+	if (nb < 1 || nb > 256)
 		ft_error(E_BD_REG);
 	return (1);
 }
@@ -56,7 +56,6 @@ static	int		check_ind(char *arg)
 		while (arg[i])
 		{
 			tmp[i] = arg[i];
-			ft_putchar(arg[i]);
 			if ((!ft_isdigit(arg[i]) && arg[i] != '-') || i++ > 5)
 				ft_error(E_BD_IND);
 		}

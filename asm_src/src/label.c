@@ -49,7 +49,8 @@ static	char	*replace_label(char *label_name, int adress, t_env *env)
 		dir = ft_atoi(&(label_name[ft_strlen(label_name) - 1]));
 		label_name = ft_strcut_beg(ft_strcut_end(label_name, 1), 1);
 	}
-	tmp = env->labels;
+	if(!(tmp = env->labels))
+		ft_error(E_UK_LBL);
 	while(ft_strcmp(tmp->name, label_name) != 0)
 	{
 		if (!tmp->next)
