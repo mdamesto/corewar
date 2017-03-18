@@ -1,71 +1,109 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/18 18:13:26 by mdamesto          #+#    #+#             */
+/*   Updated: 2017/03/18 18:13:26 by mdamesto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
-char			**init_args(void)
+static int		norme1(t_env *env)
 {
-	char	**args;
-	int		i;
-
-	args = malloc(sizeof(char*) * 4);
-	i = 0;
-	while (i < 4)
-		args[i++] = NULL;
-	return (args);
+	if (!ft_strncmp("add", env->line, 3))
+	{
+		add_sub(ft_strcut_beg(env->line, 3), "04");
+		return (1);
+	}
+	else if (!ft_strncmp("sub", env->line, 3))
+	{
+		add_sub(ft_strcut_beg(env->line, 3), "05");
+		return (1);
+	}
+	else if (!ft_strncmp("and", env->line, 3))
+	{
+		or_xor_and(ft_strcut_beg(env->line, 3), "06");
+		return (1);
+	}
+	else if (!ft_strncmp("xor", env->line, 3))
+	{
+		or_xor_and(ft_strcut_beg(env->line, 3), "08");
+		return (1);
+	}
+	return (0);
 }
 
-static void		norme(char *line, int len)
+static int		norme2(t_env *env)
 {
-	if (len > 2)
+	if (!ft_strncmp("ldi", env->line, 3))
 	{
-		if (!ft_strncmp("add", line, 3))
-			return (add_sub(ft_strcut_beg(line, 3), "04"));
-		else if (!ft_strncmp("sub", line, 3))
-			return (add_sub(ft_strcut_beg(line, 3), "05"));
-		else if (!ft_strncmp("and", line, 3))
-			return (or_xor_and(ft_strcut_beg(line, 3), "06"));
-		else if (!ft_strncmp("xor", line, 3))
-			return (or_xor_and(ft_strcut_beg(line, 3), "08"));
-		else if (!ft_strncmp("ldi", line, 3))
-			return (ldi_lldi(ft_strcut_beg(line, 3), "0a"));
-		else if (!ft_strncmp("sti", line, 3))
-			return (sti(ft_strcut_beg(line, 3), "0b"));
-		else if (!ft_strncmp("lld", line, 3))
-			return (ld_lld(ft_strcut_beg(line, 3), "0d"));
-		else if (!ft_strncmp("aff", line, 3))
-			return (aff(ft_strcut_beg(line, 3), "10"));
+		ldi_lldi(ft_strcut_beg(env->line, 3), "0a");
+		return (1);
 	}
+	else if (!ft_strncmp("sti", env->line, 3))
+	{
+		sti(ft_strcut_beg(env->line, 3), "0b");
+		return (1);
+	}
+	else if (!ft_strncmp("lld", env->line, 3))
+	{
+		ld_lld(ft_strcut_beg(env->line, 3), "0d");
+		return (1);
+	}
+	else if (!ft_strncmp("aff", env->line, 3))
+	{
+		aff(ft_strcut_beg(env->line, 3), "10");
+		return (1);
+	}
+	return (0);
+}
+
+static void		norme3(t_env *env, int len)
+{
 	if (len > 1)
 	{
-		if (!ft_strncmp("ld", line, 2))
-			return (ld_lld(ft_strcut_beg(line, 2), "02"));
-		else if (!ft_strncmp("st", line, 2))
-			return (st(ft_strcut_beg(line, 2), "03"));
-		else if (!ft_strncmp("or", line, 2))
-			return (or_xor_and(ft_strcut_beg(line, 2), "07"));
+		if (!ft_strncmp("ld", env->line, 2))
+			return (ld_lld(ft_strcut_beg(env->line, 2), "02"));
+		else if (!ft_strncmp("st", env->line, 2))
+			return (st(ft_strcut_beg(env->line, 2), "03"));
+		else if (!ft_strncmp("or", env->line, 2))
+			return (or_xor_and(ft_strcut_beg(env->line, 2), "07"));
 	}
 }
 
-static void		get_inst(char *line)
+static void		get_inst(t_env *env)
 {
 	int len;
 
-	len = ft_strlen(line);
+	len = ft_strlen(env->line);
 	if (len > 4)
 	{
-		if (!ft_strncmp("lfork", line, 5))
-			return (live_zjump_fork_lfork(ft_strcut_beg(line, 5), "0f", 2));
+		if (!ft_strncmp("lfork", env->line, 5))
+			return (live_zjump_fork_lfork(ft_strcut_beg(env->line, 5), "0f", 2));
 	}
 	if (len > 3)
 	{
-		if (!ft_strncmp("fork", line, 4))
-			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "0c", 2));
-		else if (!ft_strncmp("live", line, 4))
-			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "01", 4));
-		else if (!ft_strncmp("zjmp", line, 4))
-			return (live_zjump_fork_lfork(ft_strcut_beg(line, 4), "09", 2));
-		else if (!ft_strncmp("lldi", line, 4))
-			return (ldi_lldi(ft_strcut_beg(line, 4), "0e"));
+		if (!ft_strncmp("fork", env->line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(env->line, 4), "0c", 2));
+		else if (!ft_strncmp("live", env->line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(env->line, 4), "01", 4));
+		else if (!ft_strncmp("zjmp", env->line, 4))
+			return (live_zjump_fork_lfork(ft_strcut_beg(env->line, 4), "09", 2));
+		else if (!ft_strncmp("lldi", env->line, 4))
+			return (ldi_lldi(ft_strcut_beg(env->line, 4), "0e"));
 	}
-	norme(line, len);
+	if (len > 2)
+	{
+		if(norme1(env) == 1)
+			return ;
+		if(norme2(env) == 1)
+			return ;
+	}
+	norme3(env, len);
 }
 
 static	int		get_label(t_env *env)
@@ -104,7 +142,7 @@ void			parsing_champion(t_env *env)
 	while (gnl() > 0)
 	{
 		if (get_label(env))
-			get_inst(env->line);
+			get_inst(env);
 	}
 	replace_labels(env);
 }

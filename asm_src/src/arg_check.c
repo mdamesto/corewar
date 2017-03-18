@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arg_check.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/18 18:11:36 by mdamesto          #+#    #+#             */
+/*   Updated: 2017/03/18 18:11:40 by mdamesto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 static	int		check_reg(char *arg)
@@ -15,7 +27,7 @@ static	int		check_reg(char *arg)
 			ft_error(E_BD_REG);
 	}
 	nb = ft_atoi(tmp);
-	if (nb < 1 || nb > 256)
+	if (nb < 0 || nb > 99)
 		ft_error(E_BD_REG);
 	return (1);
 }

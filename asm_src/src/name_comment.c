@@ -1,4 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   name_comment.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/18 18:14:32 by mdamesto          #+#    #+#             */
+/*   Updated: 2017/03/18 18:14:33 by mdamesto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
+
+void	norme_gnl(t_env *env)
+{
+	env->line_nb++;
+	if (get_next_line(env->fd, &(env->line)) != 1)
+		ft_error(EPARSING);
+}
 
 char	*get_content(t_env *env)
 {
@@ -13,22 +32,18 @@ char	*get_content(t_env *env)
 		ft_error(EPARSING);
 	while (env->line[i] != '"')
 	{
-		ret[j++] = env->line[i];
-		if (!env->line[i + 1])
+		ret[j++] = env->line[i++];
+		if (!env->line[i])
 		{
 			ret[j++] = '\n';
-			env->line_nb++;
-			if (get_next_line(env->fd, &(env->line)) != 1)
-				ft_error(EPARSING);
-			i = -1;
+			norme_gnl(env);
+			i = 0;
 		}
 		if (j > COMMENT_LENGTH)
 			ft_error(EPARSING);
-		i++;
 	}
 	if (env->line[i + 1])
 		ft_error(EPARSING);
-	ret[j] = '\0';
 	return (ret);
 }
 

@@ -1,29 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/18 18:13:58 by mdamesto          #+#    #+#             */
+/*   Updated: 2017/03/18 18:13:59 by mdamesto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 void	remove_comment(t_env *env)
 {
-	int		i;
-	int		j;
-	char	*tmp;
+	int i;
 
 	i = 0;
-	j = 0;
-	tmp = ft_strnew(ft_strlen(env->line));
 	while (env->line[i])
 	{
-		while (env->line[i] && \
-			env->line[i] != COMMENT_CHAR && env->line[i] != ';')
-			tmp[j++] = env->line[i++];
+		if (env->line[i] == '"')
+		{
+			while (env->line[i] && env->line[i] != '"')
+				i++;
+			if (!env->line[i])
+				return ;
+		}
 		if (env->line[i] == COMMENT_CHAR || env->line[i] == ';')
-			i++;
-		while (env->line[i] \
-			&& env->line[i] != COMMENT_CHAR && env->line[i] != ';')
-			i++;
-		if (env->line[i] == COMMENT_CHAR || env->line[i] == ';')
-			i++;
+		{
+			env->line = ft_strget_f(env->line, 0, i);
+			return ;
+		}
+		i++;
 	}
-	free(env->line);
-	env->line = tmp;
 }
 
 int		check_empty_line(char *line)
@@ -54,7 +63,8 @@ int		gnl(void)
 		env->line_nb++;
 		if ((ret = get_next_line(env->fd, &(env->line))) < 0)
 			ft_error(EGNL);
-		remove_comment(env);
+		if (ret == 1)
+			remove_comment(env);
 		loop = check_empty_line(env->line);
 	}
 	env->line = ft_strtrim_f(env->line);

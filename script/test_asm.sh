@@ -9,7 +9,7 @@ DIR="../champions/test"
 
 # Check if asm is in current dir and put it where it belong
 if [ -f ../asm ]
-then mv asm ./resources/bin/
+then cp ../asm ./resources/bin/
 fi
 
 # Create directory

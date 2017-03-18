@@ -132,5 +132,12 @@ char	*ret_to_oct(char *tmp, int oct_nb);
 //inst_switch
 void	inst_switch(char **data);
 
+void	get_arg_reg_dir4_ind(char *split, char **args, char **tab_args_code, int arg_nb);
+void	get_arg_reg_dir2_ind(char *split, char **args, char **tab_args_code, int arg_nb);
+void	get_arg_reg_dir2(char *split, char **args, char **tab_args_code, int arg_nb);
+void	get_arg_reg_dir4(char *split, char **args, char **tab_args_code, int arg_nb);
+
+char 	**split_and_trim(char *data);
+
 #endif
 	

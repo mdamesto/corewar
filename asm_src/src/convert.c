@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   convert.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/18 18:14:25 by mdamesto          #+#    #+#             */
+/*   Updated: 2017/03/18 18:14:26 by mdamesto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 char	*str_to_hex(char *str)
@@ -35,5 +47,14 @@ char	*ret_to_oct(char *tmp, int oct_nb)
 		ret[ret_len + i] = tmp[i];
 		i++;
 	}
+	return (ret);
+}
+
+char	**split_and_trim(char *data)
+{
+	char **ret;
+
+	ret = ft_strsplit(data, ',');
+	ft_tab_trim(ret);
 	return (ret);
 }

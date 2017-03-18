@@ -14,7 +14,7 @@ NAME = ../asm
 
 SRC_NAME = main.c error.c parsing.c env.c gnl.c label.c name_comment.c arg_check.c\
 		inst_to_env.c inst_1.c inst_2.c create_champ.c convert.c print.c\
-		arg_get.c
+		arg_get.c arg_get_mult.c
 SRC_PATH = ./src/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

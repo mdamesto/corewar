@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   inst_1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/18 18:12:39 by mdamesto          #+#    #+#             */
+/*   Updated: 2017/03/18 18:12:40 by mdamesto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 void	live_zjump_fork_lfork(char *data, char *inst, size_t siz)
@@ -6,8 +18,7 @@ void	live_zjump_fork_lfork(char *data, char *inst, size_t siz)
 	char	**split;
 
 	args = init_args();
-	split = ft_strsplit(data, SEPARATOR_CHAR);
-	ft_tab_trim(split);
+	split = split_and_trim(data);
 	if (!split[0] || split[1])
 		ft_error(E_ARG_NB);
 	if (check_arg(split[0]) == 2)
@@ -27,8 +38,7 @@ void	add_sub(char *data, char *inst)
 
 	args_code = "54";
 	args = init_args();
-	split = ft_strsplit(data, ',');
-	ft_tab_trim(split);
+	split = split_and_trim(data);
 	if (!split[0] || !split[1] || !split[2] || split[3])
 		ft_error(E_ARG_NB);
 	if (check_arg(split[0]) == 1 \
@@ -55,44 +65,11 @@ void	or_xor_and(char *data, char *inst)
 	tab_args_code = ft_tab_set(4, 2);
 	ft_strcpy(tab_args_code[3], "00");
 	args = init_args();
-	split = ft_strsplit(data, ',');
-	ft_tab_trim(split);
+	split = split_and_trim(data);
 	if (!split[0] || !split[1] || !split[2] || split[3])
 		ft_error(E_ARG_NB);
-	if (check_arg(split[0]) == 1)
-	{
-		args[0] = get_reg(split[0]);
-		ft_strcpy(tab_args_code[0], "01");
-	}
-	else if (check_arg(split[0]) == 2)
-	{
-		args[0] = get_dir(split[0], 4);
-		ft_strcpy(tab_args_code[0], "10");
-	}
-	else if (check_arg(split[0]) == 3)
-	{
-		args[0] = get_ind(split[0]);
-		ft_strcpy(tab_args_code[0], "11");
-	}
-	else
-		ft_error(E_BD_ARG);
-	if (check_arg(split[1]) == 1)
-	{
-		args[1] = get_reg(split[1]);
-		ft_strcpy(tab_args_code[1], "01");
-	}
-	else if (check_arg(split[1]) == 2)
-	{
-		args[1] = get_dir(split[1], 4);
-		ft_strcpy(tab_args_code[1], "10");
-	}
-	else if (check_arg(split[1]) == 3)
-	{
-		args[1] = get_ind(split[1]);
-		ft_strcpy(tab_args_code[1], "11");
-	}
-	else
-		ft_error(E_BD_ARG);
+	get_arg_reg_dir4_ind(split[0], args, tab_args_code, 0);
+	get_arg_reg_dir4_ind(split[1], args, tab_args_code, 1);
 	if (check_arg(split[2]) == 1)
 	{
 		args[2] = get_reg(split[2]);
@@ -114,8 +91,7 @@ void	aff(char *data, char *inst)
 	char	*args_code;
 
 	args = init_args();
-	split = ft_strsplit(data, ',');
-	ft_tab_trim(split);
+	split = split_and_trim(data);
 	args_code = "40";
 	if (!split[0] || split[1])
 		ft_error(E_ARG_NB);
