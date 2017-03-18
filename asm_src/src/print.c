@@ -15,12 +15,14 @@ void	print_add_inst(char *inst, char *args_code, char **args)
 	i = 0;
 	ft_putstr("\ninst: ");
 	ft_putstr(inst);
-	if (args_code) {
+	if (args_code)
+	{
 		ft_putstr("\nargs_code: ");
 		ft_putstr(args_code);
 	}
 	ft_putstr("\nargs:");
-	while(args[i]){
+	while (args[i])
+	{
 		ft_putstr(" ");
 		ft_putstr(args[i]);
 		i++;
@@ -33,20 +35,20 @@ void	print_labels(t_env *env)
 
 	ft_putstr("\nLABEL_LST: ");
 	if (!env->labels)
-		return ; 
+		return ;
 	tmp = env->labels;
- 	while (tmp->next)
- 	{
- 		ft_putstr(tmp->name);
- 		ft_putstr("(");
- 		ft_putstr(ft_itoa(tmp->adress));
- 		ft_putstr(")/");
- 		tmp = tmp->next;
- 	}
- 	ft_putstr(tmp->name);
- 	ft_putstr("(");
- 	ft_putstr(ft_itoa(tmp->adress));
- 	ft_putstr(")\n");
+	while (tmp->next)
+	{
+		ft_putstr(tmp->name);
+		ft_putstr("(");
+		ft_putstr(ft_itoa(tmp->adress));
+		ft_putstr(")/");
+		tmp = tmp->next;
+	}
+	ft_putstr(tmp->name);
+	ft_putstr("(");
+	ft_putstr(ft_itoa(tmp->adress));
+	ft_putstr(")\n");
 }
 
 void	print_inst(t_env *env)
@@ -64,8 +66,6 @@ void	print_inst(t_env *env)
 	ft_putstr(tmp->content);
 	ft_putstr("\n");
 }
-
-
 
 void	print_champ(char **tab, char *final)
 {

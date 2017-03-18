@@ -72,7 +72,6 @@ typedef struct	s_env
 
 //inst.c
 void	inst_to_env(char *inst, char *args_code, char **args);
-void	inst_switch(char **data);
 char	**init_args(void);
 
 void	live_zjump_fork_lfork(char *data, char *inst, size_t siz);

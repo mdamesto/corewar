@@ -1,16 +1,16 @@
 #include "asm.h"
 
-char 	*get_reg(char *arg) 
+char	*get_reg(char *arg)
 {
-	t_env *env;
-	int i;
-	char *tmp;
+	t_env	*env;
+	int		i;
+	char	*tmp;
 
 	tmp = ft_strnew(3);
 	env = get_env(NULL);
 	env->add_to_adress++;
 	i = 1;
-	while (arg[i]) 
+	while (arg[i])
 	{
 		tmp[i - 1] = arg[i];
 		i++;
@@ -18,11 +18,11 @@ char 	*get_reg(char *arg)
 	return (convert_hex_octnb(ft_atoi(tmp), 1));
 }
 
- char	*get_dir(char *arg, int size)
- {
-	t_env *env;
-	int i;
-	char *tmp;
+char	*get_dir(char *arg, int size)
+{
+	t_env	*env;
+	int		i;
+	char	*tmp;
 
 	tmp = ft_strnew(10);
 	env = get_env(NULL);
@@ -36,17 +36,17 @@ char 	*get_reg(char *arg)
 	else
 	{
 		i = 0;
-		while (arg[++i]) 
+		while (arg[++i])
 			tmp[i - 1] = arg[i];
 		return (convert_hex_octnb(ft_atoi(tmp), size));
 	}
 }
 
 char	*get_ind(char *arg)
- {
-	t_env *env;
-	int i;
-	char *tmp;
+{
+	t_env	*env;
+	int		i;
+	char	*tmp;
 
 	tmp = ft_strnew(10);
 	env = get_env(NULL);
@@ -56,7 +56,7 @@ char	*get_ind(char *arg)
 	else
 	{
 		i = -1;
-		while (arg[++i]) 
+		while (arg[++i])
 			tmp[i] = arg[i];
 		return (convert_hex_octnb(ft_atoi(tmp), 2));
 	}

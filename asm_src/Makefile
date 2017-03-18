@@ -13,7 +13,7 @@
 NAME = ../asm
 
 SRC_NAME = main.c error.c parsing.c env.c gnl.c label.c name_comment.c arg_check.c\
-		inst_to_env.c inst_1.c inst_2.c create_champ.c convert.c print.c inst_switch.c\
+		inst_to_env.c inst_1.c inst_2.c create_champ.c convert.c print.c\
 		arg_get.c
 SRC_PATH = ./src/
 

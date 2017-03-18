@@ -1,17 +1,17 @@
 #include "asm.h"
 
-char	*get_content(t_env *env) 
+char	*get_content(t_env *env)
 {
-	int i;
-	int j;
-	char *ret;
+	int		i;
+	int		j;
+	char	*ret;
 
 	ret = ft_strnew(COMMENT_LENGTH);
 	i = 0;
 	j = 0;
 	if (env->line[i++] != '"')
 		ft_error(EPARSING);
-	while(env->line[i] != '"')
+	while (env->line[i] != '"')
 	{
 		ret[j++] = env->line[i];
 		if (!env->line[i + 1])
@@ -29,19 +29,18 @@ char	*get_content(t_env *env)
 	if (env->line[i + 1])
 		ft_error(EPARSING);
 	ret[j] = '\0';
-
 	return (ret);
 }
 
 void	get_name(t_env *env)
 {
-	int ret;
-	char *content;
+	int		ret;
+	char	*content;
 
 	ret = gnl();
 	if (ret == 0)
 		ft_error(EEMPTYFILE);
-	if (ft_strncmp(env->line, ".name" , 5) != 0)
+	if (ft_strncmp(env->line, ".name", 5) != 0)
 		ft_error(ENONAME);
 	env->line = ft_strcut_f(env->line, 0, 5);
 	env->line = ft_strtrim(env->line);
@@ -57,7 +56,7 @@ void	get_comment(t_env *env)
 	char *content;
 
 	gnl();
-	if (ft_strncmp(env->line, ".comment" , 8) != 0)
+	if (ft_strncmp(env->line, ".comment", 8) != 0)
 		ft_error(ENONAME);
 	env->line = ft_strcut_f(env->line, 0, 8);
 	env->line = ft_strtrim(env->line);

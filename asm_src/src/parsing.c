@@ -1,6 +1,18 @@
 #include "asm.h"
 
-static void norme(char *line, int len)
+char			**init_args(void)
+{
+	char	**args;
+	int		i;
+
+	args = malloc(sizeof(char*) * 4);
+	i = 0;
+	while (i < 4)
+		args[i++] = NULL;
+	return (args);
+}
+
+static void		norme(char *line, int len)
 {
 	if (len > 2)
 	{
@@ -32,7 +44,7 @@ static void norme(char *line, int len)
 	}
 }
 
-static void get_inst(char *line)
+static void		get_inst(char *line)
 {
 	int len;
 
@@ -56,47 +68,43 @@ static void get_inst(char *line)
 	norme(line, len);
 }
 
-static	int	get_label(t_env * env)
+static	int		get_label(t_env *env)
 {
-	int i;
-	char *label;
+	int		i;
+	char	*label;
 
 	i = -1;
 	label = NULL;
-	while (env->line[++i] && env->line[i] != LABEL_CHAR /*&& env->line[i] != ' ' && env->line[i] != '	'*/)
-			;
+	while (env->line[++i] && env->line[i] != LABEL_CHAR)
+		;
 	if (i == 0)
-			ft_error(E_BD_LBL);
+		ft_error(E_BD_LBL);
 	if (env->line[i] == LABEL_CHAR)
 		label = ft_strtrim(ft_strget(env->line, 0, i));
 	if (label)
 	{
 		i = -1;
-		while(label[++i])
+		while (label[++i])
 			if (!ft_is_label_char(label[i]))
 				return (1);
 		add_label(env, label);
 		env->line = ft_strcut_f(env->line, 0, ft_strlen(label) + 1);
 		if (check_empty_line(env->line))
-			if(!gnl())
+			if (!gnl())
 				return (0);
 		get_label(env);
 	}
 	return (1);
 }
 
-
-void			parsing_champion(t_env *env) 
+void			parsing_champion(t_env *env)
 {
 	get_name(env);
 	get_comment(env);
-	while(gnl() > 0) 
+	while (gnl() > 0)
 	{
 		if (get_label(env))
 			get_inst(env->line);
 	}
 	replace_labels(env);
-	//print_name_comment(env)	/* ------- NAME_COMMENT ------ */
-	//print_labels(env); 		/* ------- PRINT LABELS ------ */ 
-	//print_inst(env);			/* ------ PRINT ALL INST ----- */
 }

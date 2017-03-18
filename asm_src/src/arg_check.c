@@ -2,13 +2,13 @@
 
 static	int		check_reg(char *arg)
 {
-	int i;
-	char *tmp;
-	int nb;
+	int		i;
+	char	*tmp;
+	int		nb;
 
 	i = 1;
 	tmp = ft_strnew(10);
-	while (arg[i]) 
+	while (arg[i])
 	{
 		tmp[i - 1] = arg[i];
 		if (i > 2 || !ft_isdigit(arg[i++]))
@@ -22,12 +22,12 @@ static	int		check_reg(char *arg)
 
 static	int		check_dir(char *arg)
 {
-	int i;
-	char *tmp;
-	int nb;
+	int		i;
+	char	*tmp;
+	int		nb;
 
 	tmp = ft_strnew(10);
-	if (arg[1] != LABEL_CHAR) // if label -> skip check
+	if (arg[1] != LABEL_CHAR)
 	{
 		i = 1;
 		while (arg[i])
@@ -45,9 +45,9 @@ static	int		check_dir(char *arg)
 
 static	int		check_ind(char *arg)
 {
-	int i;
-	char *tmp;
-	int nb;
+	int		i;
+	char	*tmp;
+	int		nb;
 
 	tmp = ft_strnew(10);
 	if (arg[0] != LABEL_CHAR)
@@ -67,7 +67,7 @@ static	int		check_ind(char *arg)
 }
 
 int				check_arg(char *arg)
-{	
+{
 	if (arg[0] == 'r' && check_reg(arg))
 		return (1);
 	else if (arg[0] == DIRECT_CHAR && check_dir(arg))
