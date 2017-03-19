@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 #Path Champion
-DIR="../champions/test/success"
+DIR="../champions/test_internet/fail"
 
 # Check if asm is in current dir and put it where it belong
 cp ../asm resources/bin
@@ -40,11 +40,18 @@ do
 	name=$(basename "$champion" .zaz.log)
 	grep "Invalid" ./log/$name.zaz.log > /dev/null 2>&1
 	zaz=$?
+	grep "error" ./log/$name.zaz.log > /dev/null 2>&1
+	zaz1=$?
+	if [[ "$zaz1" == "0" ]]
+		then
+			zaz=0
+	fi
 	grep "Error" ./log/$name.log > /dev/null 2>&1
 	team=$?
+	printf " $zaz : $zaz1 : $team "
 	printf "Champion $name"
-	if [[ "$zaz" == "$team" ]] 
-		then 
+	if [[ "$zaz" == "$team" ]]
+		then
 		tput cup $lines $cols
 		printf "${GREEN}[OK]${NC}"
 	else

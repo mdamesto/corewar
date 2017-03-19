@@ -67,7 +67,7 @@ static	int		check_ind(char *arg)
 		if (arg[0] != LABEL_CHAR)
 		{
 				i = 0;
-				while (arg[i])
+				while (arg[i] && arg[i] != ' ' && arg[i] != SEPARATOR_CHAR)
 				{
 						tmp[i] = arg[i];
 						//			if ((!ft_isdigit(arg[i]) && arg[i] != '-') || i++ > 5)
