@@ -87,7 +87,8 @@ int				print_ls(t_printf_format *format, wint_t *ls)
 	}
 	calibrate_format_ls(format, ls);
 	if (format->flags.minus)
-		ret = putstr_ls_printf(ls, format->precision_size);
+	//	ret = putstr_ls_printf(ls, format->precision_size);
+		ret = putstr_ls_printf((wchar_t*)ls, format->precision_size);
 	if (format->pad_size)
 	{
 		bufpad = ft_strnew(format->pad_size);
@@ -96,7 +97,8 @@ int				print_ls(t_printf_format *format, wint_t *ls)
 		free(bufpad);
 	}
 	if (!format->flags.minus)
-		ret = putstr_ls_printf(ls, format->precision_size);
+		//ret = putstr_ls_printf(ls, format->precision_size);
+		ret = putstr_ls_printf((wchar_t*)ls, format->precision_size);
 	if (bufnull)
 		free(bufnull);
 	return (ret + format->pad_size);

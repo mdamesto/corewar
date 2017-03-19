@@ -24,7 +24,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 		tmp->content = NULL;
 	else
 		tmp->content = (void *)content;
-	tmp->content_size = 0;
+	tmp->content_size = content_size;
 	tmp->next = NULL;
 	return (tmp);
 }

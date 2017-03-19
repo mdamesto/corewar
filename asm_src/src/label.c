@@ -16,9 +16,7 @@ void			add_label(t_env *env, char *label)
 {
 	t_label	*new_label;
 	t_label	*tmp;
-	int		i;
 
-	i = 0;
 	new_label = malloc(sizeof(t_label));
 	new_label->next = NULL;
 	new_label->name = ft_strnew(ft_strlen(label));

@@ -38,11 +38,13 @@ int		parser_s(t_printf_format format, va_list varlist)
 	else
 	{
 		if (format.type == 'S')
-			return (print_ls(&format, va_arg(varlist, wchar_t *)));
+			//return (print_ls(&format, va_arg(varlist, wchar_t *)));
+			return (print_ls(&format, (wint_t*)va_arg(varlist, wchar_t *)));
 		if (!format.modifier)
 			return (print_s(format, va_arg(varlist, char *)));
 		if (format.modifier == 3)
-			return (print_ls(&format, va_arg(varlist, wchar_t *)));
+			//return (print_ls(&format, va_arg(varlist, wchar_t *)));
+			return (print_ls(&format, (wint_t*)va_arg(varlist, wchar_t *)));
 	}
 	return (-1);
 }

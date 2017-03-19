@@ -54,18 +54,18 @@ static void	display_champions(t_env *env)
 
 void		init_display(t_env *env)
 {
-	WINDOW * main;
+	WINDOW * main1;
 	WINDOW * menu;
 	initscr();
 	cbreak();
 	noecho();
 	scrollok(stdscr, TRUE);
 	my_init_color();
-	main = subwin(stdscr, 64, 193, 1, 4);
+	main1 = subwin(stdscr, 64, 193, 1, 4);
 	menu = subwin(stdscr, 66, 55, 1, 204);
-	wbkgd(main, COLOR_PAIR(255));
+	wbkgd(main1, COLOR_PAIR(255));
 	wbkgd(menu, COLOR_PAIR(255));
-	env->w_main = main;
+	env->w_main = main1;
 	env->w_menu = menu;
 	mvwprintw(env->w_menu, 1, 1, "CYCLES                  :\t\tELAPSED CYCLES");
 	mvwprintw(env->w_menu, 3, 1, "NEXT LIVE CHECK IN      :\t\tCYCLES");

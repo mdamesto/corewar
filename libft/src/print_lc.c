@@ -23,11 +23,9 @@ void	calibrate_format_lc(t_printf_format *format, wint_t lc)
 
 int		print_lc(t_printf_format *format, wint_t lc)
 {
-	int				i;
 	char			*bufpad;
 	unsigned char	*e;
 
-	i = 0;
 	calibrate_format_lc(format, lc);
 	e = ft_strnew_uchar(format->pad_size + utf_byte_size(lc));
 	if (format->flags.minus)

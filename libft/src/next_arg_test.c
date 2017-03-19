@@ -26,7 +26,8 @@ int		test_next_arg(char *ipt_string, va_list varlist)
 		if (format.type == 'C' || (format.type == 'c' && format.modifier == 3))
 		{
 			buf = va_arg(varlist, wint_t);
-			if (buf < 0 || buf > 1114111)
+			//if (buf < 0 || buf > 1114111)
+			if (buf > 1114111)
 				return (1);
 			if (buf >= 55296 && buf <= 57343)
 				return (1);

@@ -79,12 +79,10 @@ t_player	*file_parser(int fd)
 	t_player		*player;
 	unsigned char	*buf;
 	unsigned int	bufint;
-	int				i;
 
 	player = player_init();
 	buf = (unsigned char *)malloc((2048 > CHAMP_MAX_SIZE) ?
 								2048 + 4 : CHAMP_MAX_SIZE + 4);
-	i = 0;
 	if (!check_header(fd))
 		return (NULL);
 	read(fd, buf, 128);

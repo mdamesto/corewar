@@ -46,10 +46,8 @@ t_process	*process_init(int master, int master_id)
 t_arena		*arena_init(void)
 {
 	t_arena	*arena;
-	int		i;
 
 	arena = ft_memalloc(sizeof(t_arena));
-	i = 0;
 	arena->current_cycle = 0;
 	arena->process_amount = 0;
 	arena->player_amount = 0;

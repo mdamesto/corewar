@@ -72,7 +72,7 @@ char	*get_ind(char *arg)
 	int		i;
 	char	*tmp;
 
-	tmp = ft_strnew(10);
+	tmp = ft_strnew(ft_strlen(arg));
 	env = get_env(NULL);
 	env->add_to_adress += 2;
 	if (arg[0] == LABEL_CHAR)
