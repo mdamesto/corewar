@@ -5,11 +5,12 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 #Path Champion
-DIR="../champions"
+DIR="../champions/test/fail"
 
 # Check if asm is in current dir and put it where it belong
-if [ -f asm ]
-then mv asm resources/bin/
+cp ../asm resources/bin
+if [ ! -f resources/bin/asm ]
+then echo "asm not found" && exit
 fi
 
 # Create directory
@@ -53,3 +54,6 @@ do
 	printf "\n"
 	lines=$(($lines+1))
 done
+rm log/*.log
+find $DIR -type f -iname "*.cor" -delete
+rm resources/bin/asm

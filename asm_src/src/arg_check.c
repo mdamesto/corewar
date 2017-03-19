@@ -65,11 +65,12 @@ static	int		check_ind(char *arg)
 	if (arg[0] != LABEL_CHAR)
 	{
 		i = 0;
-		while (arg[i])
+		while (ft_isdigit(arg[i]))
 		{
 			tmp[i] = arg[i];
 			if ((!ft_isdigit(arg[i]) && arg[i] != '-') || i++ > 5)
 				ft_error(E_BD_IND);
+			i++;
 		}
 		nb = ft_atoi(tmp);
 		if (nb < -32768 || nb > 65535)
