@@ -6,7 +6,7 @@
 /*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/25 17:11:04 by mdamesto          #+#    #+#             */
-/*   Updated: 2015/11/28 16:17:53 by mdamesto         ###   ########.fr       */
+/*   Updated: 2017/03/20 18:52:43 by jclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 short	ft_atoi_short(const char *str)
 {
-	int 		s;
-	long  int	r;
+	int			s;
+	long int	r;
 
 	s = 1;
 	r = 0;
