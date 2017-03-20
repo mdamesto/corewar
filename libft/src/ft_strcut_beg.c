@@ -22,6 +22,6 @@ char 	*ft_strcut_beg(char *str, int n) {
 		tmp[i++] = str[n++];
 	}
 	tmp[i] = '\0';
-	free(str);
+//	free(str);
 	return(tmp);
 }
