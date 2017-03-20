@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 #Path Champion
-DIR="../champions/test_internet/fail"
+DIR="../champions/test/success"
 
 # Check if asm is in current dir and put it where it belong
 cp ../asm resources/bin
@@ -48,7 +48,6 @@ do
 	fi
 	grep "Error" ./log/$name.log > /dev/null 2>&1
 	team=$?
-	printf " $zaz : $zaz1 : $team "
 	printf "Champion $name"
 	if [[ "$zaz" == "$team" ]]
 		then
