@@ -51,9 +51,10 @@ int		check_empty_line(char *line)
 
 int		gnl(void)
 {
-	int		ret;
-	int		loop;
-	t_env	*env;
+	static char*	last_line;
+	int				ret;
+	int				loop;
+	t_env			*env;
 
 	loop = 1;
 	ret = 1;
@@ -63,6 +64,10 @@ int		gnl(void)
 		env->line_nb++;
 		if ((ret = get_next_line(env->fd, &(env->line))) < 0)
 			ft_error(EGNL);
+		//if (ret == 0)/
+			/*if(ft_strlen(last_line))
+				ft_error(E_LST_LINE);*/
+		last_line = env->line;
 		if (ret == 1)
 			remove_comment(env);
 		loop = check_empty_line(env->line);

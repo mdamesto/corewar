@@ -47,6 +47,7 @@ char	*get_dir(char *arg, int size)
 	t_env	*env;
 	int		i;
 	char	*tmp;
+	long int 	tmp_value;
 
 //	tmp = ft_strnew(10);
 	tmp = ft_strnew(ft_strlen(arg));
@@ -63,7 +64,12 @@ char	*get_dir(char *arg, int size)
 		i = 0;
 		while (arg[++i])
 			tmp[i - 1] = arg[i];
-		return (convert_hex_octnb(ft_atoi(tmp), size));
+		tmp_value = ft_atoi(tmp);
+		if (tmp_value == 2147483647)
+			tmp_value = -1;
+		if (tmp_value == -2147483648)
+			tmp_value = 0;
+		return (convert_hex_octnb(tmp_value, size));
 	}
 }
 
@@ -72,17 +78,23 @@ char	*get_ind(char *arg)
 	t_env	*env;
 	int		i;
 	char	*tmp;
+	int 	tmp_value;
 
 	tmp = ft_strnew(ft_strlen(arg));
 	env = get_env(NULL);
 	env->add_to_adress += 2;
 	if (arg[0] == LABEL_CHAR)
 		return (ft_strjoin(arg, ":"));
-	else
+	else 
 	{
 		i = -1;
 		while (arg[++i])
 			tmp[i] = arg[i];
-		return (convert_hex_octnb(ft_atoi(tmp), 2));
+		tmp_value = ft_atoi(tmp);
+		if (tmp_value > 32767)
+			tmp_value = -1;
+		if (tmp_value < -32768)
+			tmp_value = 0;
+		return (convert_hex_octnb(tmp_value, 2));
 	}
 }

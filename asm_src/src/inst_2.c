@@ -64,8 +64,8 @@ void	ldi_lldi(char *data, char *inst)
 	split = split_and_trim(data);
 	if (!split[0] || !split[1] || !split[2] || split[3])
 		ft_error(E_ARG_NB);
-	get_arg_reg_dir4_ind(split[0], args, tab_args_code, 0);
-	get_arg_reg_dir4(split[1], args, tab_args_code, 1);
+	get_arg_reg_dir2_ind(split[0], args, tab_args_code, 0);
+	get_arg_reg_dir2(split[1], args, tab_args_code, 1);
 	if (check_arg(split[2]) == 1)
 	{
 		args[2] = get_reg(split[2]);

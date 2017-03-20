@@ -114,6 +114,11 @@ void	norme5(int code, t_env *env)
 		ft_putstr_fd(env->line, 2);
 		ft_putstr_fd("\n", 2);
 	}
+	else if (code == 20)
+	{
+		ft_putstr_fd("unexpected end of input", 2);
+		ft_putstr_fd("\n", 2);
+	}
 }
 
 void	ft_error(int code)

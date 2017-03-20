@@ -35,7 +35,8 @@
 # define E_BD_LBL		16
 # define E_BD_CHP		17
 # define E_NM_LEN		18
-# define E_CM_LEN		19	
+# define E_CM_LEN		19
+# define E_LST_LINE		20
 
 /*# define EMALLOC_TXT "Error: Malloc Failed"
 write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/

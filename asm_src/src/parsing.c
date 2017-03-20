@@ -62,23 +62,34 @@ static int		norme2(t_env *env)
 	return (0);
 }
 
-static void		norme3(t_env *env, int len)
+static int		norme3(t_env *env, int len)
 {
 	if (len > 1)
 	{
 		if (!ft_strncmp("ld", env->line, 2))
-			return (ld_lld(ft_strcut_beg(env->line, 2), "02"));
+		{
+			ld_lld(ft_strcut_beg(env->line, 2), "02");
+			return (1);
+		}
 		else if (!ft_strncmp("st", env->line, 2))
-			return (st(ft_strcut_beg(env->line, 2), "03"));
+		{
+			st(ft_strcut_beg(env->line, 2), "03");
+			return (1);
+		}
 		else if (!ft_strncmp("or", env->line, 2))
-			return (or_xor_and(ft_strcut_beg(env->line, 2), "07"));
+		{
+			or_xor_and(ft_strcut_beg(env->line, 2), "07");
+			return (1);
+		}
 	}
+	return (0);
 }
 
 static void		get_inst(t_env *env)
 {
 	int len;
 
+	env->line = ft_strtrim(env->line);
 	len = ft_strlen(env->line);
 	if (len > 4)
 	{
@@ -103,7 +114,9 @@ static void		get_inst(t_env *env)
 		if(norme2(env) == 1)
 			return ;
 	}
-	norme3(env, len);
+	if(norme3(env, len) == 1)
+		return ;
+	ft_error(EBDINST);
 }
 
 static	int		get_label(t_env *env)

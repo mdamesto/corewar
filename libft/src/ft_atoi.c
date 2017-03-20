@@ -15,7 +15,7 @@
 int		ft_atoi(const char *str)
 {
 	int s;
-	int r;
+	long int r;
 
 	s = 1;
 	r = 0;
@@ -27,8 +27,16 @@ int		ft_atoi(const char *str)
 	if (*str == '-' || *str == '+')
 		str++;
 	while (ft_isdigit(*str) > 0)
+	{
 		r = r * 10 + *str++ - '0';
+		if (r > 2147483647)
+		{
+			if (s < 0)
+				return (-2147483648);
+			return (2147483647);
+		}
+	}
 	if (s < 0)
 		r = -r;
-	return (r);
+	return ((int)r);
 }
