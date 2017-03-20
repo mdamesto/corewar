@@ -24,6 +24,19 @@ char	**init_args(void)
 	return (args);
 }
 
+int		handle_overflow(char *tmp)
+{
+	if (ft_strlen(tmp) > 19)
+	{
+		if (tmp[0] == '-')
+			return (0);
+		else
+			return (-1);
+	}
+	else
+		return (1);
+}
+
 char	*get_reg(char *arg)
 {
 	t_env	*env;
@@ -44,12 +57,11 @@ char	*get_reg(char *arg)
 
 char	*get_dir(char *arg, int size)
 {
-	t_env	*env;
-	int		i;
-	char	*tmp;
-	long int 	tmp_value;
+	t_env		*env;
+	int			i;
+	char		*tmp;
+	long int	tmp_value;
 
-//	tmp = ft_strnew(10);
 	tmp = ft_strnew(ft_strlen(arg));
 	env = get_env(NULL);
 	env->add_to_adress += size;
@@ -64,11 +76,9 @@ char	*get_dir(char *arg, int size)
 		i = 0;
 		while (arg[++i])
 			tmp[i - 1] = arg[i];
-		tmp_value = ft_atoi(tmp);
-		if (tmp_value == 2147483647)
-			tmp_value = -1;
-		if (tmp_value == -2147483648)
-			tmp_value = 0;
+		tmp_value = handle_overflow(tmp);
+		if (tmp_value == 1)
+			tmp_value = ft_atoi(tmp);
 		return (convert_hex_octnb(tmp_value, size));
 	}
 }
@@ -78,23 +88,21 @@ char	*get_ind(char *arg)
 	t_env	*env;
 	int		i;
 	char	*tmp;
-	int 	tmp_value;
+	int		tmp_value;
 
 	tmp = ft_strnew(ft_strlen(arg));
 	env = get_env(NULL);
 	env->add_to_adress += 2;
 	if (arg[0] == LABEL_CHAR)
 		return (ft_strjoin(arg, ":"));
-	else 
+	else
 	{
 		i = -1;
 		while (arg[++i])
 			tmp[i] = arg[i];
-		tmp_value = ft_atoi(tmp);
-		if (tmp_value > 32767)
-			tmp_value = -1;
-		if (tmp_value < -32768)
-			tmp_value = 0;
+		tmp_value = handle_overflow(tmp);
+		if (tmp_value == 1)
+			tmp_value = ft_atoi_short(tmp);
 		return (convert_hex_octnb(tmp_value, 2));
 	}
 }

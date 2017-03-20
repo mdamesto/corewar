@@ -12,20 +12,16 @@
 
 #include "asm.h"
 
-uint8_t			*convert_strhex_to_hex(char *str)
+uint8_t			*convert_strhex_to_hex(char *str, int size_champ)
 {
 	uint8_t	*ret;
 	int		i;
-	int		size;
 	char	tmp[3];
 
-	size = MEM_SIZE / 6;
-//	ret = (uint8_t*)ft_strnew(MEM_SIZE / 6);
-	ret = (uint8_t*)ft_strnew(size);
+	ret = (uint8_t*)ft_strnew(size_champ);
 	i = 0;
 	tmp[2] = '\0';
-	//while (*str &&)
-	while (*str && i <= size)
+	while (*str && i <= size_champ)
 	{
 		ft_strncpy(tmp, str, 2);
 		ret[i++] = ft_atoi_hex(tmp);
@@ -42,6 +38,8 @@ static uint8_t	*get_full_insts(t_env *env)
 
 	insts = ft_strnew(1);
 	tmp_inst = env->inst;
+	if (!tmp_inst)
+		ft_error(E_CHMP_NULL);
 	while (tmp_inst)
 	{
 		to_free = insts;
@@ -50,7 +48,7 @@ static uint8_t	*get_full_insts(t_env *env)
 		if (to_free)
 			free(to_free);
 	}
-	return (convert_strhex_to_hex(insts));
+	return (convert_strhex_to_hex(insts, env->c_adress));
 }
 
 uint32_t		convert_be(uint32_t data)

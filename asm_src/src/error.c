@@ -34,6 +34,11 @@ void	norme2(int code)
 		ft_putstr_fd(ft_itoa(COMMENT_LENGTH), 2);
 		ft_putstr_fd(":)\n", 2);
 	}
+	else if (code == 21)
+	{
+		ft_putstr_fd("Champ have no instructions.", 2);
+		ft_putstr_fd("\n", 2);
+	}
 }
 
 void	norme3(int code, t_env *env)

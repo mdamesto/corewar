@@ -37,6 +37,7 @@
 # define E_NM_LEN		18
 # define E_CM_LEN		19
 # define E_LST_LINE		20
+# define E_CHMP_NULL	21
 
 /*# define EMALLOC_TXT "Error: Malloc Failed"
 write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/
@@ -45,31 +46,31 @@ write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/
 typedef struct		s_label
 {
 	char			*name;
-	int 			adress;
-	struct s_label 	*next;
+	int				adress;
+	struct s_label	*next;
 }					t_label;
 
 typedef struct		s_instr
 {
-	char			*content;
+	char            *content;
 	int 			adress;
 	int 			line;
 	struct s_instr 	*next;
 }					t_inst;
 
-typedef struct	s_env
+typedef struct		s_env
 {
-	header_t 	*header;
-	t_label 	*labels;
-	t_inst		*inst;
-	char		*filename;
-	int 		fd;
-	int 		line_nb;
-	uint32_t	c_adress;
-	int 		add_to_adress;
-	char		*line;		//line value
-	char 		**data; 		//tmp splitted line
-}				t_env;
+	header_t 		*header;
+	t_label 		*labels;
+	t_inst			*inst;
+	char			*filename;
+	int 			fd;
+	int 			line_nb;
+	uint32_t		c_adress;
+	int 			add_to_adress;
+	char			*line;
+	char 			**data;
+}					t_env;
 
 //inst.c
 void	inst_to_env(char *inst, char *args_code, char **args);
@@ -139,6 +140,7 @@ void	get_arg_reg_dir2(char *split, char **args, char **tab_args_code, int arg_nb
 void	get_arg_reg_dir4(char *split, char **args, char **tab_args_code, int arg_nb);
 
 char 	**split_and_trim(char *data);
+void	get_inst(t_env *env);
 
 #endif
 	

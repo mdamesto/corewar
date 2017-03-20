@@ -224,5 +224,6 @@ void			get_flags(t_printf_format *format, int pos, char **str);
 void			get_utf_char(unsigned int c, unsigned char **str);
 
 int				test_next_arg(char *ipt_string, va_list varlist);
+short			ft_atoi_short(const char *str);
 
 #endif

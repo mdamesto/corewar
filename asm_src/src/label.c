@@ -69,7 +69,7 @@ static	char	*replace_label(char *label_name, int adress, t_env *env)
 	if (dir)
 		return (convert_hex_octnb(tmp->adress - adress, dir));
 	else
-		return (get_label_inst(tmp, env));
+		return (convert_hex_octnb(tmp->adress - adress, 2));
 }
 
 void			replace_labels(t_env *env)

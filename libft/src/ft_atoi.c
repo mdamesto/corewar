@@ -29,11 +29,12 @@ int		ft_atoi(const char *str)
 	while (ft_isdigit(*str) > 0)
 	{
 		r = r * 10 + *str++ - '0';
-		if (r > 2147483647)
+		if (r > 2147483647 || r < -2147483648)
 		{
-			if (s < 0)
-				return (-2147483648);
-			return (2147483647);
+			r = (int)r;
+			//if (s < 0)
+				//return (-2147483648);
+			//return (2147483647);
 		}
 	}
 	if (s < 0)
