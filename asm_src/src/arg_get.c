@@ -48,7 +48,8 @@ char	*get_dir(char *arg, int size)
 	int		i;
 	char	*tmp;
 
-	tmp = ft_strnew(10);
+//	tmp = ft_strnew(10);
+	tmp = ft_strnew(ft_strlen(arg));
 	env = get_env(NULL);
 	env->add_to_adress += size;
 	if (arg[1] == LABEL_CHAR)

@@ -26,7 +26,7 @@ char	*fill_hex(char *tmp, size_t oct_nb)
 	while (i < ret_len)
 		ret[i++] = '0';
 	tmp_len = ft_strlen(tmp);
-
+//tmp_len > ret_len avec t_DIR_big_number.s
 	i = 0;
 	ret_len = ret_len - tmp_len;
 	while ( i < tmp_len) {

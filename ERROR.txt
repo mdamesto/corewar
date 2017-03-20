@@ -2,3 +2,9 @@ Invalid read :
 
 champions/test/success/t_big_bee_gees.s
 
+Invalid write :
+
+champions/test/success/t_DIR_big_number.s :
+voir le fichier de la libft convert_hex_octnb.c on ecrit dans un tableau avec un indice negatif...
+
+
