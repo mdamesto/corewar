@@ -16,7 +16,7 @@ static	int		check_label(char *label)
 {
 	int i;
 
-	i = -1;
+	i = 0;
 	while (label[i] == ' ' || label[i] == '	')
 		i++;
 	while (label[++i])
