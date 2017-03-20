@@ -16,12 +16,16 @@ uint8_t			*convert_strhex_to_hex(char *str)
 {
 	uint8_t	*ret;
 	int		i;
+	int		size;
 	char	tmp[3];
 
-	ret = (uint8_t*)ft_strnew(MEM_SIZE / 6);
+	size = MEM_SIZE / 6;
+//	ret = (uint8_t*)ft_strnew(MEM_SIZE / 6);
+	ret = (uint8_t*)ft_strnew(size);
 	i = 0;
 	tmp[2] = '\0';
-	while (*str)
+	//while (*str &&)
+	while (*str && i <= size)
 	{
 		ft_strncpy(tmp, str, 2);
 		ret[i++] = ft_atoi_hex(tmp);

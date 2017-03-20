@@ -1,0 +1,4 @@
+Invalid read :
+
+champions/test/success/t_big_bee_gees.s
+
