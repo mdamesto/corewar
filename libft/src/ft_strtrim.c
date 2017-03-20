@@ -64,9 +64,9 @@ char		*ft_strtrim_f(char *s)
 	j = 0;
 	while (s[j])
 		j++;
-	if (i == j)
+	if (i == j--)
 		return (ft_strnew(0));
-	j--;
+	//j--;
 	while (s[j] == ' ' || s[j] == ' ' || s[j] == '\n' || s[j] == '\t')
 		j--;
 	c = ft_strnew(j - i + 1);
