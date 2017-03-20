@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM
-# define ASM
+#ifndef ASM_H
+# define ASM_H
 
 # include "libft.h"
 # include "op.h"
@@ -39,10 +39,6 @@
 # define E_LST_LINE		20
 # define E_CHMP_NULL	21
 
-/*# define EMALLOC_TXT "Error: Malloc Failed"
-write(2, EMALLOC_TXT, sizeof(EMALLOC_TXT) - 1)*/
-
-
 typedef struct		s_label
 {
 	char			*name;
@@ -52,95 +48,70 @@ typedef struct		s_label
 
 typedef struct		s_instr
 {
-	char            *content;
-	int 			adress;
-	int 			line;
-	struct s_instr 	*next;
+	char			*content;
+	int				adress;
+	int				line;
+	struct s_instr	*next;
 }					t_inst;
 
 typedef struct		s_env
 {
-	header_t 		*header;
-	t_label 		*labels;
+	header_t		*header;
+	t_label			*labels;
 	t_inst			*inst;
 	char			*filename;
-	int 			fd;
-	int 			line_nb;
+	int				fd;
+	int				line_nb;
 	uint32_t		c_adress;
-	int 			add_to_adress;
+	int				add_to_adress;
 	char			*line;
-	char 			**data;
+	char			**data;
 }					t_env;
 
-//inst.c
-void	inst_to_env(char *inst, char *args_code, char **args);
-char	**init_args(void);
-
-void	live_zjump_fork_lfork(char *data, char *inst, size_t siz);
-void	add_sub(char *data, char *inst);
-void	ld_lld(char *data, char *inst);
-void	or_xor_and(char *data, char *inst);
-void	ldi_lldi(char *data, char *inst);
-void	sti(char *data, char *inst);
-void	st(char *data, char *inst);
-void	aff(char *data, char *inst);
-
-
-void	ft_error(int code);
-
-//gnl.c
-int gnl(void);
-int 	check_empty_line(char *line);
-
-//parsing.c
-void	parsing_champion(t_env *env);
-
-//env.c
-void	init_env(char *filename);
-t_env	*get_env(t_env *env);
-void	free_env(void);
-
-//name_comment.c
-void	get_name(t_env *env);
-void	get_comment(t_env *env);
-
-//label.c
-void	print_labels(t_env *env);
-void	add_label(t_env *env, char *label);
-void	replace_labels(t_env *env);
-
-//check_arg.c
-int		check_arg(char *arg);
-
-//get_arg.c
-char	*get_dir(char *arg, int size);
-char 	*get_reg(char *arg);
-char 	*get_ind(char *arg); 
-
-//print
-void	print_name_comment(t_env *env);
-void	print_add_inst(char *inst, char *args_code, char **args);
-void	print_labels(t_env *env);
-void	print_inst(t_env *env);
-void	print_champ(char **tab, char *final);
-
-//create champ
-void			create_champion(t_env *env);
-
-//convert
-char	*str_to_hex(char *str);
-char	*ret_to_oct(char *tmp, int oct_nb);
-
-//inst_switch
-void	inst_switch(char **data);
-
-void	get_arg_reg_dir4_ind(char *split, char **args, char **tab_args_code, int arg_nb);
-void	get_arg_reg_dir2_ind(char *split, char **args, char **tab_args_code, int arg_nb);
-void	get_arg_reg_dir2(char *split, char **args, char **tab_args_code, int arg_nb);
-void	get_arg_reg_dir4(char *split, char **args, char **tab_args_code, int arg_nb);
-
-char 	**split_and_trim(char *data);
-void	get_inst(t_env *env);
+void				inst_to_env(char *inst, char *args_code, char **args);
+char				**init_args(void);
+void				live_zjump_fork_lfork(char *data, char *inst, size_t siz);
+void				add_sub(char *data, char *inst);
+void				ld_lld(char *data, char *inst);
+void				or_xor_and(char *data, char *inst);
+void				ldi_lldi(char *data, char *inst);
+void				sti(char *data, char *inst);
+void				st(char *data, char *inst);
+void				aff(char *data, char *inst);
+void				ft_error(int code);
+int					gnl(void);
+int					check_empty_line(char *line);
+void				parsing_champion(t_env *env);
+void				init_env(char *filename);
+t_env				*get_env(t_env *env);
+void				free_env(void);
+void				get_name(t_env *env);
+void				get_comment(t_env *env);
+void				print_labels(t_env *env);
+void				add_label(t_env *env, char *label);
+void				replace_labels(t_env *env);
+int					check_arg(char *arg);
+char				*get_dir(char *arg, int size);
+char				*get_reg(char *arg);
+char				*get_ind(char *arg);
+void				print_name_comment(t_env *env);
+void				print_add_inst(char *inst, char *args_code, char **args);
+void				print_labels(t_env *env);
+void				print_inst(t_env *env);
+void				print_champ(char **tab, char *final);
+void				create_champion(t_env *env);
+char				*str_to_hex(char *str);
+char				*ret_to_oct(char *tmp, int oct_nb);
+void				inst_switch(char **data);
+void				get_arg_reg_dir4_ind(char *split, \
+char				**args, char **tab_args_code, int arg_nb);
+void				get_arg_reg_dir2_ind(char *split, \
+					char **args, char **tab_args_code, int arg_nb);
+void				get_arg_reg_dir2(char *split, \
+					char **args, char **tab_args_code, int arg_nb);
+void				get_arg_reg_dir4(char *split, \
+					char **args, char **tab_args_code, int arg_nb);
+char				**split_and_trim(char *data);
+void				get_inst(t_env *env);
 
 #endif
-	

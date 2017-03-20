@@ -57,61 +57,14 @@ char		*get_hexa_x(unsigned long x, char type)
 	ft_strrev(otp);
 	return (otp);
 }
-/*
-static int	display_x_no_minus_flag(t_printf_format format, char *hexa)
-{
-	char *e;
 
-	e = ft_strnew(format.pad_size + (format.hide_print ? 0 :
-		(format.precision_size + ft_strlen(hexa)) + format.flags.hashtag));
-	if (!format.hide_print)
-	{
-		if (format.flags.zero)
-			get_flags(&format, 1, &e);
-		get_pad(format.pad_size, format.flags.zero, &e);
-		if (!format.flags.zero)
-			get_flags(&format, 1, &e);
-		get_precision(format.precision_size, &e);
-		ft_strcat(e, hexa);
-	}
-	else
-		get_pad(format.pad_size, format.flags.zero, &e);
-	ft_putstr(e);
-	free(e);
-	return (ft_strlen(e));
-}
-
-static int	display_x_minus_flag(t_printf_format format, char *hexa)
-{
-	char *e;
-
-	e = ft_strnew(format.pad_size + (format.hide_print ? 0 :
-		(format.precision_size + ft_strlen(hexa)) + format.flags.hashtag));
-	if (!format.hide_print)
-	{
-		get_flags(&format, 1, &e);
-		get_precision(format.precision_size, &e);
-		ft_strcat(e, hexa);
-	}
-	get_pad(format.pad_size, format.flags.zero, &e);
-	ft_putstr(e);
-	free(e);
-	return (ft_strlen(e));
-}
-*/
 int			print_x(t_printf_format format, unsigned long x)
 {
 	char	*hexa;
-//	int		ret;
 
 	hexa = get_hexa_x(x, format.type);
 	calibrate_format_x(&format, hexa, x);
-/*	if (format.flags.minus)
-		ret = display_x_minus_flag(format, hexa);
-	else
-		ret = display_x_no_minus_flag(format, hexa);
-*/
-free(hexa);
+	free(hexa);
 	return (format.pad_size + (format.hide_print ? 0 : (format.precision_size +
 									ft_strlen(hexa)) + format.flags.hashtag));
 }

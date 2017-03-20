@@ -23,21 +23,16 @@
 # include <stdint.h>
 # include <limits.h>
 # include <wchar.h>
-
 # include <stdarg.h>
 # include <locale.h>
 
-
-
 # define BUFF_SIZE 16
-
 # define FLAG_LETTERS "0-+ #*"
 # define PAD_LETTERS "0123456789"
 # define PRECISION_LETTERS ".0123456789"
 # define MODIFIER_LETTERS "hljz"
 # define TYPE_LETTERS "sSpdDioOuUxXcC%"
 # define NUMBER_TYPES "dDiouUxX"
-
 # define BYPASS_UNDEFINED_BEHAVIOR 1
 
 typedef struct		s_list
@@ -54,16 +49,16 @@ typedef struct		s_struct
 	char			*tmpbuf;
 }					t_struct;
 
-typedef struct	s_printf_flags
+typedef struct		s_printf_flags
 {
 	int zero;
 	int minus;
 	int plus;
 	int space;
 	int hashtag;
-}				t_printf_flags;
+}					t_printf_flags;
 
-typedef struct	s_printf_format
+typedef struct		s_printf_format
 {
 	struct s_printf_flags	flags;
 	int						pad_size;
@@ -72,8 +67,7 @@ typedef struct	s_printf_format
 	char					type;
 	int						hide_print;
 	int						nwcard;
-}				t_printf_format;
-
+}					t_printf_format;
 
 int					ft_istrlen(int *istr);
 int					ft_itab_len(int **tab);
@@ -151,23 +145,23 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 char				*ft_strcut_beg(char *str, int n);
-char 				*ft_rmv_space(char *str);
+char				*ft_rmv_space(char *str);
 int					ft_isspace(char c);
-char 				**ft_strsplit_space(char *s);
+char				**ft_strsplit_space(char *s);
 char				*ft_strcut_end(char *str, int n);
 char				*ft_tab_join(char **tab);
 char				*convert_hex_octnb(int nb, size_t oct_nb);
 char				*fill_hex(char *tmp, size_t oct_nb);
 char				*fill_hex_be(char *str, size_t oct_nb);
 void				ft_tab_trim(char **tab);
-int 				ft_bin_to_int(char *str);
-int 				ft_is_label_char(char c);
+int					ft_bin_to_int(char *str);
+int					ft_is_label_char(char c);
 char				*ft_strjoin_f(char *s1, char *s2, int code);
 char				*ft_strget(char *str, int s, int e);
 char				*ft_strget_f(char *str, int s, int e);
 char				*ft_strcut(char *str, int s, int e);
 char				*ft_strcut_f(char *str, int s, int e);
-char 				*ft_rmv_space_f(char *str);
+char				*ft_rmv_space_f(char *str);
 void				*ft_print_memory(void *addr, size_t size);
 int					ft_atoi_hex(const char *str);
 char				*ft_strtrim_f(char *s);
@@ -184,46 +178,38 @@ char				*ft_itoa_ulong(unsigned long n);
 unsigned char		*ft_strcat_uchar(unsigned char *s1, unsigned char *s2);
 int					ft_isint(char *s);
 long				ft_atoi_long(const char *str);
-
-int				ft_printf(char *input_string, ...);
-
-int				parser_c(t_printf_format format, va_list varlist);
-int				parser_s(t_printf_format format, va_list varlist);
-int				parser_o(t_printf_format format, va_list varlist);
-int				parser_x(t_printf_format format, va_list varlist);
-int				parser_u(t_printf_format format, va_list varlist);
-int				parser_d(t_printf_format format, va_list varlist);
-int				parser_p(t_printf_format format, va_list varlist);
-
-int				print_x(t_printf_format format, unsigned long x);
-int				print_u(t_printf_format format, unsigned long u);
-int				print_d(t_printf_format *format, long d);
-int				print_o(t_printf_format format, unsigned long o);
-int				print_c(t_printf_format format, unsigned char c);
-int				print_s(t_printf_format format, char *s);
-int				print_p(t_printf_format format, void *p);
-
-int				print_ls(t_printf_format *format, wint_t *ls);
-int				print_lc(t_printf_format *format, wint_t c);
-int				print_utf_char(unsigned int c);
-int				ft_binary_size(int c);
-
-void			print_pad(int pad_size, int zpad, int nwcard);
-void			print_precision(int precision_size);
-void			print_flags(t_printf_format format, int d);
-
-char			ft_printf_hexa_table(int i, char type);
-char			*string_parser(char *s, t_printf_format *format,
+int					ft_printf(char *input_string, ...);
+int					parser_c(t_printf_format format, va_list varlist);
+int					parser_s(t_printf_format format, va_list varlist);
+int					parser_o(t_printf_format format, va_list varlist);
+int					parser_x(t_printf_format format, va_list varlist);
+int					parser_u(t_printf_format format, va_list varlist);
+int					parser_d(t_printf_format format, va_list varlist);
+int					parser_p(t_printf_format format, va_list varlist);
+int					print_x(t_printf_format format, unsigned long x);
+int					print_u(t_printf_format format, unsigned long u);
+int					print_d(t_printf_format *format, long d);
+int					print_o(t_printf_format format, unsigned long o);
+int					print_c(t_printf_format format, unsigned char c);
+int					print_s(t_printf_format format, char *s);
+int					print_p(t_printf_format format, void *p);
+int					print_ls(t_printf_format *format, wint_t *ls);
+int					print_lc(t_printf_format *format, wint_t c);
+int					print_utf_char(unsigned int c);
+int					ft_binary_size(int c);
+void				print_pad(int pad_size, int zpad, int nwcard);
+void				print_precision(int precision_size);
+void				print_flags(t_printf_format format, int d);
+char				ft_printf_hexa_table(int i, char type);
+char				*string_parser(char *s, t_printf_format *format,
 								va_list varlist);
-char			hexa_ascii_table(unsigned long ipt);
-void			ftprintf_struct_init(t_printf_format *format);
-
-void			get_pad(int pad_size, int zpad, char **str);
-void			get_precision(int precision_size, char **str);
-void			get_flags(t_printf_format *format, int pos, char **str);
-void			get_utf_char(unsigned int c, unsigned char **str);
-
-int				test_next_arg(char *ipt_string, va_list varlist);
-short			ft_atoi_short(const char *str);
+char				hexa_ascii_table(unsigned long ipt);
+void				ftprintf_struct_init(t_printf_format *format);
+void				get_pad(int pad_size, int zpad, char **str);
+void				get_precision(int precision_size, char **str);
+void				get_flags(t_printf_format *format, int pos, char **str);
+void				get_utf_char(unsigned int c, unsigned char **str);
+int					test_next_arg(char *ipt_string, va_list varlist);
+short				ft_atoi_short(const char *str);
 
 #endif
