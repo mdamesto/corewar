@@ -14,8 +14,8 @@
 
 short	ft_atoi_short(const char *str)
 {
-	int 		s;
-	long  int	r;
+	int			s;
+	long int	r;
 
 	s = 1;
 	r = 0;

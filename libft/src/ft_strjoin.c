@@ -41,9 +41,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*ft_strjoin_f(char *s1, char *s2, int code)
 {
-	int i;
-	int j;
-	char *ret;
+	int		i;
+	int		j;
+	char	*ret;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);

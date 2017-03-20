@@ -12,11 +12,11 @@
 
 #include "libft.h"
 
-char 	*ft_rmv_space(char *str)
+char	*ft_rmv_space(char *str)
 {
-	int i;
-	int len;
-	char *ret;
+	int		i;
+	int		len;
+	char	*ret;
 
 	if (!str)
 		return (NULL);
@@ -38,11 +38,11 @@ char 	*ft_rmv_space(char *str)
 	return (ret);
 }
 
-char 	*ft_rmv_space_f(char *str)
+char	*ft_rmv_space_f(char *str)
 {
-	int i;
-	int len;
-	char *ret;
+	int		i;
+	int		len;
+	char	*ret;
 
 	if (!str)
 		return (NULL);

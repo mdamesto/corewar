@@ -25,5 +25,5 @@ void	ft_bzero(void *s, size_t n)
 	}
 	sp = (char *)bp;
 	while (n--)
-		*sp++ = '\0'; 
+		*sp++ = '\0';
 }

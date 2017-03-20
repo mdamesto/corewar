@@ -35,7 +35,7 @@ static size_t	get_tab_row(const char *s)
 		{
 			while (*s == ' ' || *s == '	')
 				s++;
-			if (word_before && *s) 
+			if (word_before && *s)
 				n_sep++;
 			word_before = 0;
 		}
@@ -48,8 +48,7 @@ static size_t	get_tab_row(const char *s)
 	return (n_sep + 1);
 }
 
-
-char	**ft_strsplit_space(char *s)
+char			**ft_strsplit_space(char *s)
 {
 	char	**out;
 	size_t	n;
