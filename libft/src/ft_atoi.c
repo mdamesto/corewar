@@ -6,7 +6,7 @@
 /*   By: mdamesto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/25 17:11:04 by mdamesto          #+#    #+#             */
-/*   Updated: 2015/11/28 16:17:53 by mdamesto         ###   ########.fr       */
+/*   Updated: 2017/03/20 18:58:06 by jclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		ft_atoi(const char *str)
 {
-	int s;
-	long int r;
+	int			s;
+	long int	r;
 
 	s = 1;
 	r = 0;
@@ -32,9 +32,6 @@ int		ft_atoi(const char *str)
 		if (r > 2147483647 || r < -2147483648)
 		{
 			r = (int)r;
-			//if (s < 0)
-				//return (-2147483648);
-			//return (2147483647);
 		}
 	}
 	if (s < 0)
