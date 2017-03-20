@@ -6,13 +6,13 @@
 /*   By: jde-maga <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/10 17:19:28 by jde-maga          #+#    #+#             */
-/*   Updated: 2017/03/20 17:36:40 by jde-maga         ###   ########.fr       */
+/*   Updated: 2017/03/20 19:10:13 by jde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <corewar.h>
 
-static void	invalid_file_error()
+static void	invalid_file_error(void)
 {
 	ft_printf("invalid file. terminating VM\n");
 	exit(0);
