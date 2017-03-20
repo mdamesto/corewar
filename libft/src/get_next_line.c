@@ -73,7 +73,6 @@ int		get_next_line(int const fd, char **line)
 		return (-1);
 	while (*buf != '\n')
 	{
-		
 		if (t->i % 32 == 0 || !*buf)
 			line_buff_up(line, fd, &buf, t);
 		if (*buf != '\n')

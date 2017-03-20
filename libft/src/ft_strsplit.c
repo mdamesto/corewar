@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit2.c                                     :+:      :+:    :+:   */
+/*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtassett <mtassett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -48,8 +48,7 @@ static size_t	get_tab_row(const char *s, char c)
 	return (n_sep + 1);
 }
 
-
-char	**ft_strsplit(const char *s, char c)
+char			**ft_strsplit(const char *s, char c)
 {
 	char	**out;
 	size_t	n;
@@ -69,7 +68,7 @@ char	**ft_strsplit(const char *s, char c)
 		siz = get_sub_siz(s, c);
 		out[n++] = siz ? ft_strsub(s, 0, siz) : NULL;
 		s += siz;
-		while(*s == c)
+		while (*s == c)
 			s++;
 	}
 	out[n] = NULL;

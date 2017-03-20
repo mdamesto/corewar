@@ -12,16 +12,17 @@
 
 #include "libft.h"
 
-char 	*ft_strcut_beg(char *str, int n) {
-	int i;
-	char *tmp;
+char	*ft_strcut_beg(char *str, int n)
+{
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	tmp = ft_strnew(ft_strlen(str) - n);
-	while (str[n]) {
+	while (str[n])
+	{
 		tmp[i++] = str[n++];
 	}
 	tmp[i] = '\0';
-//	free(str);
-	return(tmp);
+	return (tmp);
 }

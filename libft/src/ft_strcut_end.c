@@ -12,20 +12,21 @@
 
 #include "libft.h"
 
-char 	*ft_strcut_end(char *str, int n) 
+char	*ft_strcut_end(char *str, int n)
 {
-	int i;
-	int len;
-	char *tmp;
+	int		i;
+	int		len;
+	char	*tmp;
 
 	i = 0;
 	len = ft_strlen(str) - n;
 	tmp = ft_strnew(len);
-	while (i < len) {
+	while (i < len)
+	{
 		tmp[i] = str[i];
 		i++;
 	}
 	tmp[i] = '\0';
 	free(str);
-	return(tmp);
+	return (tmp);
 }
